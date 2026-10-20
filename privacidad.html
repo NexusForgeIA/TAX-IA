@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Privacidad · Taxi-IA</title>
-  <meta name="description" content="Política de privacidad de Taxi-IA.">
+  <meta name="description" content="Quién es el responsable y qué datos usa Taxi-IA: sin cuenta, con tus datos guardados solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,41 +14,42 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/nav.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
-      <nav class="navegacion" aria-label="Secciones">
-        <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
-        <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
-        <a href="calculadoras.html">Calculadoras</a>
-        <a href="vencimientos.html">Vencimientos</a>
-        <a href="mantenimiento.html">Mantenimiento</a>
-        <a href="avisos.html">Avisos</a>
-      </nav>
+      <p class="marca"><a href="inicio.html">Taxi-IA</a></p>
       <h1>Privacidad</h1>
-      <p class="sub">Qué guarda Taxi-IA y dónde.</p>
     </div>
   </header>
-
   <main class="contenedor">
-    <section class="calc" aria-labelledby="t-q"><h2 id="t-q">Qué se guarda</h2>
-      <p>Carreras, vencimientos, avisos y los datos del justificante que escribes. Todo se guarda únicamente en el navegador de este dispositivo. No hay cuentas ni servidor en esta versión y no se envía nada a ninguna parte.</p></section>
-    <section class="calc peligro" aria-labelledby="t-b"><h2 id="t-b">Borrar mis datos</h2>
-      <p>Borra los datos del sitio en los ajustes de tu navegador, o pulsa el botón.</p>
-      <div class="botones"><button class="boton-peligro" id="borrar" type="button">Borrar todo</button><p class="msg" id="msg" role="status"></p></div></section>
+    <h2>Responsable del tratamiento</h2>
+    <p>El mismo titular que figura en el <a href="aviso-legal.html">aviso legal</a>:</p>
+    <dl class="datos-titular">
+      <dt>Responsable</dt><dd>Cristobal Martinez Comas</dd>
+      <dt>NIF</dt><dd>14308839X</dd>
+      <dt>Dirección</dt><dd>Calle Madrid 9, 2ºB, 28220 Majadahonda, Madrid (España)</dd>
+      <dt>Email</dt><dd><a href="mailto:comercial@whitemoon.es">comercial@whitemoon.es</a></dd>
+    </dl>
+    <p>Taxi-IA funciona sin cuenta: lo que guardas (carreras, turnos, gastos del coche, vencimientos, mantenimiento y avisos) se queda en tu navegador y no se envía a ningún servidor. Puedes ejercer tus derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición escribiendo a <a href="mailto:comercial@whitemoon.es">comercial@whitemoon.es</a>, y reclamar ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" rel="noopener">www.aepd.es</a>).</p>
+    <h2>Ubicación</h2>
+    <p>Taxi-IA no usa tu ubicación.</p>
+    <h2>Lo que guardas en tu navegador</h2>
+    <p>Las carreras que apuntas en Facturación (fecha, hora, importe, canal, forma de cobro y nota), los turnos (recaudación, gastos, km, horas, conductor y reparto), los repostajes, los vencimientos, el mantenimiento y los avisos se guardan solo en el almacenamiento local de tu navegador. Las calculadoras recuerdan tu tarifa y tu porcentaje de reparto de la misma forma. Nada de esto llega a nuestros servidores.</p>
+    <p>Puedes exportar tus datos a CSV desde cada página y borrarlos desde la propia página o borrando los datos del sitio en tu navegador. Si cambias de móvil o de navegador, no se trasladan solos: exporta antes.</p>
+    <h2>Cuentas</h2>
+    <p>Esta versión no tiene cuentas de usuario. Cuando las haya, podrás exportar tus datos y borrar tu cuenta desde la propia app.</p>
+    <h2>Cookies y analítica</h2>
+    <p>No usamos cookies de seguimiento ni analítica de terceros, y no contamos aperturas.</p>
+    <p><a href="inicio.html">Volver a Taxi-IA</a></p>
   </main>
-
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p class="enlaces-pie"><a href="privacidad.html" aria-current="page">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/privacidad.js"></script>
 </body>
 </html>

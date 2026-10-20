@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Taxi-IA · Herramientas para taxistas</title>
-  <meta name="description" content="Carreras, calculadoras, vencimientos y avisos para taxistas.">
+  <meta name="description" content="Facturación por carrera, turnos, calculadoras, vencimientos (ITV, taxímetro, revista municipal), mantenimiento y avisos municipales, con tus propios datos.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta property="og:title" content="Taxi-IA · Herramientas para taxistas">
-  <meta property="og:description" content="Carreras, calculadoras, vencimientos y avisos para taxistas.">
+  <meta property="og:description" content="Facturación por carrera, turnos, calculadoras, vencimientos y avisos municipales, con tus propios datos.">
   <meta property="og:image" content="https://nexusforgeia.github.io/TAX-IA/assets/img/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -19,13 +20,23 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/portada.css">
+  <script type="module" src="assets/config.js"></script>
 </head>
 <body>
   <main class="portada">
-    <h1 class="logo"><img src="assets/img/logo.png" width="678" height="678" alt="Taxi-IA"></h1>
-    <p class="lema">Tu taxi, con las cuentas claras</p>
+    <h1 class="logo"><picture><img src="assets/img/logo.png" width="678" height="678" alt="Taxi-IA" fetchpriority="high"></picture></h1>
+    <p class="lema">Herramientas para taxistas</p>
     <a class="entrar" href="inicio.html">Entrar</a>
-    <p class="pie">Carreras · calculadoras · vencimientos · avisos</p>
+    <a class="instalar-portada" href="instalar.html"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#instalar"/></svg>Instalar la app</a>
+    <p class="pie">Con tus propias cifras · sin cuenta</p>
+    <div class="portada-beta">
+      <p class="nota nota-beta">Versión beta gratuita en pruebas. Puede haber errores. Todas las cifras salen de lo que tú apuntas y se guardan solo en este navegador.</p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Enviar opinión</a></p>
+    </div>
+    <div class="portada-firma">
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+    </div>
   </main>
 </body>
 </html>

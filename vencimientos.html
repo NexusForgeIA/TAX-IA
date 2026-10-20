@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Vencimientos · Taxi-IA</title>
-  <meta name="description" content="Vencimientos de ITV, taxímetro, revisión municipal y seguro.">
+  <meta name="description" content="Apunta las fechas de ITV, seguro, revisión del taxímetro o revista municipal y te las recordamos al abrir la app. Guardado solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,54 +14,95 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/vencimientos-vista.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html" aria-current="page">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
-      <h1>ITV y revisiones</h1>
-      <p class="sub">Pon tus fechas: la app te dice cuáles están cerca. No conoce tus plazos oficiales.</p>
+      <h1>Vencimientos</h1>
+      <p class="sub">Apunta tus fechas y te las recordamos al abrir la app. Se guardan solo en este navegador.</p>
     </div>
   </header>
 
   <main class="contenedor">
-    <p class="tarjeta-info aviso">Cada cuánto toca la ITV, el taxímetro o la revisión municipal depende de tu vehículo y de tu ayuntamiento: confírmalo allí. Aquí solo guardas la fecha de vencimiento, o la última revisión y cada cuántos meses toca.</p>
-    <ul class="items" id="lista"></ul>
+    <p class="tarjeta-info aviso"><strong>La fecha la pones tú.</strong> Taxi-IA no calcula ni comprueba plazos legales: mira la fecha en tu documentación o pregunta en el organismo correspondiente.</p>
 
-    <section class="calc separador" aria-labelledby="ftit">
-      <h2 id="ftit">Añadir vencimiento</h2>
-      <form id="f" class="filtros" autocomplete="off">
-        <div class="campos">
-          <label class="campo"><span>Qué es</span><input type="text" name="nombre" list="sug" maxlength="60" required></label>
-          <datalist id="sug"><option value="ITV del taxi"><option value="Revisión del taxímetro"><option value="Revisión municipal"><option value="Seguro"><option value="Licencia / autorización"><option value="Permiso de conducir"></datalist>
-          <label class="campo"><span>Vence el</span><input type="date" name="fecha"></label>
-          <label class="campo"><span>…o última revisión</span><input type="date" name="ultima"></label>
-          <label class="campo"><span>…y cada (meses)</span><input type="text" inputmode="numeric" name="cadaMeses"></label>
-          <label class="campo"><span>Avisarme (días antes)</span><input type="text" inputmode="numeric" name="aviso" placeholder="30"></label>
+    <section class="resultados" aria-labelledby="t-lista">
+      <h2 id="t-lista">Tus vencimientos</h2>
+      <p id="estado-lista" class="estado" role="status" aria-live="polite"></p>
+      <ul id="lista" class="lista-simple vencimientos"></ul>
+    </section>
+
+    <section class="calc" aria-labelledby="t-form">
+      <h2 id="t-form">Añadir vencimiento</h2>
+      <form id="f-venc" class="filtros" novalidate>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="campos">
+            <label class="campo"><span>Tipo</span>
+              <select name="tipo" aria-describedby="ayuda-tipo">
+                <option value="itv">ITV</option>
+                <option value="seguro">Seguro</option>
+                <option value="taximetro">Revisión del taxímetro</option>
+                <option value="revista">Revista municipal</option>
+                <option value="otro">Otro</option>
+              </select></label>
+            <label class="campo"><span>Fecha de vencimiento <em class="tuyo">tu dato</em></span>
+              <input type="date" name="fecha" required></label>
+            <label class="campo"><span>Descripción (opcional; obligatoria en «Otro»)</span>
+              <input type="text" name="nota" maxlength="60" autocomplete="off" placeholder="p. ej. póliza, tarjeta de transporte"></label>
+            <label class="campo"><span>Vehículo (opcional)</span>
+              <input type="text" name="vehiculo" maxlength="40" autocomplete="off" placeholder="p. ej. Taxi 1, matrícula"></label>
+            <label class="campo"><span>Avisar con antelación</span>
+              <select name="antelacion">
+                <option value="7">7 días</option>
+                <option value="15">15 días</option>
+                <option value="30" selected>30 días</option>
+                <option value="60">60 días</option>
+              </select></label>
+          </div>
+          <p class="nota" id="ayuda-tipo">ITV, revisión del taxímetro y revista municipal son inspecciones distintas: apunta cada una con su fecha.</p>
+        </fieldset>
+        <div class="botones">
+          <button type="submit" class="boton" id="guardar">Añadir vencimiento</button>
+          <button type="button" class="boton-sec" id="cancelar" hidden>Cancelar edición</button>
         </div>
-        <div class="botones"><button type="submit" class="boton">Guardar</button><button type="button" class="boton-sec" id="cancel" hidden>Cancelar edición</button></div>
       </form>
+      <p id="estado-form" class="nota" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="peligro" aria-labelledby="t-datos">
+      <h2 id="t-datos">Tus datos</h2>
+      <p class="nota">Los avisos salen al abrir la app en este navegador; no hay notificaciones ni servidor. Exporta tus vencimientos a CSV o bórralos.</p>
+      <div class="botones">
+        <button type="button" id="exportar" class="boton-sec">Exportar CSV</button>
+        <button type="button" id="borrar" class="boton-peligro">Borrar todo</button>
+        <button type="button" id="borrar-si" class="boton-peligro" hidden>Sí, borrar todos</button>
+        <button type="button" id="borrar-no" class="boton-sec" hidden>Cancelar</button>
+      </div>
+      <p id="estado-datos" class="nota" role="status" aria-live="polite"></p>
     </section>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Las fechas son las que introduces tú. No es asesoramiento legal.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/calculos.js"></script>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/vencimientos.js"></script>
 </body>
 </html>

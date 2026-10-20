@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Estadísticas · Taxi-IA</title>
-  <meta name="description" content="Estadísticas de tus carreras de taxi.">
+  <meta name="description" content="Qué días, franjas y canales facturas más, calculado con las carreras que apuntas tú. Guardado solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,40 +14,71 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/estadisticas.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html" aria-current="page">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html" aria-current="page">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Estadísticas</h1>
-      <p class="sub">Con tus propias carreras: cuándo te rinde más el taxi. Sin datos de otros.</p>
+      <p class="sub">Qué días y qué horas te funcionan mejor, con tus propias carreras.</p>
     </div>
   </header>
 
   <main class="contenedor">
-    <section class="calc" aria-labelledby="t-d"><h2 id="t-d">Por día de la semana</h2><div class="tabla-wrap" id="dias"></div></section>
-    <section class="calc" aria-labelledby="t-f"><h2 id="t-f">Por franja horaria</h2><div class="tabla-wrap" id="franjas"></div><p class="nota" id="sinhora"></p></section>
-    <p class="nota">Se calcula solo con las carreras que has anotado. Cuantas más anotes, más fiable. Las carreras sin hora no entran en las franjas.</p>
+    <section class="calc" aria-labelledby="t-per">
+      <h2 id="t-per">Tus carreras</h2>
+      <p class="nota">Sale de lo que apuntas en <a href="ingresos.html">Facturación</a>. Cuantas más carreras con hora apuntes, más útil.</p>
+      <label class="campo campo-corto"><span>Periodo</span>
+        <select id="periodo"></select></label>
+    </section>
+    <p id="vacio" class="estado">Aún no hay carreras en este periodo. Apúntalas en Facturación.</p>
+    <div id="contenido" hidden>
+      <section class="resultados" aria-labelledby="t-res">
+        <h2 id="t-res">Resumen</h2>
+        <dl class="cifras" id="kpis"></dl>
+      </section>
+      <section class="resultados" aria-labelledby="t-dias">
+        <h2 id="t-dias">Por día de la semana</h2>
+        <div class="tabla-wrap" id="dias"></div>
+      </section>
+      <section class="resultados" aria-labelledby="t-fr">
+        <h2 id="t-fr">Por franja horaria</h2>
+        <div class="tabla-wrap" id="franjas"></div>
+        <p class="nota" id="sinhora"></p>
+      </section>
+      <section class="resultados" aria-labelledby="t-can">
+        <h2 id="t-can">Por canal</h2>
+        <div class="tabla-wrap" id="canales"></div>
+      </section>
+      <section class="resultados" aria-labelledby="t-met">
+        <h2 id="t-met">Por forma de cobro</h2>
+        <div class="tabla-wrap" id="metodos"></div>
+      </section>
+    </div>
+    <aside class="avisos">
+      <p><strong>Son tus propios datos, no una previsión.</strong> El día o la franja que más factura es el que más ha facturado en lo que has apuntado, no una garantía de que lo siga haciendo.</p>
+    </aside>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/calculos.js"></script>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/estadisticas.js"></script>
 </body>
 </html>

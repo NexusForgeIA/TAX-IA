@@ -1,29 +1,12 @@
-/* Componentes propios de Taxi-IA, sobre las variables de app.css. */
-input[type=date], input[type=time], input[type=url], input[type=number], textarea {
+/* Añadidos de Taxi-IA sobre app.css (mismas variables). */
+input[type=url], input[type=number], textarea {
   width: 100%; min-height: 48px; padding: .6rem .75rem; font: inherit; color: var(--text);
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); color-scheme: dark;
 }
-.calc input[type=date], .calc input[type=time], .calc input[type=url] { background: var(--bg); }
-.kpis { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); margin: 1.25rem 0 0; }
-.kpi { padding: .8rem .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.kpi small { display: block; color: var(--muted); font-size: .8rem; }
-.kpi strong { display: block; font-size: 1.35rem; color: var(--accent); font-variant-numeric: tabular-nums; }
-.items { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .6rem; }
-.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .25rem .75rem; align-items: center; padding: .8rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.item .t { font-weight: 700; overflow-wrap: anywhere; }
-.item small { display: block; color: var(--muted); overflow-wrap: anywhere; }
-.item .acciones { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-.item.vacio { color: var(--muted); display: block; }
-.mini { min-height: 40px !important; padding: .35rem .8rem !important; font-size: .9rem; }
-.chip.vencido { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
-.chip.ok { background: #fff; color: #000; border-color: #fff; font-weight: 700; }
-.msg { min-height: 1.4em; margin: 0; color: var(--accent); font-size: .92rem; }
-.separador { margin-top: 1.5rem; }
-.justificante { display: none; }
-@media print {
-  body { background: #fff; color: #000; }
-  .cabecera, main > *:not(.justificante), .pie { display: none !important; }
-  .justificante { display: block; color: #000; padding: 1rem; }
-  .justificante td { padding: .3rem 1rem .3rem 0; }
-}
-.boton-sec.mini, .boton-peligro.mini, a.boton-sec.mini { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+textarea { min-height: 5.5rem; resize: vertical; }
+.calc input[type=url], .calc textarea { background: var(--bg); }
+.lista-simple .detalle { display: block; color: var(--muted); font-size: .92rem; margin-top: .15rem; }
+.chip.vencido { border-color: var(--error); color: var(--error); }
+.chip.ok { border-color: var(--accent); color: var(--accent); }
+.tabla-calculo .max { color: var(--accent); font-weight: 800; }
+.tarjeta-destacada .tarjeta-texto { color: var(--accion-texto); }

@@ -1,33 +1,99 @@
-(function(){
-"use strict";
-var A=Almacen,C=Calculos,h=A.h,$=function(i){return document.getElementById(i)};
-var lista=A.leer("mantenimiento",null),km=A.leer("kmActual",""),f=$("f"),edit=null;
-if(!lista)lista=[{id:A.id(),nombre:"Aceite y filtro"},{id:A.id(),nombre:"Frenos"},{id:A.id(),nombre:"Neumáticos"}];
-$("kmact").value=km;
-var TXT={ok:"Al día",pronto:"Pronto",vencido:"Toca ya",sin:"Faltan datos"},CL={ok:"ok",pronto:"duda",vencido:"vencido",sin:""};
-function fmt(n){return new Intl.NumberFormat("es-ES").format(n)}
-function pintar(){
- var ul=$("lista");ul.textContent="";
- lista.map(function(m){return {m:m,e:C.estadoMantenimiento(m,km)}}).sort(function(a,b){return (a.e.quedan==null?1e12:a.e.quedan)-(b.e.quedan==null?1e12:b.e.quedan)}).forEach(function(x){
-  var li=h("li","item",null,ul),iz=h("div","",null,li);
-  h("span","t",x.m.nombre,iz);
-  h("small","",x.e.quedan==null?"Pon los km actuales, cada cuántos km y en cuáles se hizo.":(x.e.quedan<0?"Te pasaste "+fmt(-x.e.quedan)+" km":"Quedan "+fmt(x.e.quedan)+" km")+" · cada "+fmt(C.num(x.m.cadaKm))+" km · hecho en "+fmt(C.num(x.m.ultimoKm)),iz);
-  h("span","chip "+CL[x.e.estado],TXT[x.e.estado],li);
-  var dr=h("div","acciones",null,li);
-  var hecho=h("button","boton-sec mini","Hecho ahora",dr);hecho.type="button";hecho.addEventListener("click",function(){if(km===""){$("msgkm").textContent="Primero guarda los km actuales.";return}x.m.ultimoKm=String(km);guardar()});
-  var e=h("button","boton-sec mini","Editar",dr);e.type="button";e.addEventListener("click",function(){editar(x.m)});
-  var b=h("button","boton-peligro mini","Borrar",dr);b.type="button";b.addEventListener("click",function(){if(confirm("¿Borrar «"+x.m.nombre+"»?")){lista=lista.filter(function(q){return q.id!==x.m.id});guardar()}});
- });
+// Taxi-IA · mantenimiento por km. Cada cuántos km se hace cada cosa y en qué km se hizo lo pone el usuario.
+import "./nav.js";
+import { $, el } from "./util.js";
+import { leerNumero } from "./numeros.js";
+import { guardarJson, leerJson, nuevoId } from "./datos.js";
+import C from "./herramientas.js";
+
+const CLAVE = "taxi.mantenimiento";
+const CLAVE_KM = "taxi.kmActual";
+const fmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
+const form = $("f-mant");
+let editando = null;
+let lista = leerJson(CLAVE, null);
+if (!Array.isArray(lista)) lista = ["Aceite y filtro", "Frenos", "Neumáticos"].map((nombre) => ({ id: nuevoId(), nombre }));
+lista = lista.filter((m) => m && typeof m.id === "string" && typeof m.nombre === "string");
+let km = leerJson(CLAVE_KM, "");
+$("km-actual").value = km === "" ? "" : String(km);
+
+const TXT = { ok: "Al día", pronto: "Pronto", vencido: "Toca ya", sin: "Faltan datos" };
+const CLASE = { ok: "ok", pronto: "duda", vencido: "vencido", sin: "" };
+const guardar = () => { guardarJson(CLAVE, lista); pintar(); };
+
+function pintar() {
+  $("lista").replaceChildren(...lista.map((m) => ({ m, s: C.estadoMantenimiento(m, km) }))
+    .sort((a, b) => (a.s.quedan ?? 1e12) - (b.s.quedan ?? 1e12))
+    .map(({ m, s }) => {
+      const hecho = el("button", { type: "button", class: "boton-sec", text: "Hecho ahora", "aria-label": `Marcar «${m.nombre}» como hecho ahora` });
+      hecho.addEventListener("click", () => {
+        if (km === "") { $("estado-km").textContent = "Primero guarda los km actuales."; $("estado-km").classList.add("error"); $("km-actual").focus(); return; }
+        m.ultimoKm = String(km);
+        guardar();
+      });
+      const ed = el("button", { type: "button", class: "boton-sec", text: "Editar", "aria-label": `Editar «${m.nombre}»` });
+      ed.addEventListener("click", () => editar(m));
+      const bo = el("button", { type: "button", class: "boton-peligro", text: "Borrar", "aria-label": `Borrar «${m.nombre}»` });
+      bo.addEventListener("click", () => { lista = lista.filter((q) => q.id !== m.id); if (editando === m.id) limpiar(); guardar(); });
+      const detalle = s.quedan == null
+        ? "Pon los km actuales, cada cuántos km se hace y en qué km se hizo."
+        : `${s.quedan < 0 ? `Te pasaste ${fmt.format(-s.quedan)} km` : `Quedan ${fmt.format(s.quedan)} km`} · cada ${fmt.format(C.num(m.cadaKm))} km · hecho en ${fmt.format(C.num(m.ultimoKm))}`;
+      return el("li", { class: "ruta-guardada" },
+        el("strong", { text: m.nombre }), document.createTextNode(" "), el("span", { class: `chip ${CLASE[s.estado]}`, text: TXT[s.estado] }),
+        el("span", { class: "detalle", text: detalle }), el("div", { class: "botones" }, hecho, ed, bo));
+    }));
 }
-function guardar(){A.guardar("mantenimiento",lista);pintar()}
-function editar(m){edit=m.id;$("ftit").textContent="Editar «"+m.nombre+"»";["nombre","cadaKm","ultimoKm","avisoKm"].forEach(function(k){f[k].value=m[k]==null?"":m[k]});$("cancel").hidden=false;f.scrollIntoView()}
-function limpiar(){edit=null;f.reset();$("ftit").textContent="Añadir mantenimiento";$("cancel").hidden=true}
-$("cancel").addEventListener("click",limpiar);
-$("fkm").addEventListener("submit",function(e){e.preventDefault();var n=C.num($("kmact").value);if(!(n>=0)||$("kmact").value===""){$("msgkm").textContent="Pon los km.";return}km=n;A.guardar("kmActual",km);$("msgkm").textContent="Guardado.";pintar()});
-f.addEventListener("submit",function(e){
- e.preventDefault();var d=new FormData(f),o={nombre:d.get("nombre"),cadaKm:C.num(d.get("cadaKm")),ultimoKm:C.num(d.get("ultimoKm")),avisoKm:d.get("avisoKm")||""};
- if(edit){lista=lista.map(function(m){return m.id===edit?Object.assign({id:edit},o):m})}else{o.id=A.id();lista.push(o)}
- limpiar();guardar();
+
+function editar(m) {
+  editando = m.id;
+  $("t-form").textContent = `Editar «${m.nombre}»`;
+  for (const k of ["nombre", "cadaKm", "ultimoKm", "avisoKm"]) form[k].value = m[k] == null ? "" : String(m[k]);
+  $("guardar").textContent = "Guardar cambios";
+  $("cancelar").hidden = false;
+  form.nombre.focus();
+}
+function limpiar() {
+  editando = null;
+  form.reset();
+  $("t-form").textContent = "Añadir mantenimiento";
+  $("guardar").textContent = "Añadir";
+  $("cancelar").hidden = true;
+}
+$("cancelar").addEventListener("click", limpiar);
+
+$("f-km").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const n = leerNumero($("km-actual").value.replace(/\./g, ""));
+  const s = $("estado-km");
+  if (!(Number.isFinite(n) && n >= 0 && n <= 9999999)) { s.textContent = "Escribe los km del cuentakilómetros (0 a 9.999.999)."; s.classList.add("error"); return; }
+  km = Math.round(n);
+  guardarJson(CLAVE_KM, km);
+  s.classList.remove("error");
+  s.textContent = "Km guardados.";
+  pintar();
 });
+
+form.addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const est = $("estado-form");
+  const nombre = form.nombre.value.trim().replace(/\s+/g, " ").slice(0, 50);
+  const cada = leerNumero(form.cadaKm.value.replace(/\./g, ""));
+  const ult = form.ultimoKm.value.trim() === "" ? "" : leerNumero(form.ultimoKm.value.replace(/\./g, ""));
+  const aviso = form.avisoKm.value.trim() === "" ? "" : leerNumero(form.avisoKm.value.replace(/\./g, ""));
+  const fallo = (t, c) => { est.textContent = t; est.classList.add("error"); form[c].focus(); };
+  if (!nombre) return fallo("Escribe qué es (p. ej. Aceite y filtro).", "nombre");
+  if (!(cada > 0 && cada <= 999999)) return fallo("Escribe cada cuántos km se hace (mayor que 0).", "cadaKm");
+  if (ult !== "" && !(ult >= 0 && ult <= 9999999)) return fallo("Los km de la última vez deben ser un número, o déjalo vacío.", "ultimoKm");
+  if (aviso !== "" && !(aviso >= 0 && aviso <= 999999)) return fallo("Los km de antelación deben ser un número, o déjalo vacío.", "avisoKm");
+  const o = { nombre, cadaKm: cada, ultimoKm: ult, avisoKm: aviso };
+  if (editando) lista = lista.map((m) => (m.id === editando ? { id: editando, ...o } : m));
+  else {
+    if (lista.length >= 100) return fallo("Has llegado al máximo de elementos.", "nombre");
+    lista.push({ id: nuevoId(), ...o });
+  }
+  est.classList.remove("error");
+  est.textContent = editando ? "Cambios guardados." : "Añadido.";
+  limpiar();
+  guardar();
+});
+
 pintar();
-})();

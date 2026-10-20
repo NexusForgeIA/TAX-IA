@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Mantenimiento · Taxi-IA</title>
-  <meta name="description" content="Mantenimiento del taxi por kilómetros.">
+  <meta name="description" content="Aceite, frenos, neumáticos y lo que quieras: apunta cada cuántos km se hace y cuántos te quedan. Guardado solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,56 +14,80 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/mantenimiento.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html" aria-current="page">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
-      <h1>Mantenimiento por km</h1>
-      <p class="sub">Cada cuántos km cambias cada cosa lo pones tú: la app cuenta los km que te quedan.</p>
+      <h1>Mantenimiento</h1>
+      <p class="sub">Cuántos km te quedan para cada revisión del coche, con tus intervalos.</p>
     </div>
   </header>
 
   <main class="contenedor">
-    <section class="calc" aria-labelledby="t-km">
-      <h2 id="t-km">Km actuales del coche</h2>
-      <form id="fkm" class="filtros" autocomplete="off"><div class="campos"><label class="campo"><span>Cuentakilómetros <em class="tuyo">tu dato</em></span><input type="text" inputmode="numeric" id="kmact"></label></div>
-      <div class="botones"><button type="submit" class="boton">Guardar km</button><p class="msg" id="msgkm" role="status"></p></div></form>
-    </section>
-    <ul class="items" id="lista"></ul>
-    <section class="calc separador" aria-labelledby="ftit">
-      <h2 id="ftit">Añadir mantenimiento</h2>
-      <form id="f" class="filtros" autocomplete="off">
-        <div class="campos">
-          <label class="campo"><span>Qué es</span><input type="text" name="nombre" list="sug" maxlength="60" required></label>
-          <datalist id="sug"><option value="Aceite y filtro"><option value="Frenos"><option value="Neumáticos"><option value="Correa de distribución"><option value="Batería"></datalist>
-          <label class="campo"><span>Cada (km)</span><input type="text" inputmode="numeric" name="cadaKm" required></label>
-          <label class="campo"><span>Hecho en los km</span><input type="text" inputmode="numeric" name="ultimoKm" required></label>
-          <label class="campo"><span>Avisarme (km antes)</span><input type="text" inputmode="numeric" name="avisoKm" placeholder="1000"></label>
-        </div>
-        <div class="botones"><button type="submit" class="boton">Guardar</button><button type="button" class="boton-sec" id="cancel" hidden>Cancelar edición</button></div>
+    <section class="calc" aria-labelledby="t-kmact">
+      <h2 id="t-kmact">Km actuales del coche</h2>
+      <form id="f-km" class="filtros" novalidate>
+        <label class="campo"><span>Cuentakilómetros <em class="tuyo">tu dato</em></span>
+          <input type="text" inputmode="numeric" id="km-actual" autocomplete="off"></label>
+        <button type="submit" class="boton">Guardar km</button>
       </form>
+      <p id="estado-km" class="nota" role="status" aria-live="polite"></p>
     </section>
+
+    <section class="resultados" aria-labelledby="t-lista">
+      <h2 id="t-lista">Tu mantenimiento</h2>
+      <ul id="lista" class="lista-simple"></ul>
+    </section>
+
+    <section class="calc" aria-labelledby="t-form">
+      <h2 id="t-form">Añadir mantenimiento</h2>
+      <form id="f-mant" class="filtros" novalidate>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="campos">
+            <label class="campo"><span>Qué es</span>
+              <input type="text" name="nombre" maxlength="50" autocomplete="off" placeholder="p. ej. Correa de distribución"></label>
+            <label class="campo"><span>Se hace cada (km) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="numeric" autocomplete="off" name="cadaKm"></label>
+            <label class="campo"><span>Se hizo por última vez en el km <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="numeric" autocomplete="off" name="ultimoKm"></label>
+            <label class="campo"><span>Avisar con (km) de antelación, opcional <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="numeric" autocomplete="off" name="avisoKm"></label>
+          </div>
+        </fieldset>
+        <div class="botones">
+          <button type="submit" class="boton" id="guardar">Añadir</button>
+          <button type="button" class="boton-sec" id="cancelar" hidden>Cancelar edición</button>
+        </div>
+      </form>
+      <p id="estado-form" class="nota" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="avisos">
+      <p><strong>Los intervalos los pones tú.</strong> Taxi-IA no sabe cada cuánto toca revisar tu coche: míralo en el manual del fabricante o pregunta en tu taller.</p>
+    </aside>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/calculos.js"></script>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/mantenimiento.js"></script>
 </body>
 </html>

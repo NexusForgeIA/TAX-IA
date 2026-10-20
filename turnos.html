@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Turnos · Taxi-IA</title>
-  <meta name="description" content="Cierre de caja de turnos de taxi con reparto titular y asalariado.">
+  <meta name="description" content="Cierra cada turno con tu recaudación y tus gastos y calcula el reparto con el asalariado. Guardado solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,60 +14,98 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/turnos.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html" aria-current="page">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
-      <h1>Cierre de turno</h1>
-      <p class="sub">Al acabar el turno: recaudación, gastos y reparto. Tú pones el porcentaje pactado.</p>
+      <h1>Turnos</h1>
+      <p class="sub">Cierra el turno con tus cifras y mira lo que queda. Se guarda solo en este navegador.</p>
     </div>
   </header>
 
   <main class="contenedor">
-    <div class="kpis" id="kpis"></div>
-    <section class="calc" aria-labelledby="t-nuevo">
-      <h2 id="t-nuevo">Cerrar un turno</h2>
-      <form id="f" class="filtros" autocomplete="off">
-        <div class="campos">
-          <label class="campo"><span>Fecha</span><input type="date" name="fecha" required></label>
-          <label class="campo"><span>Conductor</span><input type="text" name="conductor" maxlength="60" placeholder="Yo, o el nombre del asalariado"></label>
-          <label class="campo"><span>Recaudación (€)</span><input type="text" inputmode="decimal" name="recaudacion" required></label>
-          <label class="campo"><span>Gastos del turno (€)</span><input type="text" inputmode="decimal" name="gastos"></label>
-          <label class="campo"><span>Km</span><input type="text" inputmode="decimal" name="km"></label>
-          <label class="campo"><span>Horas</span><input type="text" inputmode="decimal" name="horas"></label>
-          <label class="campo"><span>% del asalariado <em class="tuyo">tu dato</em></span><input type="text" inputmode="decimal" name="pct"></label>
-          <label class="campo"><span>El % se aplica sobre</span><select name="base"><option value="recaudacion">La recaudación</option><option value="neto">Lo que queda tras gastos</option></select></label>
+    <section class="calc" aria-labelledby="t-form">
+      <h2 id="t-form">Cerrar un turno</h2>
+      <form id="f-turno" class="filtros" novalidate>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="campos">
+            <label class="campo"><span>Fecha del turno</span>
+              <input type="date" name="fecha" required></label>
+            <label class="campo"><span>Conductor (opcional)</span>
+              <input type="text" name="conductor" maxlength="40" autocomplete="off"></label>
+            <label class="campo"><span>Recaudación (€) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="recaudacion"></label>
+            <label class="campo"><span>Gastos del turno (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="gastos"></label>
+            <label class="campo"><span>Km (opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="km"></label>
+            <label class="campo"><span>Horas (opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="horas"></label>
+            <label class="campo"><span>Porcentaje del asalariado (%, vacío si no hay) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="pct"></label>
+            <label class="campo"><span>El porcentaje se aplica sobre</span>
+              <select name="base"><option value="recaudacion">La recaudación</option><option value="neto">La recaudación menos gastos</option></select></label>
+          </div>
+        </fieldset>
+        <div class="botones">
+          <button type="button" class="boton-sec" id="traer"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg>Traer de Facturación y Gastos</button>
+          <button type="submit" class="boton">Guardar turno</button>
         </div>
-        <div class="botones"><button type="button" class="boton-sec" id="traer">Traer la recaudación de mis carreras de ese día</button></div>
-        <div class="botones"><button type="submit" class="boton">Guardar cierre</button><p class="msg" id="msg" role="status"></p></div>
       </form>
+      <p id="estado-form" class="nota" role="status" aria-live="polite"></p>
     </section>
-    <section class="calc" aria-labelledby="t-lista">
-      <h2 id="t-lista">Turnos cerrados</h2>
-      <ul class="items" id="lista"></ul>
-      <div class="botones separador"><button class="boton-sec" id="csv" type="button">Descargar CSV</button></div>
+
+    <section class="resultados" aria-labelledby="t-resumen">
+      <h2 id="t-resumen">Este mes</h2>
+      <div id="resumen"></div>
     </section>
+
+    <section class="resultados" aria-labelledby="t-lista">
+      <h2 id="t-lista">Tus turnos</h2>
+      <p id="vacio" class="estado">Aún no has cerrado ningún turno.</p>
+      <p id="estado-lista" class="nota" role="status" aria-live="polite"></p>
+      <ul id="lista" class="lista-simple"></ul>
+    </section>
+
+    <section class="peligro" aria-labelledby="t-datos">
+      <h2 id="t-datos">Tus datos</h2>
+      <p class="nota">Exporta tus turnos a CSV para el gestor, o bórralos de este navegador.</p>
+      <div class="botones">
+        <button type="button" id="exportar" class="boton-sec">Exportar CSV</button>
+        <button type="button" id="borrar" class="boton-peligro">Borrar mis turnos</button>
+        <button type="button" id="borrar-si" class="boton-peligro" hidden>Sí, borrar todos</button>
+        <button type="button" id="borrar-no" class="boton-sec" hidden>Cancelar</button>
+      </div>
+      <p id="estado-datos" class="nota" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="avisos">
+      <p><strong>Son estimaciones con tus datos.</strong> Nada de lo que sale aquí es una factura, una declaración ni consejo fiscal o legal.</p>
+      <p>Al volante, no: usa la app con el coche parado.</p>
+    </aside>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/calculos.js"></script>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/turnos.js"></script>
 </body>
 </html>
