@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Avisos · Taxi-IA</title>
-  <meta name="description" content="Tablón de avisos municipales para taxistas.">
+  <title>Avisos municipales · Taxi-IA</title>
+  <meta name="description" content="Apunta los avisos de tu ayuntamiento que te afectan: revista, cortes, cambios de normativa y paradas. Guardado solo en tu navegador.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,50 +14,67 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/avisos.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html" aria-current="page">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Avisos municipales</h1>
-      <p class="sub">Tu tablón: cortes de tráfico, eventos, bandos y los enlaces oficiales que uses.</p>
+      <p class="sub">Lo que publica tu ayuntamiento y te afecta, apuntado por ti.</p>
     </div>
   </header>
 
   <main class="contenedor">
-    <p class="tarjeta-info aviso">Aún no leemos los boletines del ayuntamiento de forma automática: primero hay que confirmar la fuente y su licencia de uso. Mientras tanto, apunta aquí lo que te interese.</p>
-    <section class="calc" aria-labelledby="t-nuevo">
-      <h2 id="t-nuevo">Nuevo aviso</h2>
-      <form id="f" class="filtros" autocomplete="off">
-        <div class="campos">
-          <label class="campo"><span>Título</span><input type="text" name="titulo" maxlength="100" required></label>
-          <label class="campo"><span>Fecha</span><input type="date" name="fecha"></label>
-          <label class="campo"><span>Enlace oficial (opcional)</span><input type="url" name="url" placeholder="https://"></label>
-          <label class="campo"><span>Detalle</span><input type="text" name="texto" maxlength="200"></label>
-        </div>
+    <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Aquí apuntas tú los avisos.</strong> Taxi-IA no recoge avisos automáticos: cada ayuntamiento los publica de una forma distinta. Para la fecha de la revista municipal, usa <a href="vencimientos.html">Vencimientos</a>.</p>
+
+    <section class="resultados" aria-labelledby="t-lista">
+      <h2 id="t-lista">Tus avisos</h2>
+      <p id="vacio" class="estado">Aún no has apuntado ningún aviso.</p>
+      <p id="estado-lista" class="nota" role="status" aria-live="polite"></p>
+      <ul id="lista" class="lista-simple"></ul>
+    </section>
+
+    <section class="calc" aria-labelledby="t-form">
+      <h2 id="t-form">Apuntar un aviso</h2>
+      <form id="f-aviso" class="filtros" novalidate>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="campos">
+            <label class="campo"><span>Título</span>
+              <input type="text" name="titulo" maxlength="80" autocomplete="off" placeholder="p. ej. Corte de la calle Mayor"></label>
+            <label class="campo"><span>Fecha (opcional)</span>
+              <input type="date" name="fecha"></label>
+            <label class="campo"><span>Enlace (opcional)</span>
+              <input type="url" name="url" autocomplete="off" placeholder="https://"></label>
+          </div>
+          <label class="campo"><span>Nota (opcional)</span>
+            <textarea name="texto" maxlength="300"></textarea></label>
+        </fieldset>
         <button type="submit" class="boton">Guardar aviso</button>
       </form>
+      <p id="estado-form" class="nota" role="status" aria-live="polite"></p>
     </section>
-    <ul class="items" id="lista"></ul>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/avisos.js"></script>
 </body>
 </html>

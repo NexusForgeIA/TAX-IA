@@ -1,4 +1,5 @@
-const C = require("./calculos.js"); const assert = require("assert");
+import assert from "node:assert";
+import C from "./herramientas.js";
 assert.strictEqual(C.importeCarrera({ bajada: 2, porKm: 1, porMinuto: 0.5, minimo: 5, suplemento: 0 }, 1, 1), 5);
 assert.strictEqual(C.importeCarrera({ bajada: "2,5", porKm: "1,2", porMinuto: 0, minimo: 0, suplemento: 1 }, 10, 0), 15.5);
 const b = C.beneficioTurno({ recaudacion: 200, combustible: 40, peajes: 5, otros: 5, alquiler: 50, km: 100, horas: 10 });
@@ -33,4 +34,4 @@ const d = C.porDiaSemana([{ fecha: "2026-10-19", importe: 10 }, { fecha: "2026-1
 assert.deepStrictEqual([d[0].n, d[0].total, d[0].medio, d[1].medio], [2, 30, 15, null]);
 const f = C.porFranja([{ hora: "07:30", importe: 10 }, { hora: "23:10", importe: 5 }, { importe: 3 }]);
 assert.deepStrictEqual([f.franjas[1].total, f.franjas[3].total, f.sinHora], [10, 5, 1]);
-console.log("calculos: ok");
+console.log("herramientas: ok");

@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Calculadoras · Taxi-IA</title>
-  <meta name="description" content="Calculadoras para taxistas: tarifa, beneficio del turno, reparto y objetivo.">
+  <meta name="description" content="Importe de una carrera con tu tarifa, beneficio del turno, reparto con el asalariado, objetivo de ingresos y coste por km. Con tus datos.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,20 +14,22 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/calculadoras.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html" aria-current="page">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Calculadoras</h1>
       <p class="sub">Con tus datos. Todo se calcula en este navegador: no se envía nada.</p>
@@ -35,131 +38,137 @@
 
   <main class="contenedor">
     <nav class="indice" aria-label="Calculadoras">
-      <a href="#c-tarifa">Tarifa</a>
+      <a href="#c-importe">Importe de carrera</a>
       <a href="#c-turno">Beneficio del turno</a>
       <a href="#c-reparto">Reparto</a>
       <a href="#c-objetivo">Objetivo</a>
       <a href="#c-coste">Coste por km</a>
     </nav>
 
-    <section id="c-tarifa" class="calc" aria-labelledby="t-tarifa">
-      <h2 id="t-tarifa">1 · Tarifa de una carrera</h2>
-      <p class="nota">Escribe la tarifa vigente de tu municipio: la publica tu ayuntamiento.</p>
-      <form id="f-tarifa" class="filtros" novalidate>
+    <section id="c-importe" class="calc" aria-labelledby="t-c-importe">
+      <h2 id="t-c-importe">1 · Importe de una carrera con tu tarifa</h2>
+      <p class="nota">La tarifa no viene de fábrica: escribe la de tu ayuntamiento. Se recuerda en este navegador.</p>
+      <form id="f-importe" class="filtros" novalidate>
         <fieldset>
           <legend>Tus datos</legend>
           <div class="campos">
             <label class="campo"><span>Bajada de bandera (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-bajada" id="t-bajada" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="bajada"></label>
             <label class="campo"><span>Precio por km (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-km" id="t-km" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="porKm"></label>
             <label class="campo"><span>Precio por minuto de espera (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-min" id="t-min" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="porMinuto"></label>
             <label class="campo"><span>Suplemento (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-sup" id="t-sup" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="suplemento"></label>
             <label class="campo"><span>Importe mínimo (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-minimo" id="t-minimo" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="minimo"></label>
             <label class="campo"><span>Km de la carrera <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-dkm" id="t-dkm" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="km"></label>
             <label class="campo"><span>Minutos de espera <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="t-dmin" id="t-dmin" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="min"></label>
           </div>
         </fieldset>
         <button type="submit" class="boton">Calcular</button>
       </form>
-      <div id="r-tarifa" class="resultado-calc" role="status" aria-live="polite"></div>
+      <div class="resultado-calc" role="status" aria-live="polite"></div>
     </section>
-    <section id="c-turno" class="calc" aria-labelledby="t-turno">
-      <h2 id="t-turno">2 · Beneficio del turno</h2>
+    <section id="c-turno" class="calc" aria-labelledby="t-c-turno">
+      <h2 id="t-c-turno">2 · Beneficio del turno</h2>
+
       <form id="f-turno" class="filtros" novalidate>
         <fieldset>
           <legend>Tus datos</legend>
           <div class="campos">
             <label class="campo"><span>Recaudación (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-rec" id="b-rec" autocomplete="off"></label>
-            <label class="campo"><span>Combustible (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-comb" id="b-comb" autocomplete="off"></label>
-            <label class="campo"><span>Peajes (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-peaje" id="b-peaje" autocomplete="off"></label>
-            <label class="campo"><span>Alquiler o cuota del día (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-alq" id="b-alq" autocomplete="off"></label>
-            <label class="campo"><span>Otros gastos (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-otros" id="b-otros" autocomplete="off"></label>
-            <label class="campo"><span>Km hechos <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-km" id="b-km" autocomplete="off"></label>
-            <label class="campo"><span>Horas <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="b-h" id="b-h" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="recaudacion"></label>
+            <label class="campo"><span>Combustible (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="combustible"></label>
+            <label class="campo"><span>Peajes (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="peajes"></label>
+            <label class="campo"><span>Alquiler o cuota (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="alquiler"></label>
+            <label class="campo"><span>Otros gastos (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="otros"></label>
+            <label class="campo"><span>Km del turno (opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="km"></label>
+            <label class="campo"><span>Horas del turno (opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="horas"></label>
           </div>
         </fieldset>
         <button type="submit" class="boton">Calcular</button>
       </form>
-      <div id="r-turno" class="resultado-calc" role="status" aria-live="polite"></div>
+      <div class="resultado-calc" role="status" aria-live="polite"></div>
     </section>
-    <section id="c-reparto" class="calc" aria-labelledby="t-reparto">
-      <h2 id="t-reparto">3 · Reparto titular y asalariado</h2>
+    <section id="c-reparto" class="calc" aria-labelledby="t-c-reparto">
+      <h2 id="t-c-reparto">3 · Reparto titular y asalariado</h2>
+      <p class="nota">El porcentaje lo pactas tú. Elige si se aplica sobre la recaudación o sobre la recaudación menos gastos.</p>
       <form id="f-reparto" class="filtros" novalidate>
         <fieldset>
           <legend>Tus datos</legend>
           <div class="campos">
             <label class="campo"><span>Recaudación (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="r-rec" id="r-rec" autocomplete="off"></label>
-            <label class="campo"><span>Gastos (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="r-gas" id="r-gas" autocomplete="off"></label>
-            <label class="campo"><span>% del asalariado <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="r-pct" id="r-pct" autocomplete="off"></label>
-            <label class="campo"><span>El % se aplica sobre</span>
-              <select id="r-base" name="base"><option value="recaudacion">La recaudación</option><option value="neto">Lo que queda tras gastos</option></select></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="recaudacion"></label>
+            <label class="campo"><span>Gastos (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="gastos"></label>
+            <label class="campo"><span>Porcentaje del asalariado (%) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="porcentaje"></label>
+            <label class="campo"><span>Se aplica sobre</span>
+              <select name="base"><option value="recaudacion">La recaudación</option><option value="neto">La recaudación menos gastos</option></select></label>
           </div>
         </fieldset>
         <button type="submit" class="boton">Calcular</button>
       </form>
-      <div id="r-reparto" class="resultado-calc" role="status" aria-live="polite"></div>
+      <div class="resultado-calc" role="status" aria-live="polite"></div>
     </section>
-    <section id="c-objetivo" class="calc" aria-labelledby="t-objetivo">
-      <h2 id="t-objetivo">4 · Objetivo de ingresos</h2>
+    <section id="c-objetivo" class="calc" aria-labelledby="t-c-objetivo">
+      <h2 id="t-c-objetivo">4 · Objetivo de ingresos</h2>
+
       <form id="f-objetivo" class="filtros" novalidate>
         <fieldset>
           <legend>Tus datos</legend>
           <div class="campos">
             <label class="campo"><span>Objetivo del mes (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="o-obj" id="o-obj" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="objetivoMes"></label>
             <label class="campo"><span>Días que vas a trabajar <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="o-dias" id="o-dias" autocomplete="off"></label>
-            <label class="campo"><span>Importe medio de carrera (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="o-medio" id="o-medio" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="dias"></label>
+            <label class="campo"><span>Importe medio por carrera (€, opcional) <em class="tuyo">tu dato</em></span>
+              <input type="text" inputmode="decimal" autocomplete="off" name="importeMedio"></label>
           </div>
         </fieldset>
         <button type="submit" class="boton">Calcular</button>
       </form>
-      <div id="r-objetivo" class="resultado-calc" role="status" aria-live="polite"></div>
+      <div class="resultado-calc" role="status" aria-live="polite"></div>
     </section>
-    <section id="c-coste" class="calc" aria-labelledby="t-coste">
-      <h2 id="t-coste">5 · Coste por km</h2>
+    <section id="c-coste" class="calc" aria-labelledby="t-c-coste">
+      <h2 id="t-c-coste">5 · Coste por km</h2>
+
       <form id="f-coste" class="filtros" novalidate>
         <fieldset>
           <legend>Tus datos</legend>
           <div class="campos">
             <label class="campo"><span>Gastos del periodo (€) <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="k-gas" id="k-gas" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="gastos"></label>
             <label class="campo"><span>Km del periodo <em class="tuyo">tu dato</em></span>
-              <input type="text" inputmode="decimal" name="k-km" id="k-km" autocomplete="off"></label>
+              <input type="text" inputmode="decimal" autocomplete="off" name="km"></label>
           </div>
         </fieldset>
         <button type="submit" class="boton">Calcular</button>
       </form>
-      <div id="r-coste" class="resultado-calc" role="status" aria-live="polite"></div>
+      <div class="resultado-calc" role="status" aria-live="polite"></div>
     </section>
-
+    <aside class="avisos">
+      <p><strong>Son estimaciones con tus datos.</strong> Nada de lo que sale aquí es una factura, una declaración ni consejo fiscal o legal.</p>
+      <p>Al volante, no: usa la app con el coche parado.</p>
+    </aside>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
-  <script src="assets/calculos.js"></script>
-  <script src="assets/almacen.js"></script>
-  <script src="assets/calculadoras.js"></script>
 </body>
 </html>

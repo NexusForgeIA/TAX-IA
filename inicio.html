@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Inicio · Taxi-IA</title>
-  <meta name="description" content="Inicio de Taxi-IA.">
+  <meta name="description" content="Herramientas para taxistas: facturación por carrera, turnos, calculadoras, vencimientos, mantenimiento y avisos municipales. Con tus datos, sin cuenta.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
@@ -13,92 +14,125 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/inicio.js"></script>
 </head>
 <body>
   <header class="cabecera">
     <div class="contenedor">
       <nav class="navegacion" aria-label="Secciones">
         <a class="marca" href="inicio.html" aria-current="page">Taxi-IA</a>
-        <a href="carreras.html">Carreras</a>
-        <a href="gastos.html">Gastos</a>
+        <a href="ingresos.html">Facturación</a>
         <a href="turnos.html">Turnos</a>
-        <a href="estadisticas.html">Estadísticas</a>
         <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
         <a href="vencimientos.html">Vencimientos</a>
         <a href="mantenimiento.html">Mantenimiento</a>
         <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
       </nav>
       <h1>¿Qué quieres hacer?</h1>
-      <p class="sub">Todo en este dispositivo. Anota con el coche parado.</p>
+      <p class="sub">Para taxistas, titulares y asalariados. Con tus propias cifras: nada viene de fábrica.</p>
     </div>
   </header>
 
   <main class="contenedor">
+    <section id="avisos-vencimientos" class="tarjeta-info aviso avisos-venc" aria-labelledby="t-avisos" hidden>
+      <h2 id="t-avisos">Revisa tus vencimientos</h2>
+      <p><a href="vencimientos.html">Ver tus vencimientos</a> · Son las fechas que apuntaste tú.</p>
+    </section>
     <ul class="tarjetas">
-      <li>
-        <a class="tarjeta" href="carreras.html">
-          <span class="tarjeta-icono" aria-hidden="true">🚕</span>
-          <span class="tarjeta-titulo">Carreras y facturación</span>
-          <span class="tarjeta-texto">Anota cada carrera, mira lo que llevas y saca el justificante o el CSV para tu gestor.</span>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="gastos.html">
-          <span class="tarjeta-icono" aria-hidden="true">🧾</span>
-          <span class="tarjeta-titulo">Gastos del coche</span>
-          <span class="tarjeta-texto">Taller, neumáticos, seguro, peajes… con resumen del mes para el gestor.</span>
+      <li class="tarjetas-ancho">
+        <a class="tarjeta tarjeta-destacada" href="ingresos.html">
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Facturación por carrera</span>
+            <span class="tarjeta-texto">Apunta cada carrera de calle o de aplicación, en efectivo o con tarjeta, y mira el total del día y del mes.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
         </a>
       </li>
       <li>
         <a class="tarjeta" href="turnos.html">
-          <span class="tarjeta-icono" aria-hidden="true">⏱️</span>
-          <span class="tarjeta-titulo">Cierre de turno</span>
-          <span class="tarjeta-texto">Recaudación, gastos y reparto entre titular y asalariado, turno a turno.</span>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="estadisticas.html">
-          <span class="tarjeta-icono" aria-hidden="true">📊</span>
-          <span class="tarjeta-titulo">Estadísticas</span>
-          <span class="tarjeta-texto">Qué días y franjas te rinden más, con tus propias carreras.</span>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="mantenimiento.html">
-          <span class="tarjeta-icono" aria-hidden="true">🔧</span>
-          <span class="tarjeta-titulo">Mantenimiento por km</span>
-          <span class="tarjeta-texto">Aceite, frenos, neumáticos: cuántos km te quedan para cada cambio.</span>
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#turno"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Turnos</span>
+            <span class="tarjeta-texto">Cierra el turno con tu recaudación y tus gastos y calcula el reparto con el asalariado.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
         </a>
       </li>
       <li>
         <a class="tarjeta" href="calculadoras.html">
-          <span class="tarjeta-icono" aria-hidden="true">🧮</span>
-          <span class="tarjeta-titulo">Calculadoras</span>
-          <span class="tarjeta-texto">Tarifa, beneficio del turno, reparto con el asalariado y objetivo diario.</span>
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#calculadora"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Calculadoras</span>
+            <span class="tarjeta-texto">Importe de una carrera con tu tarifa, beneficio del turno, objetivo de ingresos y coste por km.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta" href="gastos.html">
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#coche"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Gastos del coche</span>
+            <span class="tarjeta-texto">Apunta tus repostajes y mira tu coste por km, por turno, por día y por mes.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta" href="estadisticas.html">
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#estadisticas"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Estadísticas</span>
+            <span class="tarjeta-texto">Qué días y qué horas facturas más, con tus propias carreras.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
         </a>
       </li>
       <li>
         <a class="tarjeta" href="vencimientos.html">
-          <span class="tarjeta-icono" aria-hidden="true">🛠️</span>
-          <span class="tarjeta-titulo">ITV y revisiones</span>
-          <span class="tarjeta-texto">ITV, taxímetro, revisión municipal y seguro: aviso antes de que caduquen.</span>
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#vencimientos"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Vencimientos</span>
+            <span class="tarjeta-texto">Apunta la ITV, el seguro, el taxímetro o la revista municipal y te lo recordamos al abrir la app.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
+        </a>
+      </li>
+      <li>
+        <a class="tarjeta" href="mantenimiento.html">
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#mantenimiento"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Mantenimiento</span>
+            <span class="tarjeta-texto">Cuántos km te quedan para el aceite, los frenos o los neumáticos.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
         </a>
       </li>
       <li>
         <a class="tarjeta" href="avisos.html">
-          <span class="tarjeta-icono" aria-hidden="true">📢</span>
-          <span class="tarjeta-titulo">Avisos municipales</span>
-          <span class="tarjeta-texto">Tu tablón de cortes, eventos, bandos y enlaces oficiales.</span>
+          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#avisos"/></svg></span>
+          <span class="tarjeta-cuerpo">
+            <span class="tarjeta-titulo">Avisos municipales</span>
+            <span class="tarjeta-texto">Apunta lo que publica tu ayuntamiento y te afecta.</span>
+          </span>
+          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
         </a>
       </li>
     </ul>
-    <p class="nota">Prototipo: tus datos se guardan en este navegador. Descarga el CSV de tus carreras de vez en cuando como copia.</p>
+
+    <p class="beta">Taxi-IA está en beta gratuita. ¿Qué te parece? <a href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Envíanos tu opinión</a> · Desarrollado por <a href="https://whitemoon.es" target="_blank" rel="noopener">WhiteMoon Agencia IA</a>.</p>
   </main>
 
   <footer class="pie">
     <div class="contenedor">
-      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
-      <p><a href="privacidad.html">Privacidad</a></p>
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
 </body>

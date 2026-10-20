@@ -1,7 +1,6 @@
-/* Cálculos puros de Taxi-IA. Ninguna cifra viene de fábrica: tarifas, porcentajes y gastos los pone el usuario. */
-(function (raiz) {
-  "use strict";
-  var C = {};
+/* Cálculos puros de Taxi-IA (módulo ES, sin DOM). Ninguna cifra viene de fábrica: tarifas, porcentajes y gastos los pone el usuario. */
+const C = {};
+{
   var num = function (v) { var n = Number(String(v == null ? "" : v).replace(",", ".")); return isFinite(n) ? n : 0; };
   var r2 = function (n) { return Math.round((n + Number.EPSILON) * 100) / 100; };
   C.num = num; C.r2 = r2;
@@ -139,5 +138,5 @@
     return { franjas: r.map(function (x) { return { n: x.n, total: r2(x.total), medio: x.n ? r2(x.total / x.n) : null }; }), sinHora: sinHora };
   };
 
-  if (typeof module !== "undefined" && module.exports) module.exports = C; else raiz.Calculos = C;
-})(typeof window !== "undefined" ? window : this);
+}
+export default C;
