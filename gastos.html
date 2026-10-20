@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gastos · Taxi-IA</title>
+  <meta name="description" content="Registro de gastos del taxi.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="carreras.html">Carreras</a>
+        <a href="gastos.html" aria-current="page">Gastos</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+      </nav>
+      <h1>Gastos del coche</h1>
+      <p class="sub">Apunta lo que gastas. Sirve para el beneficio real y para tu gestor.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <div class="kpis" id="kpis"></div>
+    <section class="calc" aria-labelledby="t-nuevo">
+      <h2 id="t-nuevo">Nuevo gasto</h2>
+      <form id="f" class="filtros" autocomplete="off">
+        <div class="campos">
+          <label class="campo"><span>Fecha</span><input type="date" name="fecha" required></label>
+          <label class="campo"><span>Categoría</span><select name="categoria"><option value="combustible">Combustible</option><option value="taller">Taller y reparaciones</option><option value="neumaticos">Neumáticos</option><option value="seguro">Seguro</option><option value="peajes">Peajes</option><option value="aparcamiento">Aparcamiento</option><option value="licencia">Licencia, cuotas o alquiler</option><option value="lavado">Lavado</option><option value="otros">Otros</option></select></label>
+          <label class="campo"><span>Importe (€)</span><input type="text" inputmode="decimal" name="importe" required></label>
+          <label class="campo"><span>Nota</span><input type="text" name="nota" maxlength="120"></label>
+        </div>
+        <div class="botones"><button type="submit" class="boton">Guardar gasto</button><p class="msg" id="msg" role="status"></p></div>
+      </form>
+    </section>
+    <section class="calc" aria-labelledby="t-lista">
+      <h2 id="t-lista">Tus gastos</h2>
+      <div class="campos"><label class="campo"><span>Periodo</span><select id="per"><option value="mes" selected>Este mes</option><option value="anio">Este año</option><option value="todo">Todo</option></select></label></div>
+      <dl class="cifras" id="desglose"></dl>
+      <ul class="items" id="lista"></ul>
+      <div class="botones separador"><button class="boton-sec" id="csv" type="button">Descargar CSV para el gestor</button></div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
+      <p><a href="privacidad.html">Privacidad</a></p>
+    </div>
+  </footer>
+  <script src="assets/calculos.js"></script>
+  <script src="assets/almacen.js"></script>
+  <script src="assets/gastos.js"></script>
+</body>
+</html>

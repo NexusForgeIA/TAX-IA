@@ -20,4 +20,17 @@ assert.deepStrictEqual([r.n, r.total, r.km, r.medio, r.porMetodo.efectivo], [2, 
 assert.strictEqual(C.inicioSemana("2026-10-20"), "2026-10-19");
 assert.strictEqual(C.inicioMes("2026-10-20"), "2026-10-01");
 assert.ok(C.csv([{ fecha: "2026-10-20", hora: "10:00", importe: 12.5, metodo: "efectivo", km: 3, origen: "A;B", destino: "", nota: "" }]).includes("12,5;efectivo;3;\"A;B\""));
+const g = C.resumenGastos([{ categoria: "taller", importe: 100 }, { categoria: "taller", importe: "20,5" }, { categoria: "peajes", importe: 5 }]);
+assert.deepStrictEqual([g.n, g.total, g.porCategoria.taller], [3, 125.5, 120.5]);
+assert.ok(C.csvGastos([{ fecha: "2026-10-20", categoria: "taller", importe: 12.5, nota: "" }]).includes("12,5"));
+assert.deepStrictEqual(C.estadoMantenimiento({ cadaKm: 10000, ultimoKm: 100000 }, 105000), { estado: "ok", quedan: 5000 });
+assert.strictEqual(C.estadoMantenimiento({ cadaKm: 10000, ultimoKm: 100000 }, 109500).estado, "pronto");
+assert.strictEqual(C.estadoMantenimiento({ cadaKm: 10000, ultimoKm: 100000 }, 111000).estado, "vencido");
+assert.strictEqual(C.estadoMantenimiento({ cadaKm: 10000 }, 111000).estado, "sin");
+assert.strictEqual(C.diaSemana("2026-10-19"), 0);
+assert.strictEqual(C.diaSemana("2026-10-25"), 6);
+const d = C.porDiaSemana([{ fecha: "2026-10-19", importe: 10 }, { fecha: "2026-10-19", importe: 20 }]);
+assert.deepStrictEqual([d[0].n, d[0].total, d[0].medio, d[1].medio], [2, 30, 15, null]);
+const f = C.porFranja([{ hora: "07:30", importe: 10 }, { hora: "23:10", importe: 5 }, { importe: 3 }]);
+assert.deepStrictEqual([f.franjas[1].total, f.franjas[3].total, f.sinHora], [10, 5, 1]);
 console.log("calculos: ok");
