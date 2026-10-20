@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Estadísticas · Taxi-IA</title>
+  <meta name="description" content="Estadísticas de tus carreras de taxi.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="carreras.html">Carreras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="estadisticas.html" aria-current="page">Estadísticas</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+      </nav>
+      <h1>Estadísticas</h1>
+      <p class="sub">Con tus propias carreras: cuándo te rinde más el taxi. Sin datos de otros.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="calc" aria-labelledby="t-d"><h2 id="t-d">Por día de la semana</h2><div class="tabla-wrap" id="dias"></div></section>
+    <section class="calc" aria-labelledby="t-f"><h2 id="t-f">Por franja horaria</h2><div class="tabla-wrap" id="franjas"></div><p class="nota" id="sinhora"></p></section>
+    <p class="nota">Se calcula solo con las carreras que has anotado. Cuantas más anotes, más fiable. Las carreras sin hora no entran en las franjas.</p>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
+      <p><a href="privacidad.html">Privacidad</a></p>
+    </div>
+  </footer>
+  <script src="assets/calculos.js"></script>
+  <script src="assets/almacen.js"></script>
+  <script src="assets/estadisticas.js"></script>
+</body>
+</html>

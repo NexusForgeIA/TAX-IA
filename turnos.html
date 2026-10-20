@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Turnos · Taxi-IA</title>
+  <meta name="description" content="Cierre de caja de turnos de taxi con reparto titular y asalariado.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="carreras.html">Carreras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="turnos.html" aria-current="page">Turnos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+      </nav>
+      <h1>Cierre de turno</h1>
+      <p class="sub">Al acabar el turno: recaudación, gastos y reparto. Tú pones el porcentaje pactado.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <div class="kpis" id="kpis"></div>
+    <section class="calc" aria-labelledby="t-nuevo">
+      <h2 id="t-nuevo">Cerrar un turno</h2>
+      <form id="f" class="filtros" autocomplete="off">
+        <div class="campos">
+          <label class="campo"><span>Fecha</span><input type="date" name="fecha" required></label>
+          <label class="campo"><span>Conductor</span><input type="text" name="conductor" maxlength="60" placeholder="Yo, o el nombre del asalariado"></label>
+          <label class="campo"><span>Recaudación (€)</span><input type="text" inputmode="decimal" name="recaudacion" required></label>
+          <label class="campo"><span>Gastos del turno (€)</span><input type="text" inputmode="decimal" name="gastos"></label>
+          <label class="campo"><span>Km</span><input type="text" inputmode="decimal" name="km"></label>
+          <label class="campo"><span>Horas</span><input type="text" inputmode="decimal" name="horas"></label>
+          <label class="campo"><span>% del asalariado <em class="tuyo">tu dato</em></span><input type="text" inputmode="decimal" name="pct"></label>
+          <label class="campo"><span>El % se aplica sobre</span><select name="base"><option value="recaudacion">La recaudación</option><option value="neto">Lo que queda tras gastos</option></select></label>
+        </div>
+        <div class="botones"><button type="button" class="boton-sec" id="traer">Traer la recaudación de mis carreras de ese día</button></div>
+        <div class="botones"><button type="submit" class="boton">Guardar cierre</button><p class="msg" id="msg" role="status"></p></div>
+      </form>
+    </section>
+    <section class="calc" aria-labelledby="t-lista">
+      <h2 id="t-lista">Turnos cerrados</h2>
+      <ul class="items" id="lista"></ul>
+      <div class="botones separador"><button class="boton-sec" id="csv" type="button">Descargar CSV</button></div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: tarifas, plazos y porcentajes los pones tú; contrástalos con tu ayuntamiento y tu gestor.</p>
+      <p><a href="privacidad.html">Privacidad</a></p>
+    </div>
+  </footer>
+  <script src="assets/calculos.js"></script>
+  <script src="assets/almacen.js"></script>
+  <script src="assets/turnos.js"></script>
+</body>
+</html>

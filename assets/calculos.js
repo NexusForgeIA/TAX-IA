@@ -97,5 +97,47 @@
     return "﻿" + cab.join(";") + "\n" + filas.join("\n");
   };
 
+
+  /* Gastos del coche: total y desglose por categoría. */
+  C.resumenGastos = function (lista) {
+    var r = { n: 0, total: 0, porCategoria: {} };
+    lista.forEach(function (g) { r.n++; r.total += num(g.importe); var k = g.categoria || "otros"; r.porCategoria[k] = (r.porCategoria[k] || 0) + num(g.importe); });
+    r.total = r2(r.total); Object.keys(r.porCategoria).forEach(function (k) { r.porCategoria[k] = r2(r.porCategoria[k]); });
+    return r;
+  };
+  C.csvGastos = function (lista) {
+    var cab = ["fecha", "categoria", "importe", "nota"];
+    var filas = lista.slice().sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; }).map(function (g) {
+      return cab.map(function (k) { return cel(k === "importe" ? String(g[k] == null ? "" : g[k]).replace(".", ",") : g[k]); }).join(";");
+    });
+    return "\ufeff" + cab.join(";") + "\n" + filas.join("\n");
+  };
+
+  /* Mantenimiento por km: cuántos km quedan para el siguiente cambio (lo pone el usuario: cada cuántos km y en qué km se hizo). */
+  C.estadoMantenimiento = function (m, kmActual) {
+    var cada = num(m.cadaKm), ult = m.ultimoKm === "" || m.ultimoKm == null ? null : num(m.ultimoKm), act = kmActual === "" || kmActual == null ? null : num(kmActual);
+    if (!(cada > 0) || ult == null || act == null) return { estado: "sin", quedan: null };
+    var quedan = Math.round(ult + cada - act), aviso = m.avisoKm === "" || m.avisoKm == null ? 1000 : num(m.avisoKm);
+    return { estado: quedan < 0 ? "vencido" : quedan <= aviso ? "pronto" : "ok", quedan: quedan };
+  };
+
+  /* Estadísticas con las carreras del propio usuario. Lunes = 0. */
+  C.diaSemana = function (s) { var d = parse(s); return d ? (d.getUTCDay() + 6) % 7 : null; };
+  C.porDiaSemana = function (lista) {
+    var r = [0, 1, 2, 3, 4, 5, 6].map(function () { return { n: 0, total: 0 }; });
+    lista.forEach(function (c) { var i = C.diaSemana(c.fecha); if (i == null) return; r[i].n++; r[i].total += num(c.importe); });
+    return r.map(function (x) { return { n: x.n, total: r2(x.total), medio: x.n ? r2(x.total / x.n) : null }; });
+  };
+  var FR = [[0, 6, "00:00–06:00"], [6, 12, "06:00–12:00"], [12, 18, "12:00–18:00"], [18, 24, "18:00–24:00"]];
+  C.franjas = FR.map(function (f) { return f[2]; });
+  C.porFranja = function (lista) {
+    var r = FR.map(function () { return { n: 0, total: 0 }; }), sinHora = 0;
+    lista.forEach(function (c) {
+      var m = /^(\d{1,2}):/.exec(c.hora || ""); if (!m) { sinHora++; return; }
+      var hh = +m[1]; for (var i = 0; i < FR.length; i++) if (hh >= FR[i][0] && hh < FR[i][1]) { r[i].n++; r[i].total += num(c.importe); break; }
+    });
+    return { franjas: r.map(function (x) { return { n: x.n, total: r2(x.total), medio: x.n ? r2(x.total / x.n) : null }; }), sinHora: sinHora };
+  };
+
   if (typeof module !== "undefined" && module.exports) module.exports = C; else raiz.Calculos = C;
 })(typeof window !== "undefined" ? window : this);
