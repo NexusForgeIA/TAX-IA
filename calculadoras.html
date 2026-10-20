@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadoras · Taxi-IA</title>
+<meta name="description" content="Calculadoras para taxistas: tarifa, beneficio del turno, reparto y objetivo.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a0a">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="cabecera"><div class="contenedor">
+<nav class="navegacion" aria-label="Secciones"><a class="marca" href="index.html"><img src="assets/icons/favicon-48.png" alt="" width="28" height="28">Taxi-IA</a><a href="index.html">Inicio</a><a href="carreras.html">Carreras</a><a href="calculadoras.html" aria-current="page">Calculadoras</a><a href="vencimientos.html">Vencimientos</a><a href="avisos.html">Avisos</a></nav>
+<h1>Calculadoras</h1><p class="sub">Los números los pones tú: la app no trae ninguna tarifa ni porcentaje de fábrica.</p>
+</div></header>
+<main class="contenedor">
+<section class="panel" id="c-tarifa"><h2>Tarifa de una carrera</h2>
+<p class="sub">Escribe la tarifa vigente de tu municipio (la publica tu ayuntamiento).</p>
+<div class="rejilla"><label>Bajada de bandera (€)<input id="t-bajada" inputmode="decimal" placeholder=""></label><label>Precio por km (€)<input id="t-km" inputmode="decimal" placeholder=""></label><label>Precio por minuto de espera (€)<input id="t-min" inputmode="decimal" placeholder=""></label><label>Suplemento (€)<input id="t-sup" inputmode="decimal" placeholder=""></label><label>Importe mínimo (€)<input id="t-minimo" inputmode="decimal" placeholder=""></label><label>Km de la carrera<input id="t-dkm" inputmode="decimal" placeholder=""></label><label>Minutos de espera<input id="t-dmin" inputmode="decimal" placeholder=""></label></div>
+<div class="fila"><button id="t-go" type="button">Calcular</button></div><div class="res" id="t-res" aria-live="polite"></div></section>
+<section class="panel" id="c-turno"><h2>Beneficio del turno</h2>
+<div class="rejilla"><label>Recaudación (€)<input id="b-rec" inputmode="decimal" placeholder=""></label><label>Combustible (€)<input id="b-comb" inputmode="decimal" placeholder=""></label><label>Peajes (€)<input id="b-peaje" inputmode="decimal" placeholder=""></label><label>Alquiler / cuota del día (€)<input id="b-alq" inputmode="decimal" placeholder=""></label><label>Otros gastos (€)<input id="b-otros" inputmode="decimal" placeholder=""></label><label>Km hechos<input id="b-km" inputmode="decimal" placeholder=""></label><label>Horas<input id="b-h" inputmode="decimal" placeholder=""></label></div>
+<div class="fila"><button id="b-go" type="button">Calcular</button></div><div class="res" id="b-res" aria-live="polite"></div></section>
+<section class="panel" id="c-reparto"><h2>Reparto titular y asalariado</h2>
+<div class="rejilla"><label>Recaudación (€)<input id="r-rec" inputmode="decimal" placeholder=""></label><label>Gastos (€)<input id="r-gas" inputmode="decimal" placeholder=""></label><label>% del asalariado<input id="r-pct" inputmode="decimal" placeholder=""></label><label>El % se aplica sobre<select id="r-base"><option value="recaudacion">La recaudación</option><option value="neto">Lo que queda tras gastos</option></select></label></div>
+<div class="fila"><button id="r-go" type="button">Calcular</button></div><div class="res" id="r-res" aria-live="polite"></div></section>
+<section class="panel" id="c-objetivo"><h2>Objetivo de ingresos</h2>
+<div class="rejilla"><label>Objetivo del mes (€)<input id="o-obj" inputmode="decimal" placeholder=""></label><label>Días que vas a trabajar<input id="o-dias" inputmode="decimal" placeholder=""></label><label>Importe medio de carrera (€)<input id="o-medio" inputmode="decimal" placeholder=""></label></div>
+<div class="fila"><button id="o-go" type="button">Calcular</button></div><div class="res" id="o-res" aria-live="polite"></div></section>
+<section class="panel" id="c-coste"><h2>Coste por km</h2>
+<div class="rejilla"><label>Gastos del periodo (€)<input id="k-gas" inputmode="decimal" placeholder=""></label><label>Km del periodo<input id="k-km" inputmode="decimal" placeholder=""></label></div>
+<div class="fila"><button id="k-go" type="button">Calcular</button></div><div class="res" id="k-res" aria-live="polite"></div></section>
+</main>
+<footer class="pie"><div class="contenedor"><p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: las tarifas, plazos y porcentajes los pones tú y conviene contrastarlos con tu ayuntamiento y tu gestor.</p><p><a href="privacidad.html">Privacidad</a></p></div></footer>
+<script src="assets/calculos.js"></script><script src="assets/almacen.js"></script><script src="assets/calculadoras.js"></script>
+</body>
+</html>

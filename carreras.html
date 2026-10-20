@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carreras · Taxi-IA</title>
+<meta name="description" content="Registro de carreras de taxi y justificantes.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a0a">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="cabecera"><div class="contenedor">
+<nav class="navegacion" aria-label="Secciones"><a class="marca" href="index.html"><img src="assets/icons/favicon-48.png" alt="" width="28" height="28">Taxi-IA</a><a href="index.html">Inicio</a><a href="carreras.html" aria-current="page">Carreras</a><a href="calculadoras.html">Calculadoras</a><a href="vencimientos.html">Vencimientos</a><a href="avisos.html">Avisos</a></nav>
+<h1>Carreras y facturación</h1><p class="sub">Anota cada carrera al terminar. Con el coche parado.</p>
+</div></header>
+<main class="contenedor">
+<div class="kpis" id="kpis"></div>
+<section class="panel"><h2>Nueva carrera</h2>
+<form id="f" autocomplete="off"><div class="rejilla">
+<label>Fecha<input type="date" name="fecha" required></label>
+<label>Hora<input type="time" name="hora"></label>
+<label>Importe (€)<input name="importe" inputmode="decimal" required></label>
+<label>Pago<select name="metodo"><option value="efectivo">Efectivo</option><option value="tarjeta">Tarjeta</option><option value="app">App</option><option value="otro">Otro</option></select></label>
+<label>Km<input name="km" inputmode="decimal"></label>
+<label>Origen<input name="origen" maxlength="80"></label>
+<label>Destino<input name="destino" maxlength="80"></label>
+<label>Nota<input name="nota" maxlength="120"></label>
+</div><div class="fila"><button type="submit">Guardar carrera</button><span class="msg" id="msg" role="status"></span></div></form></section>
+<section class="panel"><h2>Periodo</h2>
+<div class="rejilla"><label>Ver<select id="per"><option value="hoy">Hoy</option><option value="semana">Esta semana</option><option value="mes" selected>Este mes</option><option value="todo">Todo</option></select></label></div>
+<ul class="lista sep" id="lista"></ul>
+<div class="fila"><button class="sec" id="csv" type="button">Descargar CSV para el gestor</button></div></section>
+<section class="panel"><h2>Datos para el justificante</h2>
+<p class="sub">Se guardan solo aquí y salen en el justificante que imprimes. Es un documento informativo: no sustituye a una factura.</p>
+<div class="rejilla"><label>Nombre o razón social<input id="j-nombre" maxlength="80"></label><label>NIF<input id="j-nif" maxlength="20"></label><label>Nº de licencia<input id="j-lic" maxlength="20"></label><label>Matrícula<input id="j-mat" maxlength="12"></label></div></section>
+<article class="justificante" id="just"></article>
+</main>
+<footer class="pie"><div class="contenedor"><p>Tus datos se guardan solo en este dispositivo. Taxi-IA no da asesoramiento fiscal ni legal: las tarifas, plazos y porcentajes los pones tú y conviene contrastarlos con tu ayuntamiento y tu gestor.</p><p><a href="privacidad.html">Privacidad</a></p></div></footer>
+<script src="assets/calculos.js"></script><script src="assets/almacen.js"></script><script src="assets/carreras.js"></script>
+</body>
+</html>
