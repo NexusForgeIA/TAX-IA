@@ -8,12 +8,12 @@ function pintar(){
  var ul=$("lista");ul.textContent="";
  var l=lista.map(function(v){return {v:v,e:C.estadoVencimiento(v)}}).sort(function(a,b){return (a.e.dias==null?1e9:a.e.dias)-(b.e.dias==null?1e9:b.e.dias)});
  l.forEach(function(x){
-  var li=h("li","",null,ul),iz=h("div","",null,li);
+  var li=h("li","item",null,ul),iz=h("div","",null,li);
   h("span","t",x.v.nombre,iz);
   h("small","",x.e.fecha?"Vence el "+x.e.fecha+(x.e.dias<0?" · hace "+(-x.e.dias)+" días":" · en "+x.e.dias+" días"):"Pon una fecha para que te avise",h("div","",null,iz));
-  var dr=h("div","",null,li);h("span","estado "+x.e.estado,TXT[x.e.estado],dr);dr.appendChild(document.createTextNode(" "));
-  var e=h("button","mini sec","Editar",dr);e.type="button";e.addEventListener("click",function(){editar(x.v)});
-  var b=h("button","mini peligro","Borrar",dr);b.type="button";b.addEventListener("click",function(){if(confirm("¿Borrar «"+x.v.nombre+"»?")){lista=lista.filter(function(q){return q.id!==x.v.id});guardar()}});
+  h("span","chip "+({ok:"ok",pronto:"duda",vencido:"vencido",sin:""})[x.e.estado],TXT[x.e.estado],li);var dr=h("div","acciones",null,li);
+  var e=h("button","boton-sec mini","Editar",dr);e.type="button";e.addEventListener("click",function(){editar(x.v)});
+  var b=h("button","boton-peligro mini","Borrar",dr);b.type="button";b.addEventListener("click",function(){if(confirm("¿Borrar «"+x.v.nombre+"»?")){lista=lista.filter(function(q){return q.id!==x.v.id});guardar()}});
  });
  var nv=l.filter(function(x){return x.e.estado==="vencido"||x.e.estado==="pronto"}).length;
  document.title=(nv?"("+nv+") ":"")+"Vencimientos · Taxi-IA";
