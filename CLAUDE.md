@@ -29,5 +29,5 @@ vencimientos (ITV, taxímetro, revisión municipal, seguro, licencia) y avisos m
 - Ramas + PR (`feat/`, `fix/`, `docs/`, `refactor/`). Un PR, una cosa. Nunca push a `main` para cambios grandes.
 
 ## Diseño
-- Mobile-first y accesible; fondo negro y acento amarillo del logo. Lighthouse móvil >= 85, cero errores de consola,
+- Mobile-first y accesible; paleta solo negro, amarillo (#ffc800) y blanco. Lighthouse móvil >= 85, cero errores de consola,
   sin desbordamiento horizontal a 390 px, `prefers-reduced-motion`.
