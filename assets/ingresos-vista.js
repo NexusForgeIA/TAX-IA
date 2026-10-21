@@ -200,7 +200,7 @@ function pintarDetalle(d, hoy) {
     return el("li", { class: c.hora == null ? "sin-detalle" : null },
       el("span", { class: "carrera-linea" }, el("span", { text: textoCarrera(c) }), el("strong", { text: eur(c.importe) })),
       c.nota ? el("span", { class: "nota", text: c.nota }) : null,
-      el("span", { class: "botones" }, bE, bB));
+      el("span", { class: "botones" }, c.hora == null ? null : el("a", { class: "boton-sec", href: `justificante.html?id=${encodeURIComponent(c.id)}`, text: "Justificante", "aria-label": `Justificante de ${textoCarrera(c)}, ${eur(c.importe)}` }), bE, bB));
   }));
   $("aviso-cierre").hidden = !d.lista.some((c) => c.hora == null && c.canal === "calle" && c.metodo === "tarjeta" && c.nota === NOTA_CIERRE);
   $("estado-dia").replaceChildren(...(aviso?.fecha === d.fecha ? aviso.nodos : []));
