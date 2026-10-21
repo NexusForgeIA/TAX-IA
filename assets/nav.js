@@ -16,12 +16,45 @@ function bordes() {
   nav.classList.toggle("mas-der", nav.scrollLeft < max - 4);
 }
 
+// Flechas de la barra (solo en pantallas anchas; el CSS las oculta en móvil, donde se usa la barra inferior).
+let flechas = null;
+function colocarFlechas() {
+  if (!flechas) return;
+  for (const f of flechas) { f.style.top = `${nav.offsetTop}px`; f.style.height = `${nav.offsetHeight}px`; }
+  flechas[0].hidden = !nav.classList.contains("mas-izq");
+  flechas[1].hidden = !nav.classList.contains("mas-der");
+}
+
 if (nav) {
   const actual = nav.querySelector('[aria-current="page"]');
   if (actual) nav.scrollLeft = actual.offsetLeft - (nav.clientWidth - actual.offsetWidth) / 2;
   bordes();
   nav.addEventListener("scroll", bordes, { passive: true });
   window.addEventListener("resize", bordes);
+}
+
+if (nav && nav.parentElement) {
+  const reducido = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const crear = (dir, etiqueta) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `nav-flecha nav-flecha-${dir < 0 ? "izq" : "der"}`;
+    b.setAttribute("aria-label", etiqueta);
+    b.hidden = true;
+    b.append(icono("chevron", dir < 0 ? "girado" : ""));
+    b.addEventListener("click", () => nav.scrollBy({ left: dir * nav.clientWidth * 0.7, behavior: reducido() ? "auto" : "smooth" }));
+    return b;
+  };
+  flechas = [crear(-1, "Ver secciones anteriores"), crear(1, "Ver más secciones")];
+  nav.parentElement.classList.add("con-flechas");
+  nav.after(...flechas);
+  // La rueda del ratón también mueve la barra de lado.
+  nav.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && nav.scrollWidth > nav.clientWidth) { nav.scrollLeft += e.deltaY; e.preventDefault(); }
+  }, { passive: false });
+  nav.addEventListener("scroll", colocarFlechas, { passive: true });
+  window.addEventListener("resize", colocarFlechas);
+  colocarFlechas();
 }
 
 // ---- Barra inferior y panel «Más» (móvil) ---------------------------------------------------
