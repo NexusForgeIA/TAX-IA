@@ -15,3 +15,6 @@ Recortadas (480×300) y recomprimidas (WebP y JPG). Son fotos de archivo, ilustr
 | assets/img/card-avisos* | @bdchu614 · https://unsplash.com/photos/pKeF6Tt3c08 |
 | assets/img/card-instalar* | @nordwood · https://unsplash.com/photos/q8U1YgBaRQk |
 | assets/img/card-radar* | @timdannmalweg · https://unsplash.com/photos/Xd_zJ7ey8EQ |
+| assets/img/evento-futbol* | @timdannmalweg · https://unsplash.com/photos/Xd_zJ7ey8EQ |
+| assets/img/evento-feria* | @declansun · https://unsplash.com/photos/p4k8ietFM4k |
+| assets/img/evento-otro* | @borkography · https://unsplash.com/photos/s1oMlP-RlqU |

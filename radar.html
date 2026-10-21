@@ -43,18 +43,15 @@
 
     <section class="resultados" aria-labelledby="t-eventos">
       <h2 id="t-eventos">Eventos próximos</h2>
-      <label class="campo campo-ciudad"><span>Ciudad</span>
-        <select id="ciudad">
-          <option>Madrid</option><option>Barcelona</option><option>Sevilla</option><option>Valencia</option>
-        </select></label>
+      <div id="ciudades" class="pildoras" role="group" aria-label="Ciudad"></div>
       <p id="estado-eventos" class="estado" role="status" aria-live="polite">Cargando eventos…</p>
-      <ul id="eventos" class="eventos"></ul>
+      <ul id="eventos" class="eventos" aria-label="Eventos de la ciudad elegida"></ul>
     </section>
 
     <section class="resultados" aria-labelledby="t-llegadas">
-      <h2 id="t-llegadas">Llegadas: webs oficiales</h2>
+      <h2 id="t-llegadas">Llegadas: dónde mirar</h2>
       <p class="nota">Enlaces a las páginas de cada operador, donde ves las llegadas del momento.</p>
-      <ul id="llegadas" class="lista-simple enlaces-llegadas"></ul>
+      <ul id="llegadas" class="llegadas"></ul>
     </section>
   </main>
 

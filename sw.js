@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v7";
+const VERSION = "taxi-v8";
 const CARCASA = [
   "./",
   "aviso-legal.html",
@@ -52,6 +52,12 @@ const CARCASA = [
   "assets/img/logo.png",
   "assets/img/card-radar.webp",
   "assets/img/card-radar.jpg",
+  "assets/img/evento-futbol.webp",
+  "assets/img/evento-futbol.jpg",
+  "assets/img/evento-feria.webp",
+  "assets/img/evento-feria.jpg",
+  "assets/img/evento-otro.webp",
+  "assets/img/evento-otro.jpg",
   "assets/img/card-ingresos.webp",
   "assets/img/card-ingresos.jpg",
   "assets/img/card-turnos.webp",

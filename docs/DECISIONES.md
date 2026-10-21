@@ -25,3 +25,6 @@
    `taxi_eventos.ciudad` limitada a esas cuatro; `taxi-eventos?ciudad=…` valida la ciudad; el selector guarda la última
    elegida solo en este navegador (`taxi.ciudad`). Los enlaces de llegadas son generales (AENA y Renfe; Estación Sur solo
    en Madrid). `taxi_eventos_proximos` queda sin uso (sustituida por `taxi_eventos_ciudad`).
+9. **Radar rediseñado (21/10/2026):** ciudades como pastillas, tarjetas de evento con foto (por `tipo`: futbol/feria/concierto/otro)
+   deslizables, y llegadas en bloques con icono (avión/tren/autobús). Código y fotos propios; no se copia diseño ni código de otras apps.
+   Migración 20261021140000 (columna `tipo`). SW taxi-v8.
