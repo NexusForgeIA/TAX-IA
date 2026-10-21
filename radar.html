@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Radar de eventos · Taxi-IA</title>
-  <meta name="description" content="Eventos de Madrid con su fuente y enlaces a las llegadas oficiales del aeropuerto y las estaciones. Información orientativa.">
+  <meta name="description" content="Eventos de Madrid, Barcelona, Sevilla y Valencia con su fuente y enlaces a las llegadas oficiales del aeropuerto y las estaciones. Información orientativa.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
@@ -34,7 +34,7 @@
         <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Radar de eventos</h1>
-      <p class="sub">Qué pasa hoy en Madrid y dónde mirar llegadas. Información orientativa.</p>
+      <p class="sub">Qué pasa hoy en Madrid, Barcelona, Sevilla y Valencia, y dónde mirar llegadas. Información orientativa.</p>
     </div>
   </header>
 
@@ -42,7 +42,11 @@
     <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Es una pista, no una promesa.</strong> Que haya un evento no garantiza más carreras: decides tú si te compensa ir. Taxi-IA no muestra aún vuelos ni trenes en tiempo real.</p>
 
     <section class="resultados" aria-labelledby="t-eventos">
-      <h2 id="t-eventos">Eventos próximos en Madrid</h2>
+      <h2 id="t-eventos">Eventos próximos</h2>
+      <label class="campo campo-ciudad"><span>Ciudad</span>
+        <select id="ciudad">
+          <option>Madrid</option><option>Barcelona</option><option>Sevilla</option><option>Valencia</option>
+        </select></label>
       <p id="estado-eventos" class="estado" role="status" aria-live="polite">Cargando eventos…</p>
       <ul id="eventos" class="eventos"></ul>
     </section>
@@ -50,11 +54,7 @@
     <section class="resultados" aria-labelledby="t-llegadas">
       <h2 id="t-llegadas">Llegadas: webs oficiales</h2>
       <p class="nota">Enlaces a las páginas de cada operador, donde ves las llegadas del momento.</p>
-      <ul class="lista-simple enlaces-llegadas">
-        <li><a href="https://www.aena.es/es/infovuelos.html" target="_blank" rel="noopener noreferrer"><strong>Aeropuerto Adolfo Suárez Madrid-Barajas</strong><span> · vuelos de llegada (AENA)</span></a></li>
-        <li><a href="https://www.renfe.com/" target="_blank" rel="noopener noreferrer"><strong>Atocha y Chamartín</strong><span> · web de Renfe: busca tu estación</span></a></li>
-        <li><a href="https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid" target="_blank" rel="noopener noreferrer"><strong>Estación Sur de autobuses (Méndez Álvaro)</strong><span> · información de la estación</span></a></li>
-      </ul>
+      <ul id="llegadas" class="lista-simple enlaces-llegadas"></ul>
     </section>
   </main>
 

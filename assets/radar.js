@@ -1,9 +1,24 @@
-// Taxi-IA · Radar: próximos eventos de Madrid cargados por WhiteMoon desde fuentes públicas.
-// Cada evento lleva su fuente y su enlace. La señal «posible más demanda» es orientativa: solo sale
-// en eventos marcados como grandes y no lleva cifras. No se envía nada del usuario.
+// Taxi-IA · Radar: próximos eventos de Madrid, Barcelona, Sevilla y Valencia cargados por WhiteMoon
+// desde fuentes públicas. Cada evento lleva su fuente y su enlace. La señal «posible más demanda» es
+// orientativa: solo sale en eventos marcados como grandes y no lleva cifras. No se envía nada del
+// usuario; solo se guarda en este navegador la última ciudad elegida.
 import "./nav.js";
 import { $, el } from "./util.js";
 import { API } from "./config.js";
+import { guardarJson, leerJson } from "./datos.js";
+
+const CIUDADES = ["Madrid", "Barcelona", "Sevilla", "Valencia"];
+const CLAVE = "taxi.ciudad";
+const AENA = "https://www.aena.es/es/infovuelos.html";
+const RENFE = "https://www.renfe.com/";
+// Enlaces generales a las webs de cada operador (no al panel de cada estación).
+const LLEGADAS = {
+  Madrid: [["Aeropuerto Adolfo Suárez Madrid-Barajas", " · vuelos de llegada (AENA)", AENA], ["Atocha y Chamartín", " · web de Renfe: busca tu estación", RENFE],
+    ["Estación Sur de autobuses (Méndez Álvaro)", " · información de la estación", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
+  Barcelona: [["Aeropuerto Josep Tarradellas Barcelona-El Prat", " · vuelos de llegada (AENA)", AENA], ["Barcelona-Sants", " · web de Renfe: busca tu estación", RENFE]],
+  Sevilla: [["Aeropuerto de Sevilla-San Pablo", " · vuelos de llegada (AENA)", AENA], ["Sevilla-Santa Justa", " · web de Renfe: busca tu estación", RENFE]],
+  Valencia: [["Aeropuerto de Valencia-Manises", " · vuelos de llegada (AENA)", AENA], ["València-Joaquín Sorolla", " · web de Renfe: busca tu estación", RENFE]],
+};
 
 const enlaceSeguro = (u) => { try { const x = new URL(u); return x.protocol === "https:" ? x.href : null; } catch { return null; } };
 const dm = (iso) => iso.split("-").reverse().slice(0, 2).join("/");
@@ -30,19 +45,35 @@ function tarjeta(e, hoy) {
   return li;
 }
 
-async function cargar() {
-  const estado = $("estado-eventos");
+function pintarLlegadas(ciudad) {
+  $("llegadas").replaceChildren(...LLEGADAS[ciudad].map(([t, s, u]) => el("li", {},
+    el("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, el("strong", { text: t }), el("span", { text: s })))));
+}
+
+let ultima = 0; // descarta respuestas de una ciudad que ya no es la elegida
+async function cargar(ciudad) {
+  const n = ++ultima, estado = $("estado-eventos");
+  estado.hidden = false; estado.classList.remove("error"); estado.textContent = "Cargando eventos…";
+  $("eventos").replaceChildren();
   try {
-    const r = await fetch(`${API}/taxi-eventos`, { credentials: "omit" });
+    const r = await fetch(`${API}/taxi-eventos?ciudad=${encodeURIComponent(ciudad)}`, { credentials: "omit" });
     if (!r.ok) throw new Error(String(r.status));
     const { hoy, eventos } = await r.json();
-    if (!Array.isArray(eventos) || !eventos.length) { estado.textContent = "No hay eventos cargados para los próximos días."; return; }
+    if (n !== ultima) return;
+    if (!Array.isArray(eventos) || !eventos.length) { estado.textContent = `Aún no hay eventos cargados para ${ciudad} en los próximos días.`; return; }
     estado.hidden = true;
     $("eventos").replaceChildren(...eventos.map((e) => tarjeta(e, hoy)));
   } catch (e) {
+    if (n !== ultima) return;
     estado.textContent = "No se han podido cargar los eventos. Comprueba la conexión e inténtalo de nuevo.";
     estado.classList.add("error");
     console.warn("Radar:", e.message);
   }
 }
-cargar();
+
+const guardada = leerJson(CLAVE, "Madrid");
+const sel = $("ciudad");
+sel.value = CIUDADES.includes(guardada) ? guardada : "Madrid";
+const elegir = () => { pintarLlegadas(sel.value); cargar(sel.value); };
+sel.addEventListener("change", () => { guardarJson(CLAVE, sel.value); elegir(); });
+elegir();
