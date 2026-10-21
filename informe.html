@@ -44,7 +44,11 @@
       <h2 id="t-mes">Elige el mes</h2>
       <label class="campo campo-corto"><span>Mes</span>
         <select id="mes"></select></label>
-      <p class="botones"><button type="button" class="boton" id="imprimir">Guardar como PDF / imprimir</button></p>
+      <label class="campo campo-corto"><span>Turno o vehículo (solo gastos)</span>
+        <select id="vehiculo"><option value="">Todos</option></select></label>
+      <p class="nota">El filtro afecta a los repostajes y otros gastos, que son los que llevan turno o vehículo. La facturación sale siempre completa.</p>
+      <p class="botones"><button type="button" class="boton" id="imprimir">Guardar como PDF / imprimir</button> <button type="button" class="boton-sec" id="csv">Descargar CSV</button> <button type="button" class="boton-sec" id="compartir">Compartir resumen</button></p>
+      <p id="estado-informe" class="nota" role="status" aria-live="polite"></p>
       <p class="nota">Se abre la ventana de impresión del móvil u ordenador: elige «Guardar como PDF». Sale de lo que apuntas en <a href="ingresos.html">Facturación</a>, <a href="gastos.html">Gastos</a> y <a href="trayecto.html">Trayecto</a>.</p>
     </section>
     <p id="vacio" class="estado" hidden>No hay datos en este mes.</p>
