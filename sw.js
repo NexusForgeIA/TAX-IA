@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v5";
+const VERSION = "taxi-v6";
 const CARCASA = [
   "./",
   "aviso-legal.html",
@@ -48,6 +48,25 @@ const CARCASA = [
   "assets/icons/icon-512.png",
   "assets/icons/icon-maskable-512.png",
   "assets/img/logo.png",
+  "assets/img/card-ingresos.webp",
+  "assets/img/card-ingresos.jpg",
+  "assets/img/card-turnos.webp",
+  "assets/img/card-turnos.jpg",
+  "assets/img/card-calculadoras.webp",
+  "assets/img/card-calculadoras.jpg",
+  "assets/img/card-gastos.webp",
+  "assets/img/card-gastos.jpg",
+  "assets/img/card-estadisticas.webp",
+  "assets/img/card-estadisticas.jpg",
+  "assets/img/card-vencimientos.webp",
+  "assets/img/card-vencimientos.jpg",
+  "assets/img/card-mantenimiento.webp",
+  "assets/img/card-mantenimiento.jpg",
+  "assets/img/card-avisos.webp",
+  "assets/img/card-avisos.jpg",
+  "assets/img/card-instalar.webp",
+  "assets/img/card-instalar.jpg",
+
   "assets/img/og-image.png",
   "assets/img/whitemoon-logo-3d.png",
   "assets/img/whitemoon-logo-3d.webp"
