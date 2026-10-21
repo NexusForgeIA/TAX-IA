@@ -26,7 +26,7 @@ if (nav) {
 
 // ---- Barra inferior y panel «Más» (móvil) ---------------------------------------------------
 const PRINCIPALES = [["inicio.html", "inicio", "Inicio"], ["ingresos.html", "facturacion", "Facturación"], ["turnos.html", "turno", "Turnos"], ["calculadoras.html", "calculadora", "Calculadoras"]];
-const EN_MAS = [["radar.html", "radar", "Radar de eventos"], ["trayecto.html", "trayecto", "Trayecto con GPS"], ["gastos.html", "gastos", "Gastos del coche"], ["estadisticas.html", "estadisticas", "Estadísticas"], ["vencimientos.html", "vencimientos", "Vencimientos"], ["mantenimiento.html", "mantenimiento", "Mantenimiento"], ["avisos.html", "avisos", "Avisos municipales"], ["instalar.html", "instalar", "Instalar la app"]];
+const EN_MAS = [["radar.html", "radar", "Radar de eventos"], ["trayecto.html", "trayecto", "Trayecto con GPS"], ["gastos.html", "gastos", "Gastos del coche"], ["estadisticas.html", "estadisticas", "Estadísticas"], ["informe.html", "facturacion", "Informe del mes (PDF)"], ["vencimientos.html", "vencimientos", "Vencimientos"], ["mantenimiento.html", "mantenimiento", "Mantenimiento"], ["avisos.html", "avisos", "Avisos municipales"], ["instalar.html", "instalar", "Instalar la app"]];
 const LEGALES = [["privacidad.html", "Privacidad"], ["aviso-legal.html", "Aviso legal"]];
 const pagina = location.pathname.split("/").pop() || "index.html";
 
