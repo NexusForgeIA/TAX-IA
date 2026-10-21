@@ -537,3 +537,14 @@ td[aria-selected="true"] .dia-cal .dia-tot { color: var(--accion-texto); }
 .titulo-aviso .icono { color: var(--warn); }
 .tarjeta-info.instalada { margin: 1.25rem 0; border-color: var(--accent); }
 .tarjeta-info.instalada .icono { color: var(--accent); }
+
+/* Radar: eventos */
+.eventos { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.evento { padding: .9rem var(--tarjeta-pad); background: var(--tarjeta-fondo); border: 1px solid var(--tarjeta-borde); border-radius: var(--tarjeta-radio); display: grid; gap: .3rem; }
+.evento h3 { margin: 0; font-size: 1.1rem; color: var(--accent); overflow-wrap: anywhere; }
+.evento p { margin: 0; }
+.eventos-etiquetas { display: flex; flex-wrap: wrap; gap: .25rem; }
+.evento-lugar { color: var(--text); }
+.enlaces-llegadas a { color: var(--text); text-decoration: none; display: block; min-height: 44px; }
+.enlaces-llegadas a strong { color: var(--accent); }
+.enlaces-llegadas span { color: var(--muted); }
