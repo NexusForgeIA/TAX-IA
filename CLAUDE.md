@@ -20,12 +20,12 @@ al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni nada
 - Sin consejo fiscal ni legal. El justificante de carrera es informativo y **no sustituye a la factura**.
 - Avisos municipales automáticos: no antes de confirmar fuente y licencia de uso de cada ayuntamiento.
 - Sin WhatsApp Business API. Aviso de IA visible donde se use IA.
-- Seguridad al volante: se anota con el coche parado.
+- Seguridad al volante: se anota con el coche parado; el GPS se inicia y se termina con el coche parado. Los km del GPS son estimación, no sustituyen al taxímetro.
 - Sin emojis como iconos: solo el sprite `assets/iconos.svg` (24×24, trazo). Toda página lleva «Desarrollado por WhiteMoon Agencia IA» (firma con el logo 3D).
 
 ## RGPD
 - Prototipo: todo en `localStorage`, nada sale del dispositivo. Con cuentas: exportar y borrar datos desde la app.
-- Ubicación: no se usa. Si se añade, redondeada y sin guardar.
+- Ubicación: solo en `trayecto.html`, solo mientras el taxista graba una carrera (Iniciar/Terminar), guardada únicamente en localStorage (`taxi.trayectos`), nunca enviada a ningún servidor; borrable desde la app. Decidido por Cris (2026-10-21). En el resto de la app no se usa.
 
 ## Git
 - Ramas + PR (`feat/`, `fix/`, `docs/`, `refactor/`). Un PR, una cosa. Nunca push a `main` para cambios grandes.

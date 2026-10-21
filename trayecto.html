@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Trayecto con GPS · Taxi-IA</title>
+  <meta name="description" content="Graba tu carrera con el GPS del móvil: kilómetros, duración y recorrido, guardados solo en tu dispositivo. Orientativo.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/trayecto.js"></script>
+  <script type="module" src="assets/visita.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html" aria-current="page">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <h1>Trayecto con GPS</h1>
+      <p class="sub">Graba tu carrera y mira el recorrido, los kilómetros y el tiempo. Se guarda solo en tu móvil.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Con el coche parado.</strong> Inicia y termina la carrera sin conducir. Funciona con la app abierta y la pantalla encendida; los kilómetros son una estimación del GPS y no sustituyen al taxímetro.</p>
+
+    <section class="calc" aria-labelledby="t-actual">
+      <h2 id="t-actual">Carrera actual</h2>
+      <div class="botones">
+        <button type="button" class="boton" id="iniciar">Iniciar carrera</button>
+        <button type="button" class="boton-sec" id="terminar" hidden>Terminar</button>
+        <button type="button" class="boton-sec" id="descartar" hidden>Descartar</button>
+      </div>
+      <p id="estado" class="estado" role="status" aria-live="polite"></p>
+      <dl class="cifras" id="vivo" hidden>
+        <dt>Distancia</dt><dd id="v-km">0,00 km</dd>
+        <dt>Tiempo</dt><dd id="v-t">00:00</dd>
+        <dt>Precisión del GPS</dt><dd id="v-prec">—</dd>
+      </dl>
+    </section>
+
+    <section class="resultados" aria-labelledby="t-hist">
+      <h2 id="t-hist">Tus recorridos</h2>
+      <p id="vacio" class="nota">Aún no has grabado ninguna carrera.</p>
+      <ul id="lista" class="lista-recorridos"></ul>
+      <div class="botones" id="acciones" hidden>
+        <button type="button" class="boton-sec" id="exportar">Exportar a CSV</button>
+        <button type="button" class="boton-peligro" id="borrar">Borrar todos</button>
+      </div>
+    </section>
+    <aside class="avisos">
+      <p><strong>Tu ubicación es tuya.</strong> Solo se lee mientras grabas una carrera, se guarda en este navegador y nunca se envía a nuestros servidores. Puedes borrarla cuando quieras. Más en <a href="privacidad.html">Privacidad</a>.</p>
+    </aside>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
+    </div>
+  </footer>
+</body>
+</html>

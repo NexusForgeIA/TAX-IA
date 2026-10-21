@@ -36,4 +36,12 @@ const f = C.porFranja([{ hora: "07:30", importe: 10 }, { hora: "23:10", importe:
 assert.deepStrictEqual([f.franjas[1].total, f.franjas[3].total, f.sinHora], [10, 5, 1]);
 const h = C.porHora([{ hora: "07:30", importe: 10 }, { hora: "07:59", importe: 5 }, { hora: "23:10", importe: 2 }, { importe: 3 }]);
 assert.deepStrictEqual([h.length, h[7].n, h[7].total, h[23].n, h[0].n], [24, 2, 15, 1, 0]);
+const gps = { puntos: [], metros: 0 };
+assert.strictEqual(C.sumarPunto(gps, { lat: 40.4168, lon: -3.7038, prec: 10, t: 0 }), true);
+assert.strictEqual(C.sumarPunto(gps, { lat: 40.41681, lon: -3.70381, prec: 10, t: 1000 }), false); // ruido <8 m
+assert.strictEqual(C.sumarPunto(gps, { lat: 40.4268, lon: -3.7038, prec: 10, t: 2000 }), false);   // salto ~1,1 km en 1 s
+assert.strictEqual(C.sumarPunto(gps, { lat: 40.4178, lon: -3.7038, prec: 80, t: 60000 }), false); // poca precisión
+assert.strictEqual(C.sumarPunto(gps, { lat: 40.4178, lon: -3.7038, prec: 10, t: 60000 }), true);
+assert.ok(Math.abs(gps.metros - 111) < 3, "~111 m por 0,001° de latitud");
+assert.ok(Math.abs(C.distanciaM({ lat: 40, lon: -3 }, { lat: 41, lon: -3 }) - 111195) < 300);
 console.log("herramientas: ok");
