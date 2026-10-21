@@ -13,11 +13,11 @@ const AENA = "https://www.aena.es/es/infovuelos.html";
 const RENFE = "https://www.renfe.com/";
 // Enlaces generales a las webs de cada operador (no al panel de cada estación).
 const LLEGADAS = {
-  Madrid: [["avion", "Aeropuerto Adolfo Suárez Madrid-Barajas", "Vuelos de llegada · AENA", AENA], ["avion", "Llegadas a Barajas por franjas horarias", "Web informativa, no oficial", "https://www.aeropuertomadrid-barajas.com/llegadas.html"],
-    ["tren", "Atocha y Chamartín", "Web de Renfe: busca tu estación", RENFE], ["autobus", "Estación Sur (Méndez Álvaro)", "Información de la estación", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
-  Barcelona: [["avion", "Aeropuerto Josep Tarradellas Barcelona-El Prat", "Vuelos de llegada · AENA", AENA], ["tren", "Barcelona-Sants", "Web de Renfe: busca tu estación", RENFE]],
-  Sevilla: [["avion", "Aeropuerto de Sevilla-San Pablo", "Vuelos de llegada · AENA", AENA], ["tren", "Sevilla-Santa Justa", "Web de Renfe: busca tu estación", RENFE]],
-  Valencia: [["avion", "Aeropuerto de Valencia-Manises", "Vuelos de llegada · AENA", AENA], ["tren", "València-Joaquín Sorolla", "Web de Renfe: busca tu estación", RENFE]],
+  Madrid: [["avion", "Barajas", "Vuelos de llegada · AENA", "Oficial", AENA], ["avion", "Barajas por franjas", "Llegadas por franjas horarias", "No oficial", "https://www.aeropuertomadrid-barajas.com/llegadas.html"],
+    ["tren", "Atocha y Chamartín", "Renfe: busca tu estación", "Oficial", RENFE], ["autobus", "Estación Sur", "Méndez Álvaro · información", "Info", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
+  Barcelona: [["avion", "El Prat", "Vuelos de llegada · AENA", "Oficial", AENA], ["tren", "Barcelona-Sants", "Renfe: busca tu estación", "Oficial", RENFE]],
+  Sevilla: [["avion", "San Pablo", "Vuelos de llegada · AENA", "Oficial", AENA], ["tren", "Santa Justa", "Renfe: busca tu estación", "Oficial", RENFE]],
+  Valencia: [["avion", "Manises", "Vuelos de llegada · AENA", "Oficial", AENA], ["tren", "Joaquín Sorolla", "Renfe: busca tu estación", "Oficial", RENFE]],
 };
 // Foto del estadio si el «lugar» del evento lo nombra; si no, la genérica del tipo.
 const ESTADIOS = [[/bernab[eé]u/i, "estadio-bernabeu"], [/metropolitano/i, "estadio-metropolitano"], [/camp nou|spotify camp|olímpic lluís|olimpic lluis/i, "estadio-camp-nou"], [/s[aá]nchez.?pizju[aá]n/i, "estadio-sanchez-pizjuan"]];
@@ -53,12 +53,13 @@ function tarjeta(e, hoy) {
 }
 
 function pintarLlegadas(ciudad) {
-  $("llegadas").replaceChildren(...LLEGADAS[ciudad].map(([ic, t, s, u]) => {
+  $("llegadas").replaceChildren(...LLEGADAS[ciudad].map(([ic, t, s, ins, u]) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "icono"); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("focusable", "false");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use"); use.setAttribute("href", `assets/iconos.svg#${ic}`); svg.append(use);
     return el("li", {}, el("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, svg,
-      el("span", { class: "llegada-txt" }, el("strong", { text: t }), el("span", { text: s }))));
+      el("span", { class: "llegada-txt" }, el("strong", { text: t }), el("span", { text: s })),
+      el("span", { class: `insignia${ins === "Oficial" ? " ok" : ""}`, text: ins })));
   }));
 }
 

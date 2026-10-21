@@ -120,3 +120,17 @@ body, p, li, dd, dt, td, th, label, span, a, summary { font-weight: inherit; }
 input, select, textarea { font-weight: 600; }
 .evento-lugar, .evento-nota { font-weight: 600; }
 strong, b { font-weight: 800; }
+
+/* Panel de llegadas: fila con icono, nombre en negrita + detalle, e insignia */
+.panel-llegadas { padding: 1.1rem 1rem .6rem; background: linear-gradient(160deg, #181818, #0f0f0f); border: 1px solid rgba(255,255,255,.08); border-radius: 26px; box-shadow: var(--sombra); }
+.panel-llegadas h2 { display: flex; align-items: center; gap: .6rem; font-size: 1.4rem; margin-bottom: .25rem; }
+.punto { width: .55rem; height: .55rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); flex: none; }
+.panel-llegadas .llegadas { gap: 0; margin-top: .5rem; }
+.panel-llegadas .llegadas li + li { border-top: 1px solid rgba(255,255,255,.07); }
+.panel-llegadas .llegadas a { background: none; border: 0; box-shadow: none; border-radius: 14px; padding: .8rem .2rem; min-height: 64px; }
+.panel-llegadas .llegadas a:hover { background: rgba(255,255,255,.04); }
+.panel-llegadas .llegadas .icono { background: none; padding: 0; width: 26px; height: 26px; color: var(--accent); }
+.panel-llegadas .llegada-txt strong { font-size: 1.15rem; font-weight: 800; letter-spacing: -.02em; }
+.panel-llegadas .llegada-txt span { font-size: .9rem; }
+.insignia { flex: none; margin-left: auto; padding: .3rem .75rem; border-radius: 999px; background: rgba(255,255,255,.07); color: var(--muted); font-size: .8rem; font-weight: 800; }
+.insignia.ok { background: rgba(255, 200, 0, .14); color: var(--accent); }
