@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/gastos-vista.js"></script>
+  <script type="module" src="assets/otros-gastos-vista.js"></script>
   <script type="module" src="assets/visita.js"></script>
 </head>
 <body>
@@ -104,6 +105,28 @@
       <h2 id="t-lista">Tus repostajes</h2>
       <p id="estado-lista" class="nota" role="status" aria-live="polite"></p>
       <ul id="lista" class="lista-simple"></ul>
+    </section>
+
+    <section class="calc" aria-labelledby="t-otros">
+      <h2 id="t-otros">Otros gastos del coche</h2>
+      <p class="nota">Peajes, parking, lavado, multas, seguro… lo que pagas tú y no es combustible. Entran en tu informe del mes.</p>
+      <form id="f-otro" class="filtros" novalidate>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="campos">
+            <label class="campo"><span>Fecha</span><input type="date" name="fecha" required></label>
+            <label class="campo"><span>Tipo</span>
+              <select name="tipo"><option value="peaje">Peaje</option><option value="parking">Parking</option><option value="lavado">Lavado</option><option value="multa">Multa</option><option value="seguro">Seguro</option><option value="otro">Otro</option></select></label>
+            <label class="campo"><span>Importe (€) <em class="tuyo">tu dato</em></span><input type="text" inputmode="decimal" name="importe" autocomplete="off" required></label>
+            <label class="campo"><span>Nota (opcional)</span><input type="text" name="nota" maxlength="80" autocomplete="off"></label>
+            <label class="campo"><span>Turno o vehículo (opcional)</span><input type="text" name="etiqueta" maxlength="40" autocomplete="off" list="etiquetas"></label>
+          </div>
+        </fieldset>
+        <div class="botones"><button type="submit" class="boton">Añadir gasto</button></div>
+      </form>
+      <p id="estado-otro" class="nota" role="status" aria-live="polite"></p>
+      <p id="resumen-otros" class="nota"></p>
+      <ul id="lista-otros" class="lista-simple"></ul>
     </section>
 
     <section class="peligro" aria-labelledby="t-datos">
