@@ -1,8 +1,8 @@
 import { assertEquals } from "jsr:@std/assert@1.0.13";
 import { contarVisita, LIMITE_VISITAS_HORA, leerVisita, MODOS, PAGINAS } from "./limites.ts";
 
-Deno.test("lista cerrada: 13 páginas y dos modos; lo demás se rechaza", () => {
-  assertEquals(PAGINAS.length, 13);
+Deno.test("lista cerrada: 14 páginas y dos modos; lo demás se rechaza", () => {
+  assertEquals(PAGINAS.length, 14);
   assertEquals([...MODOS], ["navegador", "instalada"]);
   assertEquals(leerVisita('{"pagina":"turnos","modo":"instalada"}'), { pagina: "turnos", modo: "instalada" });
   for (const malo of ['{"pagina":"otra","modo":"navegador"}', '{"pagina":"turnos","modo":"app"}', '{"pagina":"turnos"}', "{roto", "null", "", '["turnos","navegador"]',
@@ -46,8 +46,8 @@ Deno.test("la carga útil no lleva datos personales: solo página, modo y tope",
   assertEquals(/ip|lat|lon|1\.2\.3\.4|40\.41/i.test(JSON.stringify(llamadas)), false);
 });
 
-Deno.test("la lista de páginas coincide con la de la migración", async () => {
-  const sql = await Deno.readTextFile(new URL("../../migrations/20261021100000_taxi_visitas.sql", import.meta.url));
+Deno.test("la lista de páginas coincide con la de la última migración", async () => {
+  const sql = await Deno.readTextFile(new URL("../../migrations/20261021120000_taxi_eventos.sql", import.meta.url));
   const enSql = [...sql.matchAll(/pagina (?:not )?in \(([^)]*)\)/g)].map((m) => m[1].replace(/'/g, "").split(",").map((x) => x.trim()));
   for (const lista of enSql) assertEquals([...lista].sort(), [...PAGINAS].sort());
   assertEquals(enSql.length >= 2, true);

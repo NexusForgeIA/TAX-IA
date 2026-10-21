@@ -13,3 +13,11 @@
    hora: comprobar que llega a las 08:00 el 25 y el 26.
 3. **Privacidad**: `privacidad.html` explica el contador. Los datos del taxista siguen solo en el dispositivo.
 4. **Cómo leer los números**: `select dia, modo, sum(recuento) from taxi_visitas group by 1,2 order by 1 desc;`
+5. **Radar de eventos (21/10/2026).** Pantalla `radar.html` con los próximos eventos de Madrid y enlaces a
+   las webs oficiales de llegadas (AENA, Renfe, Estación Sur). Los eventos están en `taxi_eventos`
+   (RLS sin políticas, solo `service_role`), cargados a mano desde fuentes públicas: `fuente` y `fuente_url`
+   (https) son obligatorias. La app los lee con la función `taxi-eventos` (GET público, sin datos del usuario).
+   La señal «posible más demanda al terminar» es orientativa, solo sale en eventos marcados `grande` y no lleva
+   cifras. Sin vuelos ni trenes en tiempo real: falta confirmar fuente y licencia (o contratar una API).
+   «radar» entra en la lista cerrada del contador de aperturas (migración 20261021120000).
+6. **Cargar un evento:** `insert into taxi_eventos (nombre, lugar, fecha, fecha_fin, hora_ini, grande, fuente, fuente_url) values (...)`.
