@@ -9,6 +9,8 @@ import {
   etiquetaDia, METODOS, quitarApp, restaurarCarrera, tablaMensual, totalCompacto,
 } from "./ingresos.js";
 
+import { iniciarObjetivo, pintarObjetivo } from "./objetivo.js";
+
 mostrarCuentas();
 
 const $ = (id) => document.getElementById(id);
@@ -205,6 +207,7 @@ function pintarDetalle(d, hoy) {
 }
 
 function pintar() {
+  pintarObjetivo();
   const t = tablaMensual(leerCarreras(), mes);
   const hoy = hoyMadrid();
   if (!foco || !foco.startsWith(`${mes}-`)) foco = abierto?.startsWith(`${mes}-`) ? abierto : mes === MES_HOY ? hoy : `${mes}-01`;
@@ -329,3 +332,4 @@ pintar();
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
+iniciarObjetivo();
