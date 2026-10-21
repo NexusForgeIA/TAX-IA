@@ -13,7 +13,7 @@ const AENA = "https://www.aena.es/es/infovuelos.html";
 const RENFE = "https://www.renfe.com/";
 // Enlaces generales a las webs de cada operador (no al panel de cada estación).
 const LLEGADAS = {
-  Madrid: [["Aeropuerto Adolfo Suárez Madrid-Barajas", " · vuelos de llegada (AENA)", AENA], ["Atocha y Chamartín", " · web de Renfe: busca tu estación", RENFE],
+  Madrid: [["Llegadas a Barajas por franjas horarias", " · web informativa, no oficial", "https://www.aeropuertomadrid-barajas.com/llegadas.html"], ["Aeropuerto Adolfo Suárez Madrid-Barajas", " · vuelos de llegada (AENA)", AENA], ["Atocha y Chamartín", " · web de Renfe: busca tu estación", RENFE],
     ["Estación Sur de autobuses (Méndez Álvaro)", " · información de la estación", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
   Barcelona: [["Aeropuerto Josep Tarradellas Barcelona-El Prat", " · vuelos de llegada (AENA)", AENA], ["Barcelona-Sants", " · web de Renfe: busca tu estación", RENFE]],
   Sevilla: [["Aeropuerto de Sevilla-San Pablo", " · vuelos de llegada (AENA)", AENA], ["Sevilla-Santa Justa", " · web de Renfe: busca tu estación", RENFE]],
