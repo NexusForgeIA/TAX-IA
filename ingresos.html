@@ -43,6 +43,18 @@
   <main class="contenedor">
     <p class="tarjeta-info aviso aviso-fiscal"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Resumen informativo con tus propios datos. No es una declaración ni asesoramiento fiscal.</strong></p>
 
+    <section class="calc" aria-labelledby="t-objetivo">
+      <h2 id="t-objetivo">Objetivo de hoy <em class="tuyo">tu dato</em></h2>
+      <form id="f-objetivo" class="filtros" novalidate>
+        <label class="campo campo-corto"><span>Quiero facturar hoy (€)</span>
+          <input type="text" inputmode="decimal" name="objetivo" autocomplete="off"></label>
+        <p class="botones"><button type="submit" class="boton-sec">Guardar objetivo</button></p>
+      </form>
+      <p id="estado-objetivo" class="nota" role="status" aria-live="polite"></p>
+      <p id="objetivo-texto" class="nota"></p>
+      <p id="objetivo-barra-wrap" hidden><progress id="objetivo-barra" value="0" max="1"></progress></p>
+    </section>
+
     <section class="resultados" aria-labelledby="t-mes">
       <div class="mes-nav">
         <button type="button" class="boton-sec" id="mes-ant" aria-label="Mes anterior"><svg class="icono girado" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></button>

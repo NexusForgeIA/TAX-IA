@@ -163,3 +163,6 @@ strong, b { font-weight: 800; }
   .avisos { border: 1px solid #888 !important; background: transparent !important; color: #000 !important; }
   .avisos * { color: #000 !important; }
 }
+
+/* Objetivo de hoy (Facturación): barra de progreso accesible. */
+#objetivo-barra { width: 100%; height: 1rem; accent-color: var(--accent); }

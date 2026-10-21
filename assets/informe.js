@@ -3,7 +3,7 @@
 import "./nav.js";
 import { $, el, cifras } from "./util.js";
 import { euros } from "./numeros.js";
-import { hoyMadrid, nombreMes, fechaCorta } from "./fechas.js";
+import { hoyMadrid, nombreMes, fechaCorta, sumarMeses } from "./fechas.js";
 import { leerJson } from "./datos.js";
 import { COLUMNAS, leerCarreras, tablaMensual, cruce } from "./ingresos.js";
 import { COMBUSTIBLES_GASTO, leerRegistros, totales, costePorKm } from "./gastos.js";
@@ -69,6 +69,18 @@ function pintar() {
   $("km-nota").textContent = filasK.length
     ? "Cuentakilómetros: entre la primera y la última lectura apuntadas en repostajes del mes. GPS: estimación, solo de los trayectos grabados."
     : "Sin lecturas de cuentakilómetros (hacen falta dos repostajes con km) ni trayectos GPS este mes.";
+
+  const ant = sumarMeses(mes, -1);
+  const tAnt = tablaMensual(carreras, ant).total;
+  const gAnt = totales(repostajes.filter((r) => r.fecha.startsWith(`${ant}-`))).importe;
+  const oAnt = totalOtros(otros.filter((o) => o.fecha.startsWith(`${ant}-`))).total;
+  const dif = (a, b) => `${b - a > 0 ? "+" : ""}${e(Math.round((b - a) * 100) / 100)}`;
+  const gastoAnt = Math.round((gAnt + oAnt) * 100) / 100, gastoMes = Math.round((G.importe + O.total) * 100) / 100;
+  $("comparar").replaceChildren(tAnt.lineas || gastoAnt ? tabla([" ", nombreMes(ant), nombreMes(mes), "Diferencia"], [
+    ["Facturado", e(tAnt.total), e(F.total), dif(tAnt.total, F.total)],
+    ["Carreras apuntadas", String(tAnt.carreras), String(F.carreras), `${F.carreras - tAnt.carreras > 0 ? "+" : ""}${F.carreras - tAnt.carreras}`],
+    ["Gastos (combustible y otros)", e(gastoAnt), e(gastoMes), dif(gastoAnt, gastoMes)],
+  ]) : el("p", { class: "nota", text: "No hay datos del mes anterior para comparar." }));
 
   const dias = t.dias.filter((d) => d.lineas);
   $("dias").replaceChildren(dias.length ? tabla(["Día", "Carreras", "Calle efectivo", "Calle tarjeta", "App cobrado", "App efectivo", "Total"],
