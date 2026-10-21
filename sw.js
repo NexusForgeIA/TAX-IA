@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v19";
+const VERSION = "taxi-v20";
 const CARCASA = [
   "./",
   "aviso-legal.html",
