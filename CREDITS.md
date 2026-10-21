@@ -12,7 +12,7 @@ Recortadas (480×300) y recomprimidas (WebP y JPG). Son fotos de archivo, ilustr
 | assets/img/card-estadisticas* | @dawson2406 · https://unsplash.com/photos/qwtCeJ5cLYs |
 | assets/img/card-vencimientos* | @roadahead_2223 · https://unsplash.com/photos/r1CDF8HXgJY |
 | assets/img/card-mantenimiento* | @christianbuehner · https://unsplash.com/photos/Fd6osyVbtG4 |
-| assets/img/card-avisos* | @bdchu614 · https://unsplash.com/photos/pKeF6Tt3c08 |
+| assets/img/card-avisos* | Richard Bell (@maplerockdesign) · https://unsplash.com/photos/0jLu827P4hE (edificio institucional; sin personas) |
 | assets/img/card-instalar* | @nordwood · https://unsplash.com/photos/q8U1YgBaRQk |
 | assets/img/card-radar* | @timdannmalweg · https://unsplash.com/photos/Xd_zJ7ey8EQ |
 | assets/img/evento-futbol* | @timdannmalweg · https://unsplash.com/photos/Xd_zJ7ey8EQ |
