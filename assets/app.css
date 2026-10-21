@@ -295,6 +295,8 @@ h2 { margin: 0; font-size: 1.25rem; }
   padding: var(--tarjeta-pad); color: var(--text); text-decoration: none;
   background: var(--tarjeta-fondo); border: 1px solid var(--tarjeta-borde); border-radius: var(--tarjeta-radio);
 }
+.tarjeta-foto { grid-column: 1 / -1; display: block; margin: calc(var(--tarjeta-pad) * -1) calc(var(--tarjeta-pad) * -1) 0; border-radius: calc(var(--tarjeta-radio) - 1px) calc(var(--tarjeta-radio) - 1px) 0 0; overflow: hidden; background: var(--surface-2); aspect-ratio: 16 / 7; }
+.tarjeta-foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tarjeta:hover { background: var(--surface-2); border-color: var(--accent); }
 .tarjeta:active { transform: scale(.99); }
 .tarjeta-icono { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: var(--radius); background: var(--accion-suave); color: var(--accent); }
