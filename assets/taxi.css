@@ -106,3 +106,17 @@ h3 { font-weight: 700; letter-spacing: -.015em; }
 .cifras dd, .precio strong { font-weight: 800; }
 .navegacion a { font-weight: 700; }
 .barra-item { font-weight: 700; }
+
+/* Más cuerpo en todo el texto, también dentro de las páginas */
+:root { --muted: #dcdcdc; font-weight: 600; }
+body, p, li, dd, dt, td, th, label, span, a, summary { font-weight: inherit; }
+.tarjeta-texto { font-size: 1rem; font-weight: 600; color: #ececec; line-height: 1.45; }
+.tarjeta-destacada .tarjeta-texto { color: #1a1400; }
+.sub { font-weight: 600; }
+.nota, .estado, .captura, .meta, .dir, .detalle, .llegada-txt span { font-weight: 600; }
+.campo span { font-weight: 700; }
+.cifras dt { font-weight: 600; }
+.cifras dd, .tabla-calculo th { font-weight: 800; }
+input, select, textarea { font-weight: 600; }
+.evento-lugar, .evento-nota { font-weight: 600; }
+strong, b { font-weight: 800; }
