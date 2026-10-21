@@ -1,5 +1,8 @@
-// Configuración del cliente. No contiene claves ni URLs de servidor: en esta versión todo se
-// guarda solo en el navegador del usuario.
+// Configuración del cliente. No contiene claves: tus datos de taxista se guardan solo en el
+// navegador del usuario.
+
+// Servidor de Taxi-IA (Edge Functions taxi-*). Hoy solo cuenta aperturas (assets/visita.js); tus datos no se envían.
+export const API = "https://mlaqtniujnvfxcvcourm.supabase.co/functions/v1";
 
 // Cuentas y copia en la nube: desactivado. Se activará con tablas taxi_* propias en Supabase.
 export const CUENTAS = false;

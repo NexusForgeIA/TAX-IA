@@ -8,13 +8,14 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#000000">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/nav.js"></script>
+  <script type="module" src="assets/visita.js"></script>
 </head>
 <body>
   <header class="cabecera">
@@ -41,7 +42,7 @@
     <h2>Cuentas</h2>
     <p>Esta versión no tiene cuentas de usuario. Cuando las haya, podrás exportar tus datos y borrar tu cuenta desde la propia app.</p>
     <h2>Cookies y analítica</h2>
-    <p>No usamos cookies de seguimiento ni analítica de terceros, y no contamos aperturas.</p>
+    <p>No usamos cookies ni analítica de terceros. Lo único que medimos es cuántas veces se abre la app: al cargar una página se envía a nuestro servidor (Supabase) solo qué página se abre y si es desde el navegador o desde la app instalada, y se suma 1 a un contador diario. Se cuentan aperturas, no personas: no se envía ni se guarda ningún identificador, cookie, dato del dispositivo ni nada de lo que apuntas en la app, y no guardamos tu IP. Supabase, como proveedor, puede conservar registros técnicos de las peticiones durante un tiempo limitado. Con este dato sabemos cuánto se usa Taxi-IA y cuánta gente la tiene instalada en el móvil; es orientativo y no permite saber quién eres.</p>
     <p><a href="inicio.html">Volver a Taxi-IA</a></p>
   </main>
   <footer class="pie">
