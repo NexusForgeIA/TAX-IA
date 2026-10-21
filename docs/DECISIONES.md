@@ -32,3 +32,4 @@
 11. **Gráfica de horas punta (21/10/2026):** en Estadísticas, barras por hora (0-23) con las carreras que apunta el propio taxista (carreras o facturado). Solo datos del usuario, en el navegador; no se usa «horas concurridas» de Google Maps (dato propio de Google, sin API oficial). Las carreras sin hora no entran.
 12. **Fotos de estadios (21/10/2026):** en el Radar, un evento de fútbol usa la foto del estadio si su «lugar» lo nombra (Bernabéu, Metropolitano, Camp Nou, Sánchez-Pizjuán); si no, la genérica. Fotos aportadas por el titular; pendiente confirmar origen/licencia (salen escudos y rótulos).
 13. **Tipografía (21/10/2026):** Plus Jakarta Sans (OFL), variable, alojada en `assets/fonts/` (la CSP no permite fuentes externas). Títulos y botones con más peso. SW taxi-v13.
+14. **Texto con más cuerpo (21/10/2026):** peso base 600, segundas líneas de las tarjetas a 1 rem y más claras, `--muted` más luminoso; también dentro de las páginas. SW taxi-v14.
