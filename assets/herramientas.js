@@ -137,6 +137,27 @@ const C = {};
     });
     return { franjas: r.map(function (x) { return { n: x.n, total: r2(x.total), medio: x.n ? r2(x.total / x.n) : null }; }), sinHora: sinHora };
   };
+  /* GPS: distancia en metros entre dos puntos {lat, lon} (haversine). */
+  C.distanciaM = function (a, b) {
+    var R = 6371000, rad = Math.PI / 180, dLat = (b.lat - a.lat) * rad, dLon = (b.lon - a.lon) * rad;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+  };
+  /* GPS: suma un punto {lat, lon, prec, t(ms)} al recorrido est {puntos:[[lat,lon,t]], metros}. Descarta lecturas
+     poco precisas (>40 m), ruido (<8 m) y saltos imposibles (>70 m/s). Devuelve true si el punto entra. */
+  C.sumarPunto = function (est, p) {
+    if (!isFinite(p.lat) || !isFinite(p.lon) || Math.abs(p.lat) > 90 || Math.abs(p.lon) > 180) return false;
+    if (num(p.prec) > 40) return false;
+    var n = est.puntos.length;
+    if (n === 0) { est.puntos.push([r5(p.lat), r5(p.lon), p.t]); return true; }
+    var u = est.puntos[n - 1], d = C.distanciaM({ lat: u[0], lon: u[1] }, p);
+    if (d < 8) return false;
+    var dt = (p.t - u[2]) / 1000;
+    if (dt > 0 && d / dt > 70) return false;
+    est.metros += d; est.puntos.push([r5(p.lat), r5(p.lon), p.t]); return true;
+  };
+  var r5 = function (n) { return Math.round(n * 1e5) / 1e5; };
+
   /** Carreras y total por hora del día (0-23). Las carreras sin hora no entran. */
   C.porHora = function (lista) {
     var r = []; for (var i = 0; i < 24; i++) r.push({ n: 0, total: 0 });

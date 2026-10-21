@@ -111,4 +111,7 @@
   <symbol id="autobus" viewBox="0 0 24 24">
     <rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M7 21v-3M17 21v-3"/><circle cx="8" cy="14.5" r=".8"/><circle cx="16" cy="14.5" r=".8"/>
   </symbol>
+  <symbol id="trayecto" viewBox="0 0 24 24">
+    <circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8"/>
+  </symbol>
 </svg>
