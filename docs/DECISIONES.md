@@ -30,3 +30,4 @@
    Migración 20261021140000 (columna `tipo`). SW taxi-v8.
 10. **Capa visual moderna (21/10/2026):** `assets/taxi.css` añade degradados, tarjetas con relieve, botones en píldora, barra inferior de cristal y entrada suave (solo con movimiento permitido). Mismo negro/amarillo y mismo contenido; solo estilo. SW taxi-v9.
 11. **Gráfica de horas punta (21/10/2026):** en Estadísticas, barras por hora (0-23) con las carreras que apunta el propio taxista (carreras o facturado). Solo datos del usuario, en el navegador; no se usa «horas concurridas» de Google Maps (dato propio de Google, sin API oficial). Las carreras sin hora no entran.
+12. **Fotos de estadios (21/10/2026):** en el Radar, un evento de fútbol usa la foto del estadio si su «lugar» lo nombra (Bernabéu, Metropolitano, Camp Nou, Sánchez-Pizjuán); si no, la genérica. Fotos aportadas por el titular; pendiente confirmar origen/licencia (salen escudos y rótulos).

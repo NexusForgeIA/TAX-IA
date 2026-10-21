@@ -19,6 +19,9 @@ const LLEGADAS = {
   Sevilla: [["avion", "Aeropuerto de Sevilla-San Pablo", "Vuelos de llegada · AENA", AENA], ["tren", "Sevilla-Santa Justa", "Web de Renfe: busca tu estación", RENFE]],
   Valencia: [["avion", "Aeropuerto de Valencia-Manises", "Vuelos de llegada · AENA", AENA], ["tren", "València-Joaquín Sorolla", "Web de Renfe: busca tu estación", RENFE]],
 };
+// Foto del estadio si el «lugar» del evento lo nombra; si no, la genérica del tipo.
+const ESTADIOS = [[/bernab[eé]u/i, "estadio-bernabeu"], [/metropolitano/i, "estadio-metropolitano"], [/camp nou|spotify camp|olímpic lluís|olimpic lluis/i, "estadio-camp-nou"], [/s[aá]nchez.?pizju[aá]n/i, "estadio-sanchez-pizjuan"]];
+const fotoDe = (e) => (e.tipo === "futbol" && ESTADIOS.find(([r]) => r.test(e.lugar || ""))?.[1]) || FOTO[e.tipo] || FOTO.otro;
 const FOTO = { futbol: "evento-futbol", feria: "evento-feria", concierto: "evento-otro", otro: "evento-otro" };
 
 const enlaceSeguro = (u) => { try { const x = new URL(u); return x.protocol === "https:" ? x.href : null; } catch { return null; } };
@@ -35,7 +38,7 @@ function cuando(e, hoy) {
 
 function tarjeta(e, hoy) {
   const hora = e.hora_ini ? (e.hora_fin ? `${e.hora_ini}–${e.hora_fin}` : `${e.hora_ini} h`) : "Todo el día";
-  const f = FOTO[e.tipo] || FOTO.otro;
+  const f = fotoDe(e);
   const chips = el("div", { class: "eventos-etiquetas" }, el("span", { class: "etiqueta-estado hoy", text: cuando(e, hoy) }));
   if (e.grande) chips.append(el("span", { class: "etiqueta-estado proximo", text: "Gran evento" }));
   const pie = el("div", { class: "evento-texto" },
