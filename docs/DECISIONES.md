@@ -20,4 +20,8 @@
    La señal «posible más demanda al terminar» es orientativa, solo sale en eventos marcados `grande` y no lleva
    cifras. Sin vuelos ni trenes en tiempo real: falta confirmar fuente y licencia (o contratar una API).
    «radar» entra en la lista cerrada del contador de aperturas (migración 20261021120000).
-6. **Cargar un evento:** `insert into taxi_eventos (nombre, lugar, fecha, fecha_fin, hora_ini, grande, fuente, fuente_url) values (...)`.
+7. **Cargar un evento:** `insert into taxi_eventos (nombre, lugar, fecha, fecha_fin, hora_ini, grande, fuente, fuente_url) values (...)`.
+8. **Radar en 4 ciudades (21/10/2026):** Madrid, Barcelona, Sevilla y Valencia (las que más demanda tienen por el AVE).
+   `taxi_eventos.ciudad` limitada a esas cuatro; `taxi-eventos?ciudad=…` valida la ciudad; el selector guarda la última
+   elegida solo en este navegador (`taxi.ciudad`). Los enlaces de llegadas son generales (AENA y Renfe; Estación Sur solo
+   en Madrid). `taxi_eventos_proximos` queda sin uso (sustituida por `taxi_eventos_ciudad`).

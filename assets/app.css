@@ -548,3 +548,4 @@ td[aria-selected="true"] .dia-cal .dia-tot { color: var(--accion-texto); }
 .enlaces-llegadas a { color: var(--text); text-decoration: none; display: block; min-height: 44px; }
 .enlaces-llegadas a strong { color: var(--accent); }
 .enlaces-llegadas span { color: var(--muted); }
+.campo-ciudad { max-width: 16rem; margin: .5rem 0 1rem; }
