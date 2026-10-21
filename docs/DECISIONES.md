@@ -28,3 +28,4 @@
 9. **Radar rediseñado (21/10/2026):** ciudades como pastillas, tarjetas de evento con foto (por `tipo`: futbol/feria/concierto/otro)
    deslizables, y llegadas en bloques con icono (avión/tren/autobús). Código y fotos propios; no se copia diseño ni código de otras apps.
    Migración 20261021140000 (columna `tipo`). SW taxi-v8.
+10. **Capa visual moderna (21/10/2026):** `assets/taxi.css` añade degradados, tarjetas con relieve, botones en píldora, barra inferior de cristal y entrada suave (solo con movimiento permitido). Mismo negro/amarillo y mismo contenido; solo estilo. SW taxi-v9.
