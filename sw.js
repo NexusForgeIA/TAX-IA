@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v27";
+const VERSION = "taxi-v28";
 const CARCASA = [
   "./",
   "aviso-legal.html",
@@ -99,6 +99,10 @@ const CARCASA = [
 ];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CARCASA)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== VERSION).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: "window" }).then((cs) => (cs.length ? cs[0].focus() : self.clients.openWindow("inicio.html"))));
+});
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== self.location.origin) return;

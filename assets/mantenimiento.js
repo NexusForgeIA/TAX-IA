@@ -3,6 +3,7 @@ import "./nav.js";
 import { $, el } from "./util.js";
 import { leerNumero } from "./numeros.js";
 import { guardarJson, leerJson, nuevoId } from "./datos.js";
+import { leerRegistros } from "./gastos.js";
 import C from "./herramientas.js";
 
 const CLAVE = "taxi.mantenimiento";
@@ -59,6 +60,15 @@ function limpiar() {
   $("cancelar").hidden = true;
 }
 $("cancelar").addEventListener("click", limpiar);
+
+$("km-de-gastos").addEventListener("click", () => {
+  const lecturas = leerRegistros().filter((r) => r.km != null);
+  const s = $("estado-km");
+  if (!lecturas.length) { s.textContent = "No hay ninguna lectura del cuentakilómetros en Gastos."; s.classList.add("error"); return; }
+  $("km-actual").value = String(Math.max(...lecturas.map((r) => r.km)));
+  s.classList.remove("error");
+  s.textContent = "Es la lectura más alta que apuntaste en Gastos. Revísala y pulsa «Guardar km».";
+});
 
 $("f-km").addEventListener("submit", (ev) => {
   ev.preventDefault();

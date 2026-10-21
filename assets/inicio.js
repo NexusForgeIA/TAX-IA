@@ -1,26 +1,80 @@
-// Inicio: avisos de vencimientos al abrir la app (sin push ni servidor) y registro del SW.
+// Inicio: avisos de vencimientos y de mantenimiento al abrir la app (sin push ni servidor) y registro del SW.
+// Los avisos del móvil son notificaciones locales: salen al abrir la app, no con la app cerrada.
 import "./nav.js";
-import { fechaCorta } from "./fechas.js";
+import { fechaCorta, hoyMadrid } from "./fechas.js";
+import { leerJson, guardarJson } from "./datos.js";
 import { avisos, leerVencimientos, migrarVencimientos, nombreVencimiento, textoEstado } from "./vencimientos.js";
+import C from "./herramientas.js";
 
 migrarVencimientos(); // tipos de versiones anteriores (decisión 100)
 
+const fmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
 const caja = document.getElementById("avisos-vencimientos");
-const lista = avisos(leerVencimientos());
-if (lista.length) {
+const items = avisos(leerVencimientos()).map((v) => ({ clase: v.clase, estado: `${textoEstado(v)}: `, texto: `${nombreVencimiento(v)} (${fechaCorta(v.fecha)}${v.vehiculo ? `, ${v.vehiculo}` : ""})` }));
+
+// Mantenimiento por km: solo lo que toca ya o pronto, con los intervalos y km del propio usuario.
+const km = leerJson("taxi.kmActual", "");
+const mant = leerJson("taxi.mantenimiento", []);
+if (Array.isArray(mant)) {
+  for (const m of mant) {
+    if (!m || typeof m.nombre !== "string") continue;
+    const s = C.estadoMantenimiento(m, km);
+    if (s.estado === "vencido") items.unshift({ clase: "vencido", estado: "Toca ya: ", texto: `${m.nombre} (te pasaste ${fmt.format(-s.quedan)} km)` });
+    else if (s.estado === "pronto") items.push({ clase: "duda", estado: "Pronto: ", texto: `${m.nombre} (quedan ${fmt.format(s.quedan)} km)` });
+  }
+}
+
+if (items.length) {
   const ul = document.createElement("ul");
-  for (const v of lista.slice(0, 5)) {
+  for (const v of items.slice(0, 5)) {
     const li = document.createElement("li");
     li.className = `vencimiento ${v.clase}`;
     const estado = document.createElement("strong");
-    estado.textContent = `${textoEstado(v)}: `;
-    li.append(estado, document.createTextNode(`${nombreVencimiento(v)} (${fechaCorta(v.fecha)}${v.vehiculo ? `, ${v.vehiculo}` : ""})`));
+    estado.textContent = v.estado;
+    li.append(estado, document.createTextNode(v.texto));
     ul.append(li);
   }
   caja.insertBefore(ul, caja.querySelector("p"));
-  if (lista.length > 5) caja.querySelector("p").prepend(document.createTextNode(`Y ${lista.length - 5} más. `));
+  if (items.length > 5) caja.querySelector("p").prepend(document.createTextNode(`Y ${items.length - 5} más. `));
   caja.hidden = false;
 }
+
+// ---- Avisos del móvil (notificaciones locales, con permiso del usuario) -----------------------
+const CLAVE_NOTIF = "taxi.notif"; // {on: boolean, ultimo: "AAAA-MM-DD"}
+const notif = leerJson(CLAVE_NOTIF, {});
+const cajaNotif = document.getElementById("notif-caja");
+const botonNotif = document.getElementById("notif-activar");
+const estadoNotif = document.getElementById("notif-estado");
+const posible = "Notification" in window && "serviceWorker" in navigator;
+
+async function avisarSiToca() {
+  if (!posible || Notification.permission !== "granted" || !notif.on || !items.length || notif.ultimo === hoyMadrid()) return;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    await reg.showNotification("Taxi-IA: revisa tus avisos", { body: items.slice(0, 3).map((v) => `${v.estado}${v.texto}`).join("\n"), icon: "assets/icons/favicon-48.png", tag: "taxi-avisos" });
+    guardarJson(CLAVE_NOTIF, { on: true, ultimo: hoyMadrid() });
+  } catch (err) { console.warn("Aviso del móvil:", err.message); }
+}
+
+function pintarNotif() {
+  if (!posible) return;
+  cajaNotif.hidden = false;
+  const activo = notif.on && Notification.permission === "granted";
+  botonNotif.textContent = activo ? "Desactivar avisos en el móvil" : "Activar avisos en el móvil";
+  estadoNotif.textContent = Notification.permission === "denied"
+    ? "Tienes las notificaciones bloqueadas en este navegador: actívalas en sus ajustes."
+    : activo ? "Activados: te avisaremos al abrir la app si hay algo que revisar (una vez al día). No suena con la app cerrada." : "";
+}
+botonNotif?.addEventListener("click", async () => {
+  if (notif.on && Notification.permission === "granted") { notif.on = false; guardarJson(CLAVE_NOTIF, notif); return pintarNotif(); }
+  const permiso = Notification.permission === "granted" ? "granted" : await Notification.requestPermission();
+  notif.on = permiso === "granted";
+  guardarJson(CLAVE_NOTIF, notif);
+  pintarNotif();
+  if (notif.on) avisarSiToca();
+});
+pintarNotif();
+avisarSiToca();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
