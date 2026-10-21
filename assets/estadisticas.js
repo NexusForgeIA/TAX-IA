@@ -29,6 +29,26 @@ function tabla(dest, cabecera, filas) {
   $(dest).replaceChildren(t);
 }
 
+const NS = "http://www.w3.org/2000/svg";
+const svg = (tag, attrs = {}, ...hijos) => { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, String(v)); n.append(...hijos); return n; };
+let modo = "n";
+/** Gráfica de barras por hora (0-23) con las carreras del usuario. SVG sin estilos en línea. */
+function grafica(lista) {
+  const datos = C.porHora(lista), v = (x) => (modo === "n" ? x.n : x.total), max = Math.max(0, ...datos.map(v));
+  const W = 288, H = 130, base = 104, alto = 90, ancho = W / 24;
+  const g = svg("svg", { viewBox: `0 0 ${W} ${H}`, class: "grafica-svg", role: "img", "aria-label": "Carreras por hora del día" }, svg("title", {}, document.createTextNode("Tus carreras por hora del día")));
+  g.append(svg("line", { x1: 0, y1: base, x2: W, y2: base, class: "grafica-eje" }));
+  datos.forEach((x, i) => {
+    const h = max > 0 ? Math.round((v(x) / max) * alto) : 0;
+    if (h > 0) g.append(svg("rect", { x: i * ancho + 1.5, y: base - h, width: ancho - 3, height: h, rx: 2, class: v(x) === max ? "grafica-barra max" : "grafica-barra" }));
+    if (i % 3 === 0) g.append(svg("text", { x: i * ancho + ancho / 2, y: base + 14, class: "grafica-txt", "text-anchor": "middle" }, document.createTextNode(String(i).padStart(2, "0"))));
+  });
+  $("grafica").replaceChildren(g);
+  const picos = datos.map((x, i) => [i, v(x)]).filter(([, y]) => max > 0 && y === max).map(([i]) => `${String(i).padStart(2, "0")}:00–${String(i + 1).padStart(2, "0")}:00`);
+  $("grafica-resumen").textContent = max > 0
+    ? `Hora con más ${modo === "n" ? "carreras" : "facturación"} en lo que has apuntado: ${picos.join(", ")} (${modo === "n" ? `${max} ${max === 1 ? "carrera" : "carreras"}` : e(max)}). Son tus datos, no una previsión. Las carreras sin hora no entran.`
+    : "Apunta la hora en tus carreras para ver aquí tus horas punta.";
+}
 function pintar() {
   const lista = filtrar(leerCarreras());
   $("vacio").hidden = lista.length > 0;
@@ -38,6 +58,7 @@ function pintar() {
   $("kpis").replaceChildren(...[["Total facturado", e(r.total)], ["Apuntes", String(r.n)], ["Importe medio", r.medio == null ? "—" : e(r.medio)]]
     .flatMap(([k, v]) => [el("dt", { text: k }), el("dd", { text: v })]));
   tabla("dias", ["Día", "Apuntes", "Total", "Media"], C.porDiaSemana(lista).map((x, i) => ({ etiqueta: DIAS[i], ...x })));
+  grafica(lista);
   const fr = C.porFranja(lista);
   tabla("franjas", ["Franja", "Carreras", "Total", "Media"], fr.franjas.map((x, i) => ({ etiqueta: C.franjas[i], ...x })));
   $("sinhora").textContent = fr.sinHora ? `Sin hora: ${fr.sinHora} (totales sin detallar). No entran en las franjas.` : "";
@@ -58,5 +79,8 @@ function pintar() {
   tabla("metodos", ["Cobro", "Apuntes", "Total", "Media"], [...formas.values()].map((g) => ({ ...g, total: Math.round(g.total * 100) / 100, medio: Math.round(g.total / g.n * 100) / 100 })));
 }
 
+for (const [id, m] of [["ver-n", "n"], ["ver-t", "t"]]) $(id).addEventListener("click", () => {
+  modo = m; $("ver-n").setAttribute("aria-pressed", String(m === "n")); $("ver-t").setAttribute("aria-pressed", String(m === "t")); pintar();
+});
 sel.addEventListener("change", pintar);
 pintar();

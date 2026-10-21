@@ -82,3 +82,11 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
   .tarjetas > li:nth-child(2) { animation-delay: .05s; } .tarjetas > li:nth-child(3) { animation-delay: .1s; }
   .tarjetas > li:nth-child(4) { animation-delay: .15s; } .tarjetas > li:nth-child(n+5) { animation-delay: .2s; }
 }
+
+/* Gráfica de horas punta (estadísticas) */
+.grafica { margin: .75rem 0 .5rem; padding: .75rem .5rem .25rem; background: linear-gradient(160deg, #181818, #0f0f0f); border: 1px solid rgba(255,255,255,.08); border-radius: var(--tarjeta-radio); }
+.grafica-svg { display: block; width: 100%; height: auto; }
+.grafica-eje { stroke: #3a3a3a; stroke-width: 1; }
+.grafica-barra { fill: #8a6d00; }
+.grafica-barra.max { fill: var(--accent); }
+.grafica-txt { fill: var(--muted); font-size: 9px; font-family: inherit; }
