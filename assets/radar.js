@@ -1,5 +1,5 @@
 // Taxi-IA · Radar: próximos eventos de Madrid, Barcelona, Sevilla y Valencia cargados por WhiteMoon
-// desde fuentes públicas. Cada evento lleva su fuente y su enlace. La señal «posible más demanda» es
+// desde fuentes públicas. Cada evento lleva su fuente y su enlace. La señal «fuerte demanda» es
 // orientativa: solo sale en eventos marcados como grandes y no lleva cifras. No se envía nada del
 // usuario; solo se guarda en este navegador la última ciudad elegida.
 import "./nav.js";
@@ -40,11 +40,11 @@ function tarjeta(e, hoy) {
   const hora = e.hora_ini ? (e.hora_fin ? `${e.hora_ini}–${e.hora_fin}` : `${e.hora_ini} h`) : (e.fecha_fin && e.fecha_fin !== e.fecha ? "Varios días" : "Hora por confirmar");
   const f = fotoDe(e);
   const chips = el("div", { class: "eventos-etiquetas" }, el("span", { class: "etiqueta-estado hoy", text: cuando(e, hoy) }));
-  if (e.grande) chips.append(el("span", { class: "etiqueta-estado proximo", text: "Gran evento" }));
+  if (e.grande) chips.append(el("span", { class: "etiqueta-estado demanda", text: "Fuerte demanda" }));
   const pie = el("div", { class: "evento-texto" },
     el("h3", { text: e.nombre }),
     el("p", { class: "evento-lugar", text: `${hora} · ${e.lugar}` }));
-  if (e.grande) pie.append(el("p", { class: "evento-nota", text: "Posible más demanda al terminar (orientativo, sin garantía)." }));
+  if (e.grande) pie.append(el("p", { class: "evento-nota demanda-nota", text: "Mucha gente se mueve a la entrada y, sobre todo, a la salida. Es una señal de afluencia, no una cifra ni una garantía de carreras." }));
   const u = enlaceSeguro(e.fuente_url);
   pie.append(el("p", { class: "evento-nota" }, "Fuente: ", u ? el("a", { href: u, target: "_blank", rel: "noopener noreferrer", text: e.fuente }) : e.fuente));
   const foto = el("picture", {}, el("source", { srcset: `assets/img/${f}.webp`, type: "image/webp" }),

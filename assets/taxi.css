@@ -144,3 +144,7 @@ strong, b { font-weight: 800; }
 .recorrido-datos span { color: var(--muted); font-size: .9rem; }
 .trazado-linea { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .trazado-ini { fill: #fff; } .trazado-fin { fill: var(--accent); stroke: #000; stroke-width: 2; }
+
+/* Radar: señal de fuerte demanda en eventos grandes (afluencia por el tipo de recinto, sin cifras) */
+.evento .etiqueta-estado.demanda { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 800; }
+.evento .evento-nota.demanda-nota { color: #fff; }
