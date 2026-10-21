@@ -5,7 +5,7 @@ import { $, cifras, descargarCSV, el } from "./util.js";
 import { euros, leerNumero, redondear } from "./numeros.js";
 import { guardarJson, leerJson, nuevoId } from "./datos.js";
 import { esFechaISO, fechaCorta, hoyMadrid, sumarDias } from "./fechas.js";
-import { leerCarreras } from "./ingresos.js";
+import { leerCarreras, totalesCarreras } from "./ingresos.js";
 import { celdaCSV, leerRegistros } from "./gastos.js";
 import { leerOtros } from "./otros-gastos.js";
 import C from "./herramientas.js";
@@ -30,18 +30,35 @@ const guardar = () => guardarJson(CLAVE, lista);
 const msg = (t, err = false) => { $("estado-form").textContent = t; $("estado-form").classList.toggle("error", err); };
 const num = (v) => { const n = leerNumero(v); return Number.isFinite(n) ? n : 0; };
 
+const fechaDeMs = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid", year: "numeric", month: "2-digit", day: "2-digit" });
+const kmGpsDelDia = (dia) => {
+  const l = leerJson("taxi.trayectos", []);
+  return Array.isArray(l) ? l.filter((t) => t && Number.isFinite(t.inicio) && Number.isFinite(t.metros) && fechaDeMs.format(new Date(t.inicio)) === dia).reduce((s, t) => s + t.metros, 0) / 1000 : 0;
+};
+
+// Trae del día elegido todo lo apuntado: recaudación, gastos (combustible y otros), km del GPS y el desglose por forma de cobro.
 $("traer").addEventListener("click", () => {
   const dia = form.fecha.value;
   if (!esFechaISO(dia)) return msg("Elige primero la fecha del turno.", true);
   const carreras = leerCarreras().filter((c) => c.fecha === dia);
   const repost = leerRegistros().filter((r) => r.fecha === dia);
   const otros = leerOtros().filter((g) => g.fecha === dia);
-  if (!carreras.length && !repost.length && !otros.length) return msg("No hay nada apuntado ese día en Facturación ni en Gastos.", true);
-  const total = redondear(carreras.reduce((s, c) => s + c.importe, 0));
-  const comb = redondear(repost.reduce((s, r) => s + r.importe, 0) + otros.reduce((s, g) => s + g.importe, 0));
-  if (total > 0) form.recaudacion.value = String(total).replace(".", ",");
-  if (comb > 0) form.gastos.value = String(comb).replace(".", ",");
-  msg(`Traído de ${fechaCorta(dia)}: ${total > 0 ? `facturación ${e(total)}` : "sin facturación"}${comb > 0 ? `, gastos ${e(comb)}` : ""}. Revisa las cifras antes de guardar.`);
+  const km = redondear(kmGpsDelDia(dia));
+  if (!carreras.length && !repost.length && !otros.length && !(km > 0)) return msg("No hay nada apuntado ese día en Facturación, Gastos ni Trayecto.", true);
+  const T = totalesCarreras(carreras);
+  const comb = redondear(repost.reduce((s, r) => s + r.importe, 0));
+  const otr = redondear(otros.reduce((s, g) => s + g.importe, 0));
+  const gastos = redondear(comb + otr);
+  if (T.total > 0) form.recaudacion.value = String(T.total).replace(".", ",");
+  if (gastos > 0) form.gastos.value = String(gastos).replace(".", ",");
+  if (km > 0 && form.km.value.trim() === "") form.km.value = String(km).replace(".", ",");
+  const filas = [];
+  if (T.total > 0) filas.push(["Efectivo en mano (calle + app)", e(T.efectivo_en_mano)], ["Datáfono, banco o app", e(T.cobrado_banco_app)], ["Total facturado", e(T.total), true]);
+  if (comb > 0) filas.push(["Combustible", e(comb)]);
+  if (otr > 0) filas.push(["Otros gastos", e(otr)]);
+  if (km > 0) filas.push(["Km con GPS (estimación)", `${euros(km)} km`]);
+  $("desglose").replaceChildren(...(filas.length ? [el("h3", { text: `Lo apuntado el ${fechaCorta(dia)}` }), cifras(filas)] : []));
+  msg("Traído. Revisa las cifras, pon el porcentaje si hay asalariado y guarda el turno.");
 });
 
 form.addEventListener("submit", (ev) => {
