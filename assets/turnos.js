@@ -7,6 +7,7 @@ import { guardarJson, leerJson, nuevoId } from "./datos.js";
 import { esFechaISO, fechaCorta, hoyMadrid, sumarDias } from "./fechas.js";
 import { leerCarreras } from "./ingresos.js";
 import { celdaCSV, leerRegistros } from "./gastos.js";
+import { leerOtros } from "./otros-gastos.js";
 import C from "./herramientas.js";
 
 const CLAVE = "taxi.turnos";
@@ -34,12 +35,13 @@ $("traer").addEventListener("click", () => {
   if (!esFechaISO(dia)) return msg("Elige primero la fecha del turno.", true);
   const carreras = leerCarreras().filter((c) => c.fecha === dia);
   const repost = leerRegistros().filter((r) => r.fecha === dia);
-  if (!carreras.length && !repost.length) return msg("No hay nada apuntado ese día en Facturación ni en Gastos.", true);
+  const otros = leerOtros().filter((g) => g.fecha === dia);
+  if (!carreras.length && !repost.length && !otros.length) return msg("No hay nada apuntado ese día en Facturación ni en Gastos.", true);
   const total = redondear(carreras.reduce((s, c) => s + c.importe, 0));
-  const comb = redondear(repost.reduce((s, r) => s + r.importe, 0));
+  const comb = redondear(repost.reduce((s, r) => s + r.importe, 0) + otros.reduce((s, g) => s + g.importe, 0));
   if (total > 0) form.recaudacion.value = String(total).replace(".", ",");
   if (comb > 0) form.gastos.value = String(comb).replace(".", ",");
-  msg(`Traído de ${fechaCorta(dia)}: ${total > 0 ? `facturación ${e(total)}` : "sin facturación"}${comb > 0 ? `, combustible ${e(comb)}` : ""}. Revisa las cifras antes de guardar.`);
+  msg(`Traído de ${fechaCorta(dia)}: ${total > 0 ? `facturación ${e(total)}` : "sin facturación"}${comb > 0 ? `, gastos ${e(comb)}` : ""}. Revisa las cifras antes de guardar.`);
 });
 
 form.addEventListener("submit", (ev) => {
