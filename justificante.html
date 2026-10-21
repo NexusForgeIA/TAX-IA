@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Justificante de carrera · Taxi-IA</title>
+  <meta name="description" content="Justificante informativo de una carrera, con tus datos, para guardar como PDF o compartir. No es una factura.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/justificante.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="informe.html">Informe</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <h1>Justificante de carrera</h1>
+      <p class="sub">Un resumen de la carrera para el cliente. Es informativo y no sustituye a la factura.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p id="vacio" class="estado" hidden>No se encuentra esa carrera. Vuelve a <a href="ingresos.html">Facturación</a> y elige una carrera con hora.</p>
+    <section id="datos" class="calc no-imprimir" aria-labelledby="t-datos" hidden>
+      <h2 id="t-datos">Datos que quieres que salgan</h2>
+      <form id="f-just" class="filtros" novalidate>
+        <div class="campos">
+          <label class="campo"><span>Tu nombre (opcional)</span><input type="text" name="conductor" maxlength="60" autocomplete="off"></label>
+          <label class="campo"><span>Licencia o matrícula (opcional)</span><input type="text" name="vehiculo" maxlength="30" autocomplete="off"></label>
+          <label class="campo"><span>Origen (opcional)</span><input type="text" name="origen" maxlength="80" autocomplete="off"></label>
+          <label class="campo"><span>Destino (opcional)</span><input type="text" name="destino" maxlength="80" autocomplete="off"></label>
+        </div>
+      </form>
+      <p class="nota">Tu nombre y la licencia o matrícula se recuerdan en este navegador; origen y destino no. Nada se envía a ningún servidor.</p>
+      <p class="botones"><button type="button" class="boton" id="imprimir">Guardar como PDF / imprimir</button> <button type="button" class="boton-sec" id="compartir">Compartir</button></p>
+      <p id="estado-just" class="nota" role="status" aria-live="polite"></p>
+    </section>
+    <article id="justificante" class="informe" hidden>
+      <h2>Justificante de carrera</h2>
+      <dl class="cifras" id="just-cifras"></dl>
+      <p class="nota">Documento informativo hecho con los datos que ha apuntado el conductor. No es una factura ni un recibo fiscal y no sustituye a ninguno.</p>
+    </article>
+    <aside class="avisos no-imprimir">
+      <p><strong>No es una factura.</strong> Si el cliente necesita factura, tiene que emitirla quien corresponda según la normativa; Taxi-IA no da consejo fiscal ni legal.</p>
+    </aside>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
+    </div>
+  </footer>
+</body>
+</html>
