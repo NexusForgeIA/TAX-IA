@@ -34,4 +34,6 @@ const d = C.porDiaSemana([{ fecha: "2026-10-19", importe: 10 }, { fecha: "2026-1
 assert.deepStrictEqual([d[0].n, d[0].total, d[0].medio, d[1].medio], [2, 30, 15, null]);
 const f = C.porFranja([{ hora: "07:30", importe: 10 }, { hora: "23:10", importe: 5 }, { importe: 3 }]);
 assert.deepStrictEqual([f.franjas[1].total, f.franjas[3].total, f.sinHora], [10, 5, 1]);
+const h = C.porHora([{ hora: "07:30", importe: 10 }, { hora: "07:59", importe: 5 }, { hora: "23:10", importe: 2 }, { importe: 3 }]);
+assert.deepStrictEqual([h.length, h[7].n, h[7].total, h[23].n, h[0].n], [24, 2, 15, 1, 0]);
 console.log("herramientas: ok");

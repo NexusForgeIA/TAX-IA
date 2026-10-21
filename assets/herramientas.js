@@ -137,6 +137,15 @@ const C = {};
     });
     return { franjas: r.map(function (x) { return { n: x.n, total: r2(x.total), medio: x.n ? r2(x.total / x.n) : null }; }), sinHora: sinHora };
   };
+  /** Carreras y total por hora del día (0-23). Las carreras sin hora no entran. */
+  C.porHora = function (lista) {
+    var r = []; for (var i = 0; i < 24; i++) r.push({ n: 0, total: 0 });
+    lista.forEach(function (c) {
+      var m = /^(\d{1,2}):/.exec(c.hora || ""); if (!m || +m[1] > 23) return;
+      r[+m[1]].n++; r[+m[1]].total += num(c.importe);
+    });
+    return r.map(function (x) { return { n: x.n, total: r2(x.total) }; });
+  };
 
 }
 export default C;
