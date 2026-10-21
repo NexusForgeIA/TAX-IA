@@ -15,6 +15,7 @@ const $ = (id) => document.getElementById(id);
 const form = $("f-carrera");
 const F = Object.fromEntries(["g-calle", "g-app", "c-hora", "guardar", "cancelar", "t-form", "estado-form", "apps-lista", "apps-rapidas"].map((id) => [id, $(id)]));
 const kmFmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
+const NOTA_CIERRE = "Cierre del datáfono";
 const MES_HOY = hoyMadrid().slice(0, 7);
 let mes = MES_HOY;
 let abierto = null; // fecha del día abierto en el detalle
@@ -108,6 +109,22 @@ form.addEventListener("submit", (e) => {
   form.importe.focus();
 });
 
+// Cierre del datáfono: el total de tarjeta del día (o del turno) que da el TPV, en dos toques. Se guarda
+// como total sin detallar de calle con tarjeta: suma al día y al mes, pero no cuenta como carrera.
+$("cierre-datafono").addEventListener("click", () => {
+  siguiente();
+  form.canal.value = "calle";
+  form.metodo_calle.value = "tarjeta";
+  form.sinDetalle.checked = true;
+  form.nota.value = NOTA_CIERRE;
+  F["t-form"].textContent = "Cierre del datáfono (tarjeta)";
+  F["cancelar"].hidden = false;
+  F["estado-form"].textContent = "Escribe el total de tarjeta que te da el datáfono.";
+  mostrarGrupos();
+  F["t-form"].scrollIntoView({ block: "start", behavior: sinMovimiento() ? "auto" : "smooth" });
+  form.importe.focus();
+});
+
 F["cancelar"].addEventListener("click", () => { siguiente(); F["estado-form"].textContent = "Edición cancelada."; });
 
 function editar(c) {
@@ -183,6 +200,7 @@ function pintarDetalle(d, hoy) {
       c.nota ? el("span", { class: "nota", text: c.nota }) : null,
       el("span", { class: "botones" }, bE, bB));
   }));
+  $("aviso-cierre").hidden = !d.lista.some((c) => c.hora == null && c.canal === "calle" && c.metodo === "tarjeta" && c.nota === NOTA_CIERRE);
   $("estado-dia").replaceChildren(...(aviso?.fecha === d.fecha ? aviso.nodos : []));
 }
 
