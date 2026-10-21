@@ -15,8 +15,6 @@ export function mostrarCuentas() {
 // Contacto para opiniones de la beta: solo correo (sin WhatsApp). Mismo titular que whitemoon.es.
 export const CORREO_CONTACTO = "comercial@whitemoon.es";
 export const ASUNTO_OPINION = "Opinión Taxi-IA beta";
-// Nota de beta: la portada la lleva escrita en el HTML (sin JS).
-export const AVISO_BETA = "Versión beta gratuita en pruebas. Puede haber errores. Todas las cifras salen de lo que tú apuntas y se guardan solo en este navegador.";
 export const enlaceOpinion = () => `mailto:${CORREO_CONTACTO}?subject=${encodeURIComponent(ASUNTO_OPINION)}`;
 
 // Los enlaces «Enviar opinión» del HTML se rehacen desde la constante: una sola fuente.
