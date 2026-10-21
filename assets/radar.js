@@ -13,12 +13,13 @@ const AENA = "https://www.aena.es/es/infovuelos.html";
 const RENFE = "https://www.renfe.com/";
 // Enlaces generales a las webs de cada operador (no al panel de cada estación).
 const LLEGADAS = {
-  Madrid: [["Llegadas a Barajas por franjas horarias", " · web informativa, no oficial", "https://www.aeropuertomadrid-barajas.com/llegadas.html"], ["Aeropuerto Adolfo Suárez Madrid-Barajas", " · vuelos de llegada (AENA)", AENA], ["Atocha y Chamartín", " · web de Renfe: busca tu estación", RENFE],
-    ["Estación Sur de autobuses (Méndez Álvaro)", " · información de la estación", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
-  Barcelona: [["Aeropuerto Josep Tarradellas Barcelona-El Prat", " · vuelos de llegada (AENA)", AENA], ["Barcelona-Sants", " · web de Renfe: busca tu estación", RENFE]],
-  Sevilla: [["Aeropuerto de Sevilla-San Pablo", " · vuelos de llegada (AENA)", AENA], ["Sevilla-Santa Justa", " · web de Renfe: busca tu estación", RENFE]],
-  Valencia: [["Aeropuerto de Valencia-Manises", " · vuelos de llegada (AENA)", AENA], ["València-Joaquín Sorolla", " · web de Renfe: busca tu estación", RENFE]],
+  Madrid: [["avion", "Aeropuerto Adolfo Suárez Madrid-Barajas", "Vuelos de llegada · AENA", AENA], ["avion", "Llegadas a Barajas por franjas horarias", "Web informativa, no oficial", "https://www.aeropuertomadrid-barajas.com/llegadas.html"],
+    ["tren", "Atocha y Chamartín", "Web de Renfe: busca tu estación", RENFE], ["autobus", "Estación Sur (Méndez Álvaro)", "Información de la estación", "https://www.movelia.es/es/estaciones/estacion-sur-de-autobuses-de-madrid"]],
+  Barcelona: [["avion", "Aeropuerto Josep Tarradellas Barcelona-El Prat", "Vuelos de llegada · AENA", AENA], ["tren", "Barcelona-Sants", "Web de Renfe: busca tu estación", RENFE]],
+  Sevilla: [["avion", "Aeropuerto de Sevilla-San Pablo", "Vuelos de llegada · AENA", AENA], ["tren", "Sevilla-Santa Justa", "Web de Renfe: busca tu estación", RENFE]],
+  Valencia: [["avion", "Aeropuerto de Valencia-Manises", "Vuelos de llegada · AENA", AENA], ["tren", "València-Joaquín Sorolla", "Web de Renfe: busca tu estación", RENFE]],
 };
+const FOTO = { futbol: "evento-futbol", feria: "evento-feria", concierto: "evento-otro", otro: "evento-otro" };
 
 const enlaceSeguro = (u) => { try { const x = new URL(u); return x.protocol === "https:" ? x.href : null; } catch { return null; } };
 const dm = (iso) => iso.split("-").reverse().slice(0, 2).join("/");
@@ -34,20 +35,28 @@ function cuando(e, hoy) {
 
 function tarjeta(e, hoy) {
   const hora = e.hora_ini ? (e.hora_fin ? `${e.hora_ini}–${e.hora_fin}` : `${e.hora_ini} h`) : "Todo el día";
-  const etiquetas = el("div", { class: "eventos-etiquetas" }, el("span", { class: "etiqueta-estado hoy", text: cuando(e, hoy) }));
-  if (e.grande) etiquetas.append(el("span", { class: "etiqueta-estado proximo", text: "Gran evento" }));
-  const li = el("li", { class: "evento" }, etiquetas,
+  const f = FOTO[e.tipo] || FOTO.otro;
+  const chips = el("div", { class: "eventos-etiquetas" }, el("span", { class: "etiqueta-estado hoy", text: cuando(e, hoy) }));
+  if (e.grande) chips.append(el("span", { class: "etiqueta-estado proximo", text: "Gran evento" }));
+  const pie = el("div", { class: "evento-texto" },
     el("h3", { text: e.nombre }),
-    el("p", { class: "evento-lugar", text: `${e.lugar} · ${hora}` }));
-  if (e.grande) li.append(el("p", { class: "nota", text: "Posible más demanda al terminar (orientativo, sin garantía)." }));
+    el("p", { class: "evento-lugar", text: `${hora} · ${e.lugar}` }));
+  if (e.grande) pie.append(el("p", { class: "evento-nota", text: "Posible más demanda al terminar (orientativo, sin garantía)." }));
   const u = enlaceSeguro(e.fuente_url);
-  li.append(el("p", { class: "nota" }, "Fuente: ", u ? el("a", { href: u, target: "_blank", rel: "noopener noreferrer", text: e.fuente }) : e.fuente));
-  return li;
+  pie.append(el("p", { class: "evento-nota" }, "Fuente: ", u ? el("a", { href: u, target: "_blank", rel: "noopener noreferrer", text: e.fuente }) : e.fuente));
+  const foto = el("picture", {}, el("source", { srcset: `assets/img/${f}.webp`, type: "image/webp" }),
+    el("img", { src: `assets/img/${f}.jpg`, width: "400", height: "500", alt: "", loading: "lazy", decoding: "async" }));
+  return el("li", { class: "evento" }, foto, chips, pie);
 }
 
 function pintarLlegadas(ciudad) {
-  $("llegadas").replaceChildren(...LLEGADAS[ciudad].map(([t, s, u]) => el("li", {},
-    el("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, el("strong", { text: t }), el("span", { text: s })))));
+  $("llegadas").replaceChildren(...LLEGADAS[ciudad].map(([ic, t, s, u]) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "icono"); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("focusable", "false");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use"); use.setAttribute("href", `assets/iconos.svg#${ic}`); svg.append(use);
+    return el("li", {}, el("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, svg,
+      el("span", { class: "llegada-txt" }, el("strong", { text: t }), el("span", { text: s }))));
+  }));
 }
 
 let ultima = 0; // descarta respuestas de una ciudad que ya no es la elegida
@@ -71,9 +80,15 @@ async function cargar(ciudad) {
   }
 }
 
-const guardada = leerJson(CLAVE, "Madrid");
-const sel = $("ciudad");
-sel.value = CIUDADES.includes(guardada) ? guardada : "Madrid";
-const elegir = () => { pintarLlegadas(sel.value); cargar(sel.value); };
-sel.addEventListener("change", () => { guardarJson(CLAVE, sel.value); elegir(); });
-elegir();
+let ciudad = leerJson(CLAVE, "Madrid");
+if (!CIUDADES.includes(ciudad)) ciudad = "Madrid";
+const pildoras = $("ciudades");
+const botones = CIUDADES.map((c) => { const b = el("button", { type: "button", class: "pildora", text: c }); b.addEventListener("click", () => elegir(c)); return b; });
+pildoras.append(...botones);
+function elegir(c, guardar = true) {
+  ciudad = c;
+  botones.forEach((b) => b.setAttribute("aria-pressed", String(b.textContent === c)));
+  if (guardar) guardarJson(CLAVE, c);
+  pintarLlegadas(c); cargar(c);
+}
+elegir(ciudad, false);
