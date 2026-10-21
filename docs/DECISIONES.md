@@ -33,3 +33,4 @@
 12. **Fotos de estadios (21/10/2026):** en el Radar, un evento de fútbol usa la foto del estadio si su «lugar» lo nombra (Bernabéu, Metropolitano, Camp Nou, Sánchez-Pizjuán); si no, la genérica. Fotos aportadas por el titular; pendiente confirmar origen/licencia (salen escudos y rótulos).
 13. **Tipografía (21/10/2026):** Plus Jakarta Sans (OFL), variable, alojada en `assets/fonts/` (la CSP no permite fuentes externas). Títulos y botones con más peso. SW taxi-v13.
 14. **Texto con más cuerpo (21/10/2026):** peso base 600, segundas líneas de las tarjetas a 1 rem y más claras, `--muted` más luminoso; también dentro de las páginas. SW taxi-v14.
+15. **Panel de llegadas (21/10/2026):** estilo de panel con icono, nombre en negrita, detalle e insignia (Oficial / No oficial / Info). Sin cifras de vuelos ni trenes: no hay fuente en vivo todavía. SW taxi-v15.
