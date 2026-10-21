@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Informe del mes · Taxi-IA</title>
+  <meta name="description" content="Informe del mes con tus carreras, gastos y kilómetros, listo para guardar como PDF. Sale solo de tus datos.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/informe.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="informe.html" aria-current="page">Informe</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <h1>Informe del mes</h1>
+      <p class="sub">Tus carreras, gastos y kilómetros del mes en un documento para guardar como PDF o imprimir.</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="calc no-imprimir" aria-labelledby="t-mes">
+      <h2 id="t-mes">Elige el mes</h2>
+      <label class="campo campo-corto"><span>Mes</span>
+        <select id="mes"></select></label>
+      <p class="botones"><button type="button" class="boton" id="imprimir">Guardar como PDF / imprimir</button></p>
+      <p class="nota">Se abre la ventana de impresión del móvil u ordenador: elige «Guardar como PDF». Sale de lo que apuntas en <a href="ingresos.html">Facturación</a>, <a href="gastos.html">Gastos</a> y <a href="trayecto.html">Trayecto</a>.</p>
+    </section>
+    <p id="vacio" class="estado" hidden>No hay datos en este mes.</p>
+    <article id="informe" class="informe" hidden>
+      <h2 id="inf-titulo"></h2>
+      <p class="nota" id="inf-sub"></p>
+      <section class="resultados" aria-labelledby="t-fact"><h3 id="t-fact">Facturación</h3><dl class="cifras" id="fact"></dl></section>
+      <section class="resultados" aria-labelledby="t-gas"><h3 id="t-gas">Gastos de combustible</h3><dl class="cifras" id="gas"></dl></section>
+      <section class="resultados" aria-labelledby="t-km"><h3 id="t-km">Kilómetros</h3><dl class="cifras" id="km"></dl><p class="nota" id="km-nota"></p></section>
+      <section class="resultados" aria-labelledby="t-dia"><h3 id="t-dia">Facturación por día</h3><div class="tabla-wrap" id="dias"></div></section>
+      <section class="resultados" aria-labelledby="t-rep"><h3 id="t-rep">Repostajes</h3><div class="tabla-wrap" id="repostajes"></div></section>
+    </article>
+    <aside class="avisos">
+      <p><strong>Documento informativo hecho con tus propios datos.</strong> No es una factura ni sirve como justificante fiscal; no sustituye al asesoramiento de tu gestor. Los kilómetros del GPS son una estimación y no sustituyen al taxímetro.</p>
+    </aside>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -148,3 +148,18 @@ strong, b { font-weight: 800; }
 /* Radar: señal de fuerte demanda en eventos grandes (afluencia por el tipo de recinto, sin cifras) */
 .evento .etiqueta-estado.demanda { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 800; }
 .evento .evento-nota.demanda-nota { color: #fff; }
+
+/* Informe del mes: al imprimir o guardar como PDF sale en blanco y negro, sin menús ni controles. */
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff !important; color: #000 !important; }
+  .cabecera, .barra-app, .mas-panel, .mas-fondo, .pie, .no-imprimir, .avisos .boton-sec, #vacio { display: none !important; }
+  .informe, .informe * { background: transparent !important; color: #000 !important; box-shadow: none !important; border-color: #888 !important; }
+  .informe { display: block !important; }
+  .informe h2 { font-size: 1.4rem; }
+  .informe .resultados { break-inside: avoid; }
+  .informe table { width: 100%; font-size: .8rem; }
+  .informe th, .informe td { padding: .2rem .35rem; }
+  .avisos { border: 1px solid #888 !important; background: transparent !important; color: #000 !important; }
+  .avisos * { color: #000 !important; }
+}
