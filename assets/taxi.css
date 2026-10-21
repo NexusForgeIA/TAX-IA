@@ -10,3 +10,75 @@ textarea { min-height: 5.5rem; resize: vertical; }
 .chip.ok { border-color: var(--accent); color: var(--accent); }
 .tabla-calculo .max { color: var(--accent); font-weight: 800; }
 .tarjeta-destacada .tarjeta-texto { color: var(--accion-texto); }
+
+/* ===== Capa visual moderna (21/10/2026): mismas variables, más profundidad. Solo estilo; sin cambiar contenido. ===== */
+:root {
+  --radius: 16px;
+  --tarjeta-radio: 22px;
+  --tarjeta-pad: 1.1rem;
+  --line: #2b2b2b;
+  --brillo: 0 10px 30px -12px rgba(255, 200, 0, .35);
+  --sombra: 0 12px 32px -16px rgba(0, 0, 0, .9);
+  --cristal: rgba(14, 14, 14, .78);
+  letter-spacing: -.005em;
+}
+body { background: radial-gradient(120% 60% at 50% -10%, rgba(255, 200, 0, .16), transparent 60%), var(--bg); background-attachment: fixed; }
+h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+h2 { font-weight: 800; letter-spacing: -.02em; }
+.sub { font-size: 1.02rem; }
+.cabecera { border-bottom: 0; padding: 1.1rem 0 1.4rem; background: linear-gradient(to bottom, rgba(255, 200, 0, .07), transparent); }
+.navegacion a.marca { font-size: 1.15rem; letter-spacing: -.02em; }
+
+/* Tarjetas: cristal oscuro, borde fino y elevación */
+.tarjeta, .calc, .tarjeta-info, .estacion, .avisos, .llegadas a {
+  background: linear-gradient(160deg, #181818 0%, #0f0f0f 100%); border-color: rgba(255, 255, 255, .08); box-shadow: var(--sombra);
+}
+.tarjeta { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; overflow: hidden; }
+.tarjeta:hover { background: linear-gradient(160deg, #1d1d1d 0%, #121212 100%); border-color: rgba(255, 200, 0, .55); box-shadow: var(--brillo); transform: translateY(-2px); }
+.tarjeta:active { transform: scale(.985); }
+.tarjeta-destacada { background: linear-gradient(135deg, #ffd633 0%, #ffb800 100%); border-color: transparent; box-shadow: 0 14px 36px -14px rgba(255, 200, 0, .55); }
+.tarjeta-destacada:hover { background: linear-gradient(135deg, #ffdd55 0%, #ffc21a 100%); border-color: transparent; }
+.tarjeta-foto { aspect-ratio: 16 / 8; }
+.tarjeta-foto img { transition: transform .5s ease; }
+.tarjeta:hover .tarjeta-foto img { transform: scale(1.04); }
+.tarjeta-icono { border-radius: 16px; width: 3.1rem; height: 3.1rem; background: linear-gradient(145deg, #2f2600, #1d1700); box-shadow: inset 0 0 0 1px rgba(255, 200, 0, .25); }
+.tarjeta-titulo { font-size: 1.15rem; letter-spacing: -.01em; }
+.tarjeta-info.aviso { border-color: rgba(255, 200, 0, .45); background: linear-gradient(160deg, rgba(255, 200, 0, .10), rgba(255, 200, 0, .02)); }
+
+/* Botones y campos */
+.boton, .boton-sec, .boton-peligro { border-radius: 999px; padding: .75rem 1.5rem; transition: transform .15s ease, box-shadow .2s ease, background .2s ease; }
+.boton, .boton-sec { background: linear-gradient(135deg, #ffd633, #ffbd00); box-shadow: 0 8px 22px -10px rgba(255, 200, 0, .6); }
+.boton:hover, .boton-sec:hover { background: linear-gradient(135deg, #ffe066, #ffc61f); }
+.boton:active, .boton-sec:active, .boton-peligro:active { transform: scale(.97); }
+.boton-sec[aria-pressed="true"] { background: var(--accion-activo); }
+input, select, textarea { border-radius: 14px !important; background: #121212; border-color: rgba(255, 255, 255, .12); transition: border-color .2s ease, box-shadow .2s ease; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 200, 0, .25); }
+.chip-boton { box-shadow: 0 6px 16px -8px rgba(255, 200, 0, .6); }
+
+/* Calendario */
+.dia-cal { border-radius: 14px; background: #121212; border-color: rgba(255, 255, 255, .04); }
+.dia-cal.con-datos { background: linear-gradient(160deg, #2a2200, #171300); box-shadow: inset 0 -3px 0 var(--accent); }
+.dia-cal[aria-current="date"] { border: 2px solid var(--accent); }
+
+/* Radar */
+.pildora { background: #121212; border-color: rgba(255, 255, 255, .1); transition: background .2s ease, transform .15s ease; }
+.pildora:active { transform: scale(.96); }
+.pildora[aria-pressed="true"] { background: linear-gradient(135deg, #ffd633, #ffbd00); box-shadow: var(--brillo); }
+.evento { border: 0; box-shadow: var(--sombra); }
+.llegadas .icono { padding: 6px; width: 40px; height: 40px; border-radius: 12px; background: #261f00; }
+
+/* Barra inferior de cristal */
+@media (max-width: 56.24rem) {
+  .barra-app { background: var(--cristal); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-top: 1px solid rgba(255, 255, 255, .1); border-radius: 22px 22px 0 0; }
+  .barra-item[aria-current="page"] .barra-icono, .barra-item.activo .barra-icono { background: linear-gradient(135deg, #ffd633, #ffbd00); box-shadow: var(--brillo); }
+  .mas-panel:not([hidden]) { background: #101010; border-radius: 24px 24px 0 0; }
+}
+.pie { border-top-color: rgba(255, 255, 255, .08); }
+
+/* Entrada suave de las tarjetas (solo si el usuario no pide menos movimiento) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sube { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .tarjetas > li, .resultados, .calc { animation: sube .45s ease both; }
+  .tarjetas > li:nth-child(2) { animation-delay: .05s; } .tarjetas > li:nth-child(3) { animation-delay: .1s; }
+  .tarjetas > li:nth-child(4) { animation-delay: .15s; } .tarjetas > li:nth-child(n+5) { animation-delay: .2s; }
+}
