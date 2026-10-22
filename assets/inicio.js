@@ -115,7 +115,7 @@ document.getElementById("copia-archivo").addEventListener("change", async (ev) =
   ev.target.value = "";
   if (r.error) { estadoCopia.textContent = r.error; return; }
   pendiente = r.copia;
-  document.getElementById("copia-resumen").textContent = `Copia del ${fechaCorta(String(r.copia.fecha).slice(0, 10))} con ${r.n} apartados. Restaurar sustituye en este móvil lo que traiga la copia; lo demás no se toca.`;
+  document.getElementById("copia-resumen").textContent = `Copia ${r.copia.fecha ? `del ${fechaCorta(r.copia.fecha.slice(0, 10))}` : "sin fecha"} con ${r.n} apartados. Restaurar sustituye en este móvil lo que traiga la copia; lo demás no se toca.`;
   confirmar(true);
 });
 document.getElementById("copia-no").addEventListener("click", () => { confirmar(false); estadoCopia.textContent = "No se ha cambiado nada."; });
