@@ -76,6 +76,14 @@ botonNotif?.addEventListener("click", async () => {
 pintarNotif();
 avisarSiToca();
 
+// ---- Guía de inicio: se enseña la primera vez y se puede volver a ver ---------------------------
+const CLAVE_TOUR = "taxi.tour";
+const tour = document.getElementById("tour"), verTour = document.getElementById("tour-ver");
+const mostrarTour = (on) => { tour.hidden = !on; verTour.hidden = on; };
+mostrarTour(leerJson(CLAVE_TOUR, null) !== "visto");
+document.getElementById("tour-cerrar").addEventListener("click", () => { guardarJson(CLAVE_TOUR, "visto"); mostrarTour(false); verTour.focus(); });
+verTour.addEventListener("click", () => { mostrarTour(true); tour.scrollIntoView({ block: "start" }); });
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }

@@ -178,3 +178,6 @@ strong, b { font-weight: 800; }
   .nav-flecha-izq { left: -1rem; }
   .nav-flecha-der { right: -1rem; }
 }
+
+/* Guía de inicio de la portada de la app. */
+.pasos-tour { margin: .5rem 0; padding-left: 1.25rem; display: grid; gap: .6rem; }
