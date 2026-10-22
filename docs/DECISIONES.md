@@ -57,3 +57,12 @@
 33. **Dominio propio (22/10/2026):** preparado en `docs/DOMINIO.md`, sin ejecutar (compra y DNS los hace Cris). Advertencia: al cambiar de origen se pierden los datos locales de quien ya la usa; hace falta copia de seguridad/restaurar antes o cambiar cuanto antes.
 34. **Sin cuentas de usuario (22/10/2026, decidido por Cris):** Taxi-IA se queda en local, sin perfiles ni registro, para que no haya fricción. Consecuencias: no hay sincronización entre dispositivos ni push con la app cerrada; cambiar de móvil o de dominio exige copia de seguridad/restaurar (pendiente, es lo único que evita perder datos); el contador de aperturas sigue siendo anónimo.
 35. **Copia de seguridad y restaurar (22/10/2026):** en Inicio, «Guardar copia» descarga un archivo .json con todo lo guardado (`taxi.*`, salvo las marcas de «ya contado» y el trayecto GPS en curso) y «Restaurar desde un archivo» lo valida y, tras confirmar, sustituye las claves que trae la copia (lo demás no se toca; si una escritura falla se deshace). Solo acepta claves «taxi.*». Sin cuentas ni servidor; el archivo va sin cifrar y se avisa. Prueba: `node assets/copia.test.js`. Privacidad actualizada. SW taxi-v34.
+36. **Más app, menos web (22/10/2026):**
+    - **Firma:** «Desarrollado por WhiteMoon Agencia IA» solo en Inicio (abajo, discreta, logo de 40 px) y en Privacidad; fuera del resto, también de la portada. Regla cambiada en CLAUDE.md.
+    - **Móvil (<900 px):** cabecera fija y compacta solo con el título de la pantalla; la navegación sigue en la barra inferior, que respeta las zonas seguras. El texto que iba bajo el título abre ahora el contenido (`.sub.intro`).
+    - **Inicio como panel:** objetivo de hoy (reutiliza `pintarObjetivo`), vencimientos y mantenimiento siempre visibles (con texto si no hay nada), accesos grandes a Facturación, Turnos y Gastos, y el resto en filas sin fotos. Las fotos de las tarjetas salen del precacheo.
+    - **Estados vacíos** con un botón de acción y **confirmaciones** como etiqueta breve.
+    - **Movimiento:** de 150 a 250 ms, transición entre páginas (`@view-transition`), todo solo sin prefers-reduced-motion. Sin rebote del cuerpo (`overscroll-behavior`).
+    - **Instalación:** `id` en el manifest y metas de app para iOS.
+    - **Sin saltos al cargar:** `assets/arranque.js` marca antes de pintar si hay que enseñar la guía, y el Radar reserva el hueco de los eventos. Lighthouse móvil: Inicio pasa de 75 a 96 y Radar de 81 a 96.
+    - Sin cambios en la lógica, los datos ni las claves. SW taxi-v35.

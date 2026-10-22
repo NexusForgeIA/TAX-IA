@@ -3,6 +3,7 @@
   "short_name": "Taxi-IA",
   "description": "Carreras, calculadoras, vencimientos y avisos para taxistas.",
   "lang": "es",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

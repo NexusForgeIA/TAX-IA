@@ -12,8 +12,11 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
+  <script src="assets/arranque.js"></script>
   <script type="module" src="assets/inicio.js"></script>
   <script type="module" src="assets/visita.js"></script>
 </head>
@@ -35,13 +38,13 @@
         <a href="avisos.html">Avisos</a>
         <a href="instalar.html">Instalar</a>
       </nav>
-      <h1>¿Qué quieres hacer?</h1>
-      <p class="sub">Para taxistas, titulares y asalariados. Con tus propias cifras: nada viene de fábrica.</p>
+      <h1>Inicio</h1>
     </div>
   </header>
 
   <main class="contenedor">
-    <section id="tour" class="tarjeta-info" aria-labelledby="t-tour" hidden>
+    <p class="sub intro">Para taxistas, titulares y asalariados. Con tus propias cifras: nada viene de fábrica.</p>
+    <section id="tour" class="tarjeta-info" aria-labelledby="t-tour">
       <h2 id="t-tour">Empieza en 3 pasos</h2>
       <ol class="pasos-tour">
         <li><strong>Apunta tus carreras.</strong> En <a href="ingresos.html">Facturación</a> pulsa un día y añade la carrera: calle o aplicación, efectivo o tarjeta. Si tu datáfono te da el total, usa «Cierre del datáfono».</li>
@@ -51,136 +54,43 @@
       <p class="nota">Todo lo pones tú y se guarda solo en este móvil. Se anota con el coche parado.</p>
       <p class="botones"><button type="button" class="boton" id="tour-cerrar">Entendido</button></p>
     </section>
-    <section id="avisos-vencimientos" class="tarjeta-info aviso avisos-venc" aria-labelledby="t-avisos" hidden>
-      <h2 id="t-avisos">Revisa tus vencimientos y mantenimiento</h2>
-      <p><a href="vencimientos.html">Ver vencimientos</a> · <a href="mantenimiento.html">Ver mantenimiento</a> · Son las fechas y los km que apuntaste tú.</p>
-    </section>
-    <p class="nota"><button type="button" class="boton-sec" id="tour-ver" hidden>Ver la guía de inicio</button></p>
-    <p id="notif-caja" class="nota" hidden><button type="button" class="boton-sec" id="notif-activar">Activar avisos en el móvil</button> <span id="notif-estado" role="status" aria-live="polite"></span></p>
-    <ul class="tarjetas">
-      <li class="tarjetas-ancho">
-        <a class="tarjeta tarjeta-destacada" href="ingresos.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-ingresos.webp" type="image/webp"><img src="assets/img/card-ingresos.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Facturación por carrera</span>
-            <span class="tarjeta-texto">Apunta cada carrera de calle o de aplicación, en efectivo o con tarjeta, y mira el total del día y del mes.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="radar.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-radar.webp" type="image/webp"><img src="assets/img/card-radar.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#radar"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Radar de eventos</span>
-            <span class="tarjeta-texto">Partidos, conciertos y ferias de Madrid, Barcelona, Sevilla y Valencia, y enlaces a las llegadas del aeropuerto y las estaciones.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="trayecto.html">
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#trayecto"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Trayecto con GPS</span>
-            <span class="tarjeta-texto">Graba tu carrera y mira el recorrido, los kilómetros y el tiempo. Se guarda solo en tu móvil.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="turnos.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-turnos.webp" type="image/webp"><img src="assets/img/card-turnos.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#turno"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Turnos</span>
-            <span class="tarjeta-texto">Cierra el turno con tu recaudación y tus gastos y calcula el reparto con el asalariado.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="calculadoras.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-calculadoras.webp" type="image/webp"><img src="assets/img/card-calculadoras.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#calculadora"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Calculadoras</span>
-            <span class="tarjeta-texto">Importe de una carrera con tu tarifa, beneficio del turno, objetivo de ingresos y coste por km.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="gastos.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-gastos.webp" type="image/webp"><img src="assets/img/card-gastos.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#coche"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Gastos del coche</span>
-            <span class="tarjeta-texto">Apunta tus repostajes y mira tu coste por km, por turno, por día y por mes.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="estadisticas.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-estadisticas.webp" type="image/webp"><img src="assets/img/card-estadisticas.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#estadisticas"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Estadísticas</span>
-            <span class="tarjeta-texto">Qué días y qué horas facturas más, con tus propias carreras.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="vencimientos.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-vencimientos.webp" type="image/webp"><img src="assets/img/card-vencimientos.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#vencimientos"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Vencimientos</span>
-            <span class="tarjeta-texto">Apunta la ITV, el seguro, el taxímetro o la revista municipal y te lo recordamos al abrir la app.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="mantenimiento.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-mantenimiento.webp" type="image/webp"><img src="assets/img/card-mantenimiento.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#mantenimiento"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Mantenimiento</span>
-            <span class="tarjeta-texto">Cuántos km te quedan para el aceite, los frenos o los neumáticos.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li>
-        <a class="tarjeta" href="avisos.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-avisos.webp" type="image/webp"><img src="assets/img/card-avisos.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#avisos"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Avisos municipales</span>
-            <span class="tarjeta-texto">Apunta lo que publica tu ayuntamiento y te afecta.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
-      <li class="tarjetas-ancho">
-        <a class="tarjeta" href="instalar.html">
-          <picture class="tarjeta-foto"><source srcset="assets/img/card-instalar.webp" type="image/webp"><img src="assets/img/card-instalar.jpg" width="480" height="300" alt="" loading="lazy" decoding="async"></picture>
-          <span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#instalar"/></svg></span>
-          <span class="tarjeta-cuerpo">
-            <span class="tarjeta-titulo">Instalar la app</span>
-            <span class="tarjeta-texto">Ponla en la pantalla de inicio de tu móvil y ábrela como una app, sin tienda.</span>
-          </span>
-          <svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg>
-        </a>
-      </li>
+    <div class="panel">
+      <a class="panel-tarjeta" href="ingresos.html#t-objetivo">
+        <span class="panel-cabeza"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg></span><span class="panel-titulo">Objetivo de hoy</span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></span>
+        <span id="objetivo-texto" class="panel-texto">Escribe cuánto quieres facturar hoy y verás cuánto llevas.</span>
+        <span id="objetivo-barra-wrap" class="panel-barra" hidden><progress id="objetivo-barra" value="0" max="1"></progress></span>
+      </a>
+      <section id="avisos-vencimientos" class="panel-tarjeta avisos-venc" aria-labelledby="t-avisos">
+        <h2 id="t-avisos" class="panel-cabeza"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#vencimientos"/></svg></span><span class="panel-titulo">Vencimientos y mantenimiento</span></h2>
+        <p id="venc-resumen" class="panel-texto"></p>
+        <p class="botones"><a class="boton-sec" href="vencimientos.html">Vencimientos</a><a class="boton-sec" href="mantenimiento.html">Mantenimiento</a></p>
+      </section>
+    </div>
+
+    <h2 class="panel-seccion" id="t-accesos">Apuntar ahora</h2>
+    <ul class="accesos" aria-labelledby="t-accesos">
+      <li><a class="acceso" href="ingresos.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg></span><span class="acceso-titulo">Facturación</span><span class="acceso-texto">Carreras y datáfono</span></a></li>
+      <li><a class="acceso" href="turnos.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#turno"/></svg></span><span class="acceso-titulo">Turnos</span><span class="acceso-texto">Cerrar el turno</span></a></li>
+      <li><a class="acceso" href="gastos.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#coche"/></svg></span><span class="acceso-titulo">Gastos</span><span class="acceso-texto">Repostajes y otros</span></a></li>
     </ul>
 
-    <p class="beta">Taxi-IA está en beta gratuita. ¿Qué te parece? <a href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Envíanos tu opinión</a> · Desarrollado por <a href="https://whitemoon.es" target="_blank" rel="noopener">WhiteMoon Agencia IA</a>.</p>
+    <h2 class="panel-seccion" id="t-mas">Más herramientas</h2>
+    <ul class="filas" aria-labelledby="t-mas">
+      <li><a class="fila" href="radar.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#radar"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Radar de eventos</span><span class="fila-texto">Eventos y llegadas en Madrid, Barcelona, Sevilla y Valencia</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="trayecto.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#trayecto"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Trayecto con GPS</span><span class="fila-texto">Recorrido, km y tiempo de una carrera</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="calculadoras.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#calculadora"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Calculadoras</span><span class="fila-texto">Tarifa, reparto, objetivo y coste por km</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="estadisticas.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#estadisticas"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Estadísticas</span><span class="fila-texto">Qué días y horas facturas más</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="informe.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#facturacion"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Informe del mes</span><span class="fila-texto">Para guardar como PDF o compartir</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="vencimientos.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#vencimientos"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Vencimientos</span><span class="fila-texto">ITV, seguro, taxímetro y revista</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="mantenimiento.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#mantenimiento"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Mantenimiento</span><span class="fila-texto">Km que te quedan para cada revisión</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="avisos.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#avisos"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Avisos municipales</span><span class="fila-texto">Lo que publica tu ayuntamiento</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+      <li><a class="fila" href="instalar.html"><span class="tarjeta-icono"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#instalar"/></svg></span><span class="fila-cuerpo"><span class="fila-titulo">Instalar la app</span><span class="fila-texto">En la pantalla de inicio, sin tienda</span></span><svg class="icono tarjeta-chevron" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></a></li>
+    </ul>
+
+    <p class="botones ajustes-inicio"><button type="button" class="boton-sec" id="tour-ver" hidden>Ver la guía de inicio</button></p>
+    <p id="notif-caja" class="nota" hidden><button type="button" class="boton-sec" id="notif-activar">Activar avisos en el móvil</button> <span id="notif-estado" role="status" aria-live="polite"></span></p>
+
+    <p class="beta">Taxi-IA está en beta gratuita. ¿Qué te parece? <a href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Envíanos tu opinión</a>.</p>
       <section class="calc" aria-labelledby="t-copia">
       <h2 id="t-copia">Copia de seguridad</h2>
       <p class="nota">Tus datos están solo en este móvil. Guarda una copia en un archivo por si cambias de móvil o borras los datos del navegador, y restáurala cuando quieras. No hay cuenta ni servidor: el archivo lo guardas tú donde prefieras.</p>
@@ -201,7 +111,7 @@
       <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
       <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
       <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
-      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
+      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="40" height="40" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
 </body>
