@@ -51,6 +51,9 @@
               <input type="date" name="fecha" required></label>
             <label class="campo"><span>Conductor (opcional)</span>
               <input type="text" name="conductor" maxlength="40" autocomplete="off"></label>
+            <label class="campo"><span>Vehículo o turno (opcional)</span>
+              <input type="text" name="vehiculo" maxlength="40" autocomplete="off" list="vehiculos-turno" placeholder="p. ej. Taxi 1"></label>
+            <datalist id="vehiculos-turno"></datalist>
             <label class="campo"><span>Recaudación (€) <em class="tuyo">tu dato</em></span>
               <input type="text" inputmode="decimal" autocomplete="off" name="recaudacion"></label>
             <label class="campo"><span>Gastos del turno (€, opcional) <em class="tuyo">tu dato</em></span>

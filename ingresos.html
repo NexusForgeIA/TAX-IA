@@ -109,6 +109,9 @@
               <input type="time" name="hora"></label>
           </div>
           <label class="interruptor"><input type="checkbox" name="sinDetalle"> Añadir total sin detallar (sin hora)</label>
+          <label class="campo"><span>Vehículo o turno (opcional)</span>
+            <input type="text" name="etiqueta" maxlength="40" autocomplete="off" list="etiquetas-carrera" placeholder="p. ej. Taxi 1, Noche"></label>
+          <datalist id="etiquetas-carrera"></datalist>
           <label class="campo"><span>Nota (opcional)</span>
             <input type="text" name="nota" maxlength="80" autocomplete="off"></label>
           <div class="botones">

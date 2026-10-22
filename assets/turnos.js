@@ -22,6 +22,11 @@ let ultimoBorrado = null;
 
 const pref = leerJson(CLAVE_PREF, {});
 form.fecha.value = hoyMadrid();
+{
+  const nombres = new Set([...leerCarreras().map((c) => c.etiqueta), ...leerRegistros().map((r) => r.etiqueta), ...leerOtros().map((g) => g.etiqueta)].filter(Boolean));
+  $("vehiculos-turno").replaceChildren(...[...nombres].sort((a, b) => a.localeCompare(b, "es")).map((n) => el("option", { value: n })));
+  form.vehiculo.value = leerJson("taxi.vehiculoActivo", "") || "";
+}
 form.fecha.max = sumarDias(hoyMadrid(), 1);
 if (typeof pref.pct === "string") form.pct.value = pref.pct;
 if (pref.base === "recaudacion" || pref.base === "neto") form.base.value = pref.base;
@@ -36,13 +41,15 @@ const kmGpsDelDia = (dia) => {
   return Array.isArray(l) ? l.filter((t) => t && Number.isFinite(t.inicio) && Number.isFinite(t.metros) && fechaDeMs.format(new Date(t.inicio)) === dia).reduce((s, t) => s + t.metros, 0) / 1000 : 0;
 };
 
-// Trae del día elegido todo lo apuntado: recaudación, gastos (combustible y otros), km del GPS y el desglose por forma de cobro.
+// Trae del día elegido (y del vehículo, si lo pones) todo lo apuntado: recaudación, gastos (combustible y otros), km del GPS y el desglose por forma de cobro.
 $("traer").addEventListener("click", () => {
   const dia = form.fecha.value;
   if (!esFechaISO(dia)) return msg("Elige primero la fecha del turno.", true);
-  const carreras = leerCarreras().filter((c) => c.fecha === dia);
-  const repost = leerRegistros().filter((r) => r.fecha === dia);
-  const otros = leerOtros().filter((g) => g.fecha === dia);
+  const veh = form.vehiculo.value.trim();
+  const deVeh = (x) => !veh || x.etiqueta === veh;
+  const carreras = leerCarreras().filter((c) => c.fecha === dia && deVeh(c));
+  const repost = leerRegistros().filter((r) => r.fecha === dia && deVeh(r));
+  const otros = leerOtros().filter((g) => g.fecha === dia && deVeh(g));
   const km = redondear(kmGpsDelDia(dia));
   if (!carreras.length && !repost.length && !otros.length && !(km > 0)) return msg("No hay nada apuntado ese día en Facturación, Gastos ni Trayecto.", true);
   const T = totalesCarreras(carreras);
@@ -77,7 +84,7 @@ form.addEventListener("submit", (ev) => {
   if (lista.length >= MAX) return msg("Has llegado al máximo de turnos guardados. Exporta y borra los antiguos.", true);
   const r = C.reparto({ recaudacion: rec, gastos: num(form.gastos.value), porcentaje: Number.isFinite(pct) ? pct : 0, base: form.base.value });
   lista.push({
-    id: nuevoId(), fecha: form.fecha.value, conductor: form.conductor.value.trim().slice(0, 40),
+    id: nuevoId(), fecha: form.fecha.value, conductor: form.conductor.value.trim().slice(0, 40), vehiculo: form.vehiculo.value.trim().slice(0, 40),
     recaudacion: redondear(rec), gastos: redondear(num(form.gastos.value)),
     km: form.km.value.trim() === "" ? null : redondear(num(form.km.value)), horas: form.horas.value.trim() === "" ? null : redondear(num(form.horas.value)),
     pct: Number.isFinite(pct) ? pct : 0, base: form.base.value, asalariado: r.asalariado, titular: r.titular,
@@ -112,7 +119,7 @@ function pintar() {
       $("estado-lista").replaceChildren(document.createTextNode(`Borrado el turno del ${fechaCorta(t.fecha)}. `), des);
     });
     return el("li", { class: "ruta-guardada" },
-      el("strong", { text: `${fechaCorta(t.fecha)} · ${e(t.recaudacion)}${t.conductor ? ` · ${t.conductor}` : ""}` }),
+      el("strong", { text: `${fechaCorta(t.fecha)} · ${e(t.recaudacion)}${t.conductor ? ` · ${t.conductor}` : ""}${t.vehiculo ? ` · ${t.vehiculo}` : ""}` }),
       el("span", { class: "detalle", text: `Gastos ${e(t.gastos)}${t.pct ? ` · asalariado ${e(t.asalariado)}` : ""} · titular ${e(t.titular)}${t.km ? ` · ${t.km} km` : ""}${t.horas ? ` · ${t.horas} h` : ""}` }),
       el("div", { class: "botones" }, b));
   }));
@@ -120,10 +127,10 @@ function pintar() {
 
 $("exportar").addEventListener("click", () => {
   if (!lista.length) { $("estado-datos").textContent = "No hay turnos que exportar."; return; }
-  const cab = ["fecha", "conductor", "recaudacion_eur", "gastos_eur", "km", "horas", "porcentaje", "asalariado_eur", "titular_eur"];
+  const cab = ["fecha", "conductor", "vehiculo", "recaudacion_eur", "gastos_eur", "km", "horas", "porcentaje", "asalariado_eur", "titular_eur"];
   const coma = (n) => (n == null ? "" : String(n).replace(".", ","));
   const filas = lista.slice().sort((a, b) => a.fecha.localeCompare(b.fecha)).map((t) =>
-    [t.fecha, t.conductor, coma(t.recaudacion), coma(t.gastos), coma(t.km), coma(t.horas), coma(t.pct), coma(t.asalariado), coma(t.titular)].map(celdaCSV).join(";"));
+    [t.fecha, t.conductor, t.vehiculo ?? "", coma(t.recaudacion), coma(t.gastos), coma(t.km), coma(t.horas), coma(t.pct), coma(t.asalariado), coma(t.titular)].map(celdaCSV).join(";"));
   descargarCSV(`taxi-turnos-${hoyMadrid()}.csv`, [cab.join(";"), ...filas].join("\n"));
   $("estado-datos").textContent = "CSV descargado.";
 });
