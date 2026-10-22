@@ -27,6 +27,7 @@ const C = {};
   /* Reparto titular / asalariado según el porcentaje pactado (lo pone el usuario). */
   C.reparto = function (d) {
     var base = d.base === "neto" ? num(d.recaudacion) - num(d.gastos) : num(d.recaudacion);
+    if (base < 0) base = 0; // con pérdidas no hay base de reparto: el asalariado nunca sale en negativo
     var pct = Math.min(100, Math.max(0, num(d.porcentaje)));
     var asalariado = r2(base * pct / 100);
     return { base: r2(base), asalariado: asalariado, titular: r2(num(d.recaudacion) - num(d.gastos) - asalariado) };
