@@ -287,3 +287,27 @@ html:not(.con-tour) #tour { display: none; }
   .barra-app { view-transition-name: barra-app; }
 }
 @keyframes aparece { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Campo de elegir archivo (Restaurar copia): área táctil de 48 px y botón con el estilo de la app. */
+input[type=file] {
+  display: block; width: 100%; min-height: 48px; padding: .35rem; font: inherit; color: var(--muted); cursor: pointer;
+  background: #121212; border: 1px solid rgba(255, 255, 255, .12);
+}
+input[type=file]::file-selector-button {
+  min-height: 38px; margin-right: .75rem; padding: 0 1rem; font: inherit; font-weight: 800; cursor: pointer;
+  color: var(--accion-texto); background: var(--accion); border: 0; border-radius: 999px;
+}
+
+/* Instalar: «Instalar con un toque» solo aparece cuando el navegador lo ofrece (beforeinstallprompt), tarde y
+   sin aviso previo. En vez de empujar la guía (CLS), flota sobre la barra inferior; el final de la página
+   gana sitio para que no tape nada. */
+#instalar-directo:not([hidden]) {
+  position: fixed; z-index: var(--z-barra); left: max(1rem, env(safe-area-inset-left)); right: max(1rem, env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom)); max-width: 30rem; margin: 0 auto;
+  border-color: rgba(255, 200, 0, .55); box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .95);
+}
+#instalar-directo:not([hidden]) p { margin: .25rem 0; }
+@media (max-width: 56.24rem) {
+  #instalar-directo:not([hidden]) { bottom: calc(var(--barra-alto) + .75rem + env(safe-area-inset-bottom)); }
+}
+body:has(#instalar-directo:not([hidden])) main { padding-bottom: 13rem; }

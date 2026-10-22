@@ -66,3 +66,4 @@
     - **Instalación:** `id` en el manifest y metas de app para iOS.
     - **Sin saltos al cargar:** `assets/arranque.js` marca antes de pintar si hay que enseñar la guía, y el Radar reserva el hueco de los eventos. Lighthouse móvil: Inicio pasa de 75 a 96 y Radar de 81 a 96.
     - Sin cambios en la lógica, los datos ni las claves. SW taxi-v35.
+37. **Limpieza tras «más app» (22/10/2026):** fuera las fotos `assets/img/card-*` (ya no las usaba ninguna página ni el precacheo) y sus créditos. El campo de elegir archivo de Restaurar tiene 48 px de alto. En Instalar, «Instalar con un toque» flota sobre la barra inferior en vez de empujar la guía cuando el navegador la ofrece tarde (CLS 0,188 → 0; Lighthouse móvil 90 → 98). Las demás páginas ya tenían el CLS por debajo de 0,1. Sin cambios en la lógica, los datos ni las claves. SW taxi-v39.
