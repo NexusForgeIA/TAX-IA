@@ -92,6 +92,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 .grafica-barra { fill: #8a6d00; }
 .grafica-barra.max { fill: var(--accent); }
 .grafica-txt { fill: var(--muted); font-size: 9px; font-family: inherit; }
+.grafica-txt.hoy { fill: var(--accent); font-weight: 800; }
+.grafica-valor { fill: var(--text); font-size: 9px; font-weight: 700; font-family: inherit; }
+.grafica-objetivo { stroke: var(--text); stroke-width: 1.5; stroke-dasharray: 5 4; }
+
+/* Semana (estadísticas): total grande, flechas y barras de lunes a domingo */
+.semana .mes-nav { margin-top: 0; }
+.semana .mes-nav h2 { font-size: 1.05rem; }
+.semana-total { display: grid; gap: .2rem; margin: 0 0 .5rem; text-align: center; }
+.semana-cifra { font-size: clamp(2.2rem, 11vw, 3rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.semana .cifras { margin-top: .75rem; }
 
 /* Texto más redondo y con más cuerpo */
 :root { font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 500; line-height: 1.55; }
