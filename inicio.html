@@ -51,7 +51,7 @@
         <li><strong>Cierra el turno.</strong> En <a href="turnos.html">Turnos</a>, «Traer todo lo del día» rellena las cifras y calcula el reparto con el porcentaje que pongas tú.</li>
         <li><strong>Pon tus fechas.</strong> En <a href="vencimientos.html">Vencimientos</a> apunta la ITV, el seguro, el taxímetro y la revista; la app te avisará al abrirla.</li>
       </ol>
-      <p class="nota">Todo lo pones tú y se guarda solo en este móvil. Se anota con el coche parado.</p>
+      <p class="nota">Todo lo pones tú y se guarda solo en este móvil. Se anota con el coche parado. Esta guía solo sale la primera vez; para volver a verla, pulsa «Ver la guía de inicio» al final de Inicio.</p>
       <p class="botones"><button type="button" class="boton" id="tour-cerrar">Entendido</button></p>
     </section>
     <div class="panel">
@@ -95,8 +95,8 @@
       <h2 id="t-copia">Copia de seguridad</h2>
       <p class="nota">Tus datos están solo en este móvil. Guarda una copia en un archivo por si cambias de móvil o borras los datos del navegador, y restáurala cuando quieras. No hay cuenta ni servidor: el archivo lo guardas tú donde prefieras.</p>
       <p class="botones"><button type="button" class="boton-sec" id="copia-guardar">Guardar copia</button></p>
-      <label class="campo"><span>Restaurar desde un archivo</span>
-        <input type="file" id="copia-archivo" accept=".json,application/json"></label>
+      <div class="campo"><span>Restaurar desde un archivo</span>
+        <label class="boton-sec boton-archivo">Elegir archivo<input type="file" id="copia-archivo" accept=".json,application/json"></label></div>
       <div id="copia-confirmar" hidden>
         <p id="copia-resumen" class="nota"></p>
         <p class="botones"><button type="button" class="boton-peligro" id="copia-si">Sí, restaurar</button> <button type="button" class="boton-sec" id="copia-no">Cancelar</button></p>
