@@ -3,7 +3,9 @@ import "./nav.js";
 import { mostrarCuentas } from "./config.js";
 import { euros } from "./numeros.js";
 import { cuadriculaMes, diasDelMes, fechaLarga, horaMadrid, hoyMadrid, nombreMes, sumarDias, sumarMeses } from "./fechas.js";
-import { leerRegistros, porEtiqueta, totales } from "./gastos.js";
+import { etiquetas as etiquetasDe, leerRegistros, porEtiqueta, totales } from "./gastos.js";
+import { leerOtros } from "./otros-gastos.js";
+import { guardarJson, leerJson } from "./datos.js";
 import {
   aCSV, anadirApp, anadirCarrera, borrarCarrera, borrarIngresos, CANALES, COLUMNAS, cruce, editarCarrera, leerApps, leerCarreras,
   etiquetaDia, METODOS, quitarApp, restaurarCarrera, tablaMensual, totalCompacto,
@@ -17,6 +19,11 @@ const $ = (id) => document.getElementById(id);
 const form = $("f-carrera");
 const F = Object.fromEntries(["g-calle", "g-app", "c-hora", "guardar", "cancelar", "t-form", "estado-form", "apps-lista", "apps-rapidas"].map((id) => [id, $(id)]));
 const kmFmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
+const CLAVE_ACTIVO = "taxi.vehiculoActivo";
+function sugerirEtiquetas() {
+  const todas = new Set([...leerCarreras().map((c) => c.etiqueta).filter(Boolean), ...etiquetasDe([...leerRegistros(), ...leerOtros()])]);
+  $("etiquetas-carrera").replaceChildren(...[...todas].sort((a, b) => a.localeCompare(b, "es")).map((t) => el("option", { value: t })));
+}
 const NOTA_CIERRE = "Cierre del datáfono";
 const MES_HOY = hoyMadrid().slice(0, 7);
 let mes = MES_HOY;
@@ -37,7 +44,7 @@ function el(tag, attrs = {}, ...hijos) {
 
 const eur = (n) => `${euros(n)} €`;
 const nCarreras = (d) => `${d.carreras} ${d.carreras === 1 ? "carrera" : "carreras"}`;
-const textoCarrera = (c) => [c.hora ?? "Total sin detallar", c.canal === "app" ? c.app : CANALES.calle, METODOS[c.canal][c.metodo]].join(" · ");
+const textoCarrera = (c) => [c.hora ?? "Total sin detallar", c.canal === "app" ? c.app : CANALES.calle, METODOS[c.canal][c.metodo], c.etiqueta].filter(Boolean).join(" · ");
 
 // ---- Formulario «+ Carrera» -----------------------------------------------------------------
 function mostrarGrupos() {
@@ -67,6 +74,8 @@ function apuntarApps() {
 /** Deja el formulario listo para la siguiente carrera; conserva canal, cobro y aplicación. */
 function siguiente() {
   editando = null;
+  form.etiqueta.value = leerJson(CLAVE_ACTIVO, "") || ""; // el último vehículo o turno usado
+  sugerirEtiquetas();
   form.importe.value = "";
   form.nota.value = "";
   form.sinDetalle.checked = false;
@@ -82,7 +91,7 @@ function datosFormulario() {
   return {
     fecha: abierto, canal, hora: form.hora.value, sinDetalle: form.sinDetalle.checked,
     metodo: canal === "calle" ? form.metodo_calle.value : canal === "app" ? form.metodo_app.value : "",
-    app: form.app.value, importe: form.importe.value, nota: form.nota.value,
+    app: form.app.value, importe: form.importe.value, nota: form.nota.value, etiqueta: form.etiqueta.value,
   };
 }
 
@@ -103,6 +112,7 @@ form.addEventListener("submit", (e) => {
   }
   estado.classList.remove("error");
   const c = r.carrera;
+  guardarJson(CLAVE_ACTIVO, c.etiqueta);
   const texto = `${editando ? "Actualizada" : "Guardada"}: ${textoCarrera(c)} · ${eur(c.importe)}.`;
   siguiente();
   apuntarApps();
@@ -138,6 +148,7 @@ function editar(c) {
   form.sinDetalle.checked = c.hora == null;
   form.hora.value = c.hora ?? horaMadrid();
   form.nota.value = c.nota;
+  form.etiqueta.value = c.etiqueta ?? "";
   F["cancelar"].hidden = false;
   F["t-form"].textContent = c.hora == null ? "Editar total sin detallar" : `Editar carrera de las ${c.hora}`;
   F["estado-form"].textContent = "";

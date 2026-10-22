@@ -11,7 +11,7 @@ export const CLAVE_RESPALDO = "taxi.ingresos.respaldo";
 export const VERSION_DATOS = 1;
 export const MAX_CARRERAS = 20000;
 export const MAX_APPS = 30;
-const LIM = { importe: 10000, app: 40, nota: 80 };
+const LIM = { importe: 10000, app: 40, nota: 80, etiqueta: 40 };
 
 export const CANALES = { calle: "Calle", app: "Aplicación" };
 /** Formas de cobro por canal. En la aplicación, «app» = lo cobra la aplicación. */
@@ -61,7 +61,9 @@ export function validarCarrera(datos, hoy = hoyMadrid()) {
   }
   const nota = limpio(d.nota);
   if (nota.length > LIM.nota) return { error: "La nota admite hasta 80 caracteres.", campo: "nota" };
-  return { carrera: { fecha: d.fecha, hora, canal: d.canal, metodo: d.metodo, app, importe: redondear(importe, 2), nota } };
+  const etiqueta = limpio(d.etiqueta);
+  if (etiqueta.length > LIM.etiqueta) return { error: "El vehículo o turno admite hasta 40 caracteres.", campo: "etiqueta" };
+  return { carrera: { fecha: d.fecha, hora, canal: d.canal, metodo: d.metodo, app, importe: redondear(importe, 2), nota, etiqueta } };
 }
 
 // ---- Almacenamiento con versión -------------------------------------------------------------
@@ -246,11 +248,11 @@ const coma = (n) => n.toFixed(2).replace(".", ",");
 
 /** CSV del mes: una fila por carrera; canal, aplicación y método en columnas separadas. */
 export function aCSV(carreras) {
-  const filas = [["fecha", "hora", "canal", "aplicacion", "metodo", "importe_eur", ...COLUMNAS.map(([k]) => `${k}_eur`), "nota"]];
+  const filas = [["fecha", "hora", "canal", "aplicacion", "metodo", "importe_eur", ...COLUMNAS.map(([k]) => `${k}_eur`), "nota", "turno_o_vehiculo"]];
   for (const c of ordenar([...carreras])) {
     const col = columna(c);
     filas.push([c.fecha, c.hora ?? "total sin detallar", CANALES[c.canal], c.app, METODOS[c.canal][c.metodo], coma(c.importe),
-      ...COLUMNAS.map(([k]) => (k === col ? coma(c.importe) : "")), c.nota]);
+      ...COLUMNAS.map(([k]) => (k === col ? coma(c.importe) : "")), c.nota, c.etiqueta ?? ""]);
   }
   return filas.map((f) => f.map(celdaCSV).join(";")).join("\r\n") + "\r\n";
 }

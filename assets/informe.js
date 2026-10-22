@@ -23,7 +23,7 @@ for (const o of otros) meses.add(o.fecha.slice(0, 7));
 for (const t of viajes) meses.add(fechaDeMs.format(new Date(t.inicio)).slice(0, 7));
 const sel = $("mes");
 const selVeh = $("vehiculo");
-for (const et of etiquetas([...repostajes, ...otros])) selVeh.append(el("option", { value: et, text: et }));
+for (const et of etiquetas([...carreras, ...repostajes, ...otros])) selVeh.append(el("option", { value: et, text: et }));
 const delVehiculo = (l) => (selVeh.value ? l.filter((x) => x.etiqueta === selVeh.value) : l);
 let ultimo = null; // lo último pintado, para el CSV y el resumen que se comparte
 for (const m of [...meses].sort().reverse()) sel.append(el("option", { value: m, text: nombreMes(m) }));
@@ -35,7 +35,7 @@ function tabla(cabecera, filas, pie) {
 
 function pintar() {
   const mes = sel.value;
-  const t = tablaMensual(carreras, mes);
+  const t = tablaMensual(delVehiculo(carreras), mes);
   const gastos = delVehiculo(repostajes).filter((r) => r.fecha.startsWith(`${mes}-`));
   const otrosMes = delVehiculo(otros).filter((o) => o.fecha.startsWith(`${mes}-`));
   const viajesMes = viajes.filter((v) => fechaDeMs.format(new Date(v.inicio)).startsWith(mes));
@@ -46,7 +46,7 @@ function pintar() {
   if (!hay) { ultimo = null; return; }
 
   $("inf-titulo").textContent = `Informe de ${nombreMes(mes)}`;
-  $("inf-sub").textContent = `Generado el ${fechaCorta(hoy)} con los datos apuntados en Taxi-IA.${selVeh.value ? ` Gastos del turno o vehículo: ${selVeh.value}.` : ""}`;
+  $("inf-sub").textContent = `Generado el ${fechaCorta(hoy)} con los datos apuntados en Taxi-IA.${selVeh.value ? ` Filtrado por turno o vehículo: ${selVeh.value}.` : ""}`;
 
   const F = t.total;
   const filasF = [["Total facturado", e(F.total), true], ["Carreras apuntadas", String(F.carreras)], ...COLUMNAS.map(([k, n]) => [n, e(F[k])]), ["Efectivo en mano (calle + app)", e(F.efectivo_en_mano)], ["Cobrado por banco, datáfono o app", e(F.cobrado_banco_app)]];
@@ -75,7 +75,7 @@ function pintar() {
     : "Sin lecturas de cuentakilómetros (hacen falta dos repostajes con km) ni trayectos GPS este mes.";
 
   const ant = sumarMeses(mes, -1);
-  const tAnt = tablaMensual(carreras, ant).total;
+  const tAnt = tablaMensual(delVehiculo(carreras), ant).total;
   const gAnt = totales(delVehiculo(repostajes).filter((r) => r.fecha.startsWith(`${ant}-`))).importe;
   const oAnt = totalOtros(delVehiculo(otros).filter((o) => o.fecha.startsWith(`${ant}-`))).total;
   const dif = (a, b) => `${b - a > 0 ? "+" : ""}${e(Math.round((b - a) * 100) / 100)}`;
