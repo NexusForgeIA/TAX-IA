@@ -181,6 +181,19 @@
     </ul>
 
     <p class="beta">Taxi-IA está en beta gratuita. ¿Qué te parece? <a href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion>Envíanos tu opinión</a> · Desarrollado por <a href="https://whitemoon.es" target="_blank" rel="noopener">WhiteMoon Agencia IA</a>.</p>
+      <section class="calc" aria-labelledby="t-copia">
+      <h2 id="t-copia">Copia de seguridad</h2>
+      <p class="nota">Tus datos están solo en este móvil. Guarda una copia en un archivo por si cambias de móvil o borras los datos del navegador, y restáurala cuando quieras. No hay cuenta ni servidor: el archivo lo guardas tú donde prefieras.</p>
+      <p class="botones"><button type="button" class="boton-sec" id="copia-guardar">Guardar copia</button></p>
+      <label class="campo"><span>Restaurar desde un archivo</span>
+        <input type="file" id="copia-archivo" accept=".json,application/json"></label>
+      <div id="copia-confirmar" hidden>
+        <p id="copia-resumen" class="nota"></p>
+        <p class="botones"><button type="button" class="boton-peligro" id="copia-si">Sí, restaurar</button> <button type="button" class="boton-sec" id="copia-no">Cancelar</button></p>
+      </div>
+      <p id="copia-estado" class="nota" role="status" aria-live="polite"></p>
+      <p class="nota">El archivo contiene tus carreras, gastos y ajustes sin cifrar: guárdalo en un sitio que sea solo tuyo.</p>
+    </section>
   </main>
 
   <footer class="pie">
