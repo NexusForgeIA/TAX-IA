@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/estadisticas.js"></script>
+  <script type="module" src="assets/semana-vista.js"></script>
   <script type="module" src="assets/visita.js"></script>
 </head>
 <body>
@@ -43,6 +44,22 @@
 
   <main class="contenedor">
     <p class="sub intro">Qué días y qué horas te funcionan mejor, con tus propias carreras.</p>
+    <section class="calc semana" aria-labelledby="t-semana">
+      <div class="mes-nav">
+        <button type="button" class="boton-sec" id="sem-ant" aria-label="Semana anterior"><svg class="icono girado" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></button>
+        <h2 id="t-semana" aria-live="polite">Semana</h2>
+        <button type="button" class="boton-sec" id="sem-sig" aria-label="Semana siguiente"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#chevron"/></svg></button>
+      </div>
+      <p class="semana-total"><span class="semana-cifra" id="sem-total">0,00 €</span><span class="nota" id="sem-comparacion"></span></p>
+      <div id="sem-vacio" class="vacio" hidden><p>No hay carreras apuntadas esta semana.</p><a class="boton" href="ingresos.html">Apuntar carreras</a></div>
+      <div id="sem-contenido" hidden>
+        <div id="sem-grafica" class="grafica"></div>
+        <ul id="sem-lista" class="visualmente-oculto"></ul>
+        <p class="nota" id="sem-objetivo"></p>
+        <dl class="cifras" id="sem-kpis"></dl>
+        <p class="nota" id="sem-notas"></p>
+      </div>
+    </section>
     <section class="calc" aria-labelledby="t-per">
       <h2 id="t-per">Tus carreras</h2>
       <p class="nota">Sale de lo que apuntas en <a href="ingresos.html">Facturación</a>. Cuantas más carreras con hora apuntes, más útil.</p>

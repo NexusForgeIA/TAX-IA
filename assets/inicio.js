@@ -7,9 +7,18 @@ import { avisos, leerVencimientos, migrarVencimientos, nombreVencimiento, textoE
 import C from "./herramientas.js";
 import { archivoCopia, crearCopia, leerCopia, restaurarCopia } from "./copia.js";
 import { pintarObjetivo } from "./objetivo.js";
+import { leerCarreras } from "./ingresos.js";
+import { euros } from "./numeros.js";
+import { lunesDe, resumenSemana } from "./semana.js";
 
 migrarVencimientos(); // tipos de versiones anteriores (decisión 100)
 pintarObjetivo(); // tarjeta «Objetivo de hoy» del panel: lo facturado hoy frente al objetivo que puso el usuario
+
+// Tarjeta «Esta semana»: total de lunes a domingo; el detalle está en Estadísticas.
+{
+  const s = resumenSemana(leerCarreras(), [], lunesDe(hoyMadrid()));
+  if (s.lineas) document.getElementById("semana-texto").textContent = `Llevas ${euros(s.total)} € esta semana (${s.carreras} ${s.carreras === 1 ? "carrera" : "carreras"}).`;
+}
 
 const fmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
 const caja = document.getElementById("avisos-vencimientos");
