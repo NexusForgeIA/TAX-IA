@@ -6,12 +6,15 @@ import { leerJson, guardarJson } from "./datos.js";
 import { avisos, leerVencimientos, migrarVencimientos, nombreVencimiento, textoEstado } from "./vencimientos.js";
 import C from "./herramientas.js";
 import { archivoCopia, crearCopia, leerCopia, restaurarCopia } from "./copia.js";
+import { pintarObjetivo } from "./objetivo.js";
 
 migrarVencimientos(); // tipos de versiones anteriores (decisión 100)
+pintarObjetivo(); // tarjeta «Objetivo de hoy» del panel: lo facturado hoy frente al objetivo que puso el usuario
 
 const fmt = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
 const caja = document.getElementById("avisos-vencimientos");
-const items = avisos(leerVencimientos()).map((v) => ({ clase: v.clase, estado: `${textoEstado(v)}: `, texto: `${nombreVencimiento(v)} (${fechaCorta(v.fecha)}${v.vehiculo ? `, ${v.vehiculo}` : ""})` }));
+const vencimientos = leerVencimientos();
+const items = avisos(vencimientos).map((v) => ({ clase: v.clase, estado: `${textoEstado(v)}: `, texto: `${nombreVencimiento(v)} (${fechaCorta(v.fecha)}${v.vehiculo ? `, ${v.vehiculo}` : ""})` }));
 
 // Mantenimiento por km: solo lo que toca ya o pronto, con los intervalos y km del propio usuario.
 const km = leerJson("taxi.kmActual", "");
@@ -37,7 +40,13 @@ if (items.length) {
   }
   caja.insertBefore(ul, caja.querySelector("p"));
   if (items.length > 5) caja.querySelector("p").prepend(document.createTextNode(`Y ${items.length - 5} más. `));
-  caja.hidden = false;
+  caja.querySelector("p").append("Son las fechas y los km que apuntaste tú.");
+  caja.classList.add("aviso");
+} else {
+  // Tarjeta siempre visible en el panel: sin avisos, dice por qué (nada pronto o aún sin datos).
+  caja.querySelector("p").textContent = vencimientos.length || (Array.isArray(mant) && mant.length)
+    ? "Nada vence pronto con las fechas y los km que apuntaste."
+    : "Apunta la ITV, el seguro, el taxímetro y la revista y te avisamos al abrir la app.";
 }
 
 // ---- Avisos del móvil (notificaciones locales, con permiso del usuario) -----------------------
@@ -80,7 +89,7 @@ avisarSiToca();
 // ---- Guía de inicio: se enseña la primera vez y se puede volver a ver ---------------------------
 const CLAVE_TOUR = "taxi.tour";
 const tour = document.getElementById("tour"), verTour = document.getElementById("tour-ver");
-const mostrarTour = (on) => { tour.hidden = !on; verTour.hidden = on; };
+const mostrarTour = (on) => { tour.hidden = !on; verTour.hidden = on; document.documentElement.classList.toggle("con-tour", on); };
 mostrarTour(leerJson(CLAVE_TOUR, null) !== "visto");
 document.getElementById("tour-cerrar").addEventListener("click", () => { guardarJson(CLAVE_TOUR, "visto"); mostrarTour(false); verTour.focus(); });
 verTour.addEventListener("click", () => { mostrarTour(true); tour.scrollIntoView({ block: "start" }); });

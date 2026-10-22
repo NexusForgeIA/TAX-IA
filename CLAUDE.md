@@ -21,7 +21,7 @@ al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni nada
 - Avisos municipales automáticos: no antes de confirmar fuente y licencia de uso de cada ayuntamiento.
 - Sin WhatsApp Business API. Aviso de IA visible donde se use IA.
 - Seguridad al volante: se anota con el coche parado; el GPS se inicia y se termina con el coche parado. Los km del GPS son estimación, no sustituyen al taxímetro.
-- Sin emojis como iconos: solo el sprite `assets/iconos.svg` (24×24, trazo). Toda página lleva «Desarrollado por WhiteMoon Agencia IA» (firma con el logo 3D).
+- Sin emojis como iconos: solo el sprite `assets/iconos.svg` (24×24, trazo). La firma «Desarrollado por WhiteMoon Agencia IA» (logo 3D pequeño, enlace a https://whitemoon.es con rel="noopener") va solo en Inicio (abajo, discreta) y en Privacidad; el resto de páginas no la lleva.
 
 ## RGPD
 - Prototipo: todo en `localStorage`, nada sale del dispositivo. Con cuentas: exportar y borrar datos desde la app.

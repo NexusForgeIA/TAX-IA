@@ -12,6 +12,8 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/trayecto.js"></script>
@@ -36,11 +38,11 @@
         <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Trayecto con GPS</h1>
-      <p class="sub">Graba tu carrera y mira el recorrido, los kilómetros y el tiempo. Se guarda solo en tu móvil.</p>
     </div>
   </header>
 
   <main class="contenedor">
+    <p class="sub intro">Graba tu carrera y mira el recorrido, los kilómetros y el tiempo. Se guarda solo en tu móvil.</p>
     <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Con el coche parado.</strong> Inicia y termina la carrera sin conducir. Funciona con la app abierta y la pantalla encendida; los kilómetros son una estimación del GPS y no sustituyen al taxímetro.</p>
 
     <section class="calc" aria-labelledby="t-actual">
@@ -60,7 +62,7 @@
 
     <section class="resultados" aria-labelledby="t-hist">
       <h2 id="t-hist">Tus recorridos</h2>
-      <p id="vacio" class="nota">Aún no has grabado ninguna carrera.</p>
+      <div id="vacio" class="vacio"><p>Aún no has grabado ninguna carrera.</p><a class="boton" href="#t-actual">Grabar la primera</a></div>
       <ul id="lista" class="lista-recorridos"></ul>
       <div class="botones" id="acciones" hidden>
         <button type="button" class="boton-sec" id="exportar">Exportar a CSV</button>
@@ -76,7 +78,6 @@
     <div class="contenedor">
       <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
       <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
-      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
 </body>

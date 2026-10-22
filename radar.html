@@ -12,6 +12,8 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/radar.js"></script>
@@ -36,18 +38,20 @@
         <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Radar de eventos</h1>
-      <p class="sub">Qué pasa hoy en Madrid, Barcelona, Sevilla y Valencia, y dónde mirar llegadas. Información orientativa.</p>
     </div>
   </header>
 
   <main class="contenedor">
+    <p class="sub intro">Qué pasa hoy en Madrid, Barcelona, Sevilla y Valencia, y dónde mirar llegadas. Información orientativa.</p>
     <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> <strong>Es una pista, no una promesa.</strong> Que haya un evento no garantiza más carreras: decides tú si te compensa ir. Taxi-IA no muestra aún vuelos ni trenes en tiempo real.</p>
 
     <section class="resultados" aria-labelledby="t-eventos">
       <h2 id="t-eventos">Eventos próximos</h2>
       <div id="ciudades" class="pildoras" role="group" aria-label="Ciudad"></div>
-      <p id="estado-eventos" class="estado" role="status" aria-live="polite">Cargando eventos… (hace falta JavaScript activado).</p>
-      <ul id="eventos" class="eventos" aria-label="Eventos de la ciudad elegida"></ul>
+      <div class="eventos-marco">
+        <p id="estado-eventos" class="estado" role="status" aria-live="polite">Cargando eventos… (hace falta JavaScript activado).</p>
+        <ul id="eventos" class="eventos" aria-label="Eventos de la ciudad elegida"></ul>
+      </div>
     </section>
 
     <section class="resultados" aria-labelledby="t-llegadas">
@@ -63,7 +67,6 @@
     <div class="contenedor">
       <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
       <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
-      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
 </body>

@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v37";
+const VERSION = "taxi-v38";
 const CARCASA = [
   "./",
   "aviso-legal.html",
@@ -20,6 +20,7 @@ const CARCASA = [
   "turnos.html",
   "vencimientos.html",
   "manifest.webmanifest",
+  "assets/arranque.js",
   "assets/avisos.js",
   "assets/calculadoras.js",
   "assets/config.js",
@@ -61,8 +62,6 @@ const CARCASA = [
   "assets/icons/icon-maskable-512.png",
   "assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2",
   "assets/img/logo.png",
-  "assets/img/card-radar.webp",
-  "assets/img/card-radar.jpg",
   "assets/img/evento-futbol.webp",
   "assets/img/evento-futbol.jpg",
   "assets/img/evento-feria.webp",
@@ -77,24 +76,6 @@ const CARCASA = [
   "assets/img/estadio-camp-nou.jpg",
   "assets/img/estadio-sanchez-pizjuan.webp",
   "assets/img/estadio-sanchez-pizjuan.jpg",
-  "assets/img/card-ingresos.webp",
-  "assets/img/card-ingresos.jpg",
-  "assets/img/card-turnos.webp",
-  "assets/img/card-turnos.jpg",
-  "assets/img/card-calculadoras.webp",
-  "assets/img/card-calculadoras.jpg",
-  "assets/img/card-gastos.webp",
-  "assets/img/card-gastos.jpg",
-  "assets/img/card-estadisticas.webp",
-  "assets/img/card-estadisticas.jpg",
-  "assets/img/card-vencimientos.webp",
-  "assets/img/card-vencimientos.jpg",
-  "assets/img/card-mantenimiento.webp",
-  "assets/img/card-mantenimiento.jpg",
-  "assets/img/card-avisos.webp",
-  "assets/img/card-avisos.jpg",
-  "assets/img/card-instalar.webp",
-  "assets/img/card-instalar.jpg",
 
   "assets/img/og-image.png",
   "assets/img/whitemoon-logo-3d.png",

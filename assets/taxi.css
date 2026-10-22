@@ -41,7 +41,7 @@ h2 { font-weight: 800; letter-spacing: -.02em; }
 .tarjeta-destacada { background: linear-gradient(135deg, #ffd633 0%, #ffb800 100%); border-color: transparent; box-shadow: 0 14px 36px -14px rgba(255, 200, 0, .55); }
 .tarjeta-destacada:hover { background: linear-gradient(135deg, #ffdd55 0%, #ffc21a 100%); border-color: transparent; }
 .tarjeta-foto { aspect-ratio: 16 / 8; }
-.tarjeta-foto img { transition: transform .5s ease; }
+.tarjeta-foto img { transition: transform .25s ease; }
 .tarjeta:hover .tarjeta-foto img { transform: scale(1.04); }
 .tarjeta-icono { border-radius: 16px; width: 3.1rem; height: 3.1rem; background: linear-gradient(145deg, #2f2600, #1d1700); box-shadow: inset 0 0 0 1px rgba(255, 200, 0, .25); }
 .tarjeta-titulo { font-size: 1.15rem; letter-spacing: -.01em; }
@@ -80,7 +80,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 /* Entrada suave de las tarjetas (solo si el usuario no pide menos movimiento) */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes sube { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  .tarjetas > li, .resultados, .calc { animation: sube .45s ease both; }
+  .tarjetas > li, .resultados, .calc { animation: sube .25s ease both; }
   .tarjetas > li:nth-child(2) { animation-delay: .05s; } .tarjetas > li:nth-child(3) { animation-delay: .1s; }
   .tarjetas > li:nth-child(4) { animation-delay: .15s; } .tarjetas > li:nth-child(n+5) { animation-delay: .2s; }
 }
@@ -153,7 +153,7 @@ strong, b { font-weight: 800; }
 @media print {
   :root { color-scheme: light; }
   body { background: #fff !important; color: #000 !important; }
-  .cabecera, .barra-app, .mas-panel, .mas-fondo, .pie, .no-imprimir, .avisos .boton-sec, #vacio { display: none !important; }
+  .cabecera, .intro, .barra-app, .mas-panel, .mas-fondo, .pie, .no-imprimir, .avisos .boton-sec, #vacio { display: none !important; }
   .informe, .informe * { background: transparent !important; color: #000 !important; box-shadow: none !important; border-color: #888 !important; }
   .informe { display: block !important; }
   .informe h2 { font-size: 1.4rem; }
@@ -181,3 +181,109 @@ strong, b { font-weight: 800; }
 
 /* Guía de inicio de la portada de la app. */
 .pasos-tour { margin: .5rem 0; padding-left: 1.25rem; display: grid; gap: .6rem; }
+
+/* ===== Más app, menos web (22/10/2026): cabecera compacta, panel de Inicio, vacíos con acción y confirmaciones breves. ===== */
+/* Sin rebote ni «tirar para recargar» del cuerpo: se desplaza como una app. */
+html, body { overscroll-behavior-y: none; }
+a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+/* El texto que antes iba bajo el título, ahora abre el contenido. */
+.sub.intro { margin: 1rem 0 .25rem; font-size: .98rem; }
+
+/* Móvil: cabecera fija y compacta con el título de la pantalla; la navegación va en la barra inferior. */
+@media (max-width: 56.24rem) {
+  .cabecera {
+    position: sticky; top: 0; z-index: var(--z-barra);
+    padding: calc(.55rem + env(safe-area-inset-top)) env(safe-area-inset-right) .55rem env(safe-area-inset-left);
+    background: var(--cristal); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+  }
+  .cabecera h1 { font-size: 1.3rem; line-height: 1.35; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  main :is(section, form, h2, [id]) { scroll-margin-top: 4.5rem; }
+}
+@media (max-width: 56.24rem) and (scripting: enabled) {
+  .cabecera .navegacion, .cabecera .marca { display: none; }
+}
+
+/* Inicio como panel: objetivo de hoy y vencimientos, accesos rápidos y el resto en filas. */
+.panel { display: grid; gap: 12px; margin: 1.25rem 0 0; }
+@media (min-width: 37.5rem) { .panel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.panel-tarjeta {
+  display: grid; align-content: start; gap: .7rem; min-width: 0; padding: var(--tarjeta-pad); color: var(--text); text-decoration: none;
+  background: linear-gradient(160deg, #181818 0%, #0f0f0f 100%); border: 1px solid rgba(255, 255, 255, .08); border-radius: var(--tarjeta-radio); box-shadow: var(--sombra);
+}
+a.panel-tarjeta:hover { border-color: rgba(255, 200, 0, .55); }
+a.panel-tarjeta:active { transform: scale(.985); }
+.panel-tarjeta.aviso { border-color: rgba(255, 200, 0, .45); }
+.panel-cabeza { display: flex; align-items: center; gap: .75rem; margin: 0; font-size: 1.1rem; }
+.panel-cabeza .tarjeta-icono { width: 2.6rem; height: 2.6rem; }
+.panel-cabeza .tarjeta-icono .icono { width: 1.35rem; height: 1.35rem; }
+.panel-titulo { flex: 1; min-width: 0; font-weight: 800; color: var(--accent); }
+.panel-texto { margin: 0; color: #ececec; }
+.panel-barra { display: block; }
+.panel-tarjeta ul { margin: 0; }
+.panel-tarjeta .botones { margin: 0; gap: .5rem; }
+.panel-tarjeta .botones .boton-sec { flex: 1; display: inline-flex; line-height: 1.2; padding: .75rem 1rem; }
+.panel .avisos-venc { margin: 0; }
+
+.panel-seccion { margin: 1.75rem 0 .75rem; font-size: 1.1rem; }
+.accesos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.accesos > li { display: flex; min-width: 0; }
+.acceso {
+  display: grid; justify-items: center; align-content: center; gap: .35rem; width: 100%; min-height: 116px; padding: .9rem .35rem;
+  text-align: center; color: var(--accion-texto); text-decoration: none;
+  background: linear-gradient(135deg, #ffd633 0%, #ffb800 100%); border-radius: var(--tarjeta-radio); box-shadow: 0 14px 36px -14px rgba(255, 200, 0, .55);
+}
+.acceso:hover { background: linear-gradient(135deg, #ffdd55 0%, #ffc21a 100%); }
+.acceso:active { transform: scale(.97); }
+.acceso .tarjeta-icono { width: 2.75rem; height: 2.75rem; background: rgba(0, 0, 0, .16); box-shadow: none; color: var(--accion-texto); }
+.acceso-titulo { font-size: .95rem; font-weight: 800; line-height: 1.2; }
+.acceso-texto { font-size: .78rem; line-height: 1.25; color: #1a1400; }
+
+.filas { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+@media (min-width: 37.5rem) { .filas { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.filas > li { display: flex; min-width: 0; }
+.fila {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .9rem; width: 100%; min-height: 64px;
+  padding: .6rem .9rem .6rem .6rem; color: var(--text); text-decoration: none;
+  background: linear-gradient(160deg, #181818 0%, #0f0f0f 100%); border: 1px solid rgba(255, 255, 255, .08); border-radius: 18px;
+}
+.fila:hover { border-color: rgba(255, 200, 0, .55); }
+.fila:active { transform: scale(.985); }
+.fila .tarjeta-icono { width: 2.6rem; height: 2.6rem; }
+.fila .tarjeta-icono .icono { width: 1.35rem; height: 1.35rem; }
+.fila-cuerpo { display: grid; gap: .1rem; min-width: 0; }
+.fila-titulo { font-weight: 800; }
+.fila-texto { color: var(--muted); font-size: .88rem; line-height: 1.35; }
+.ajustes-inicio { margin: 1.5rem 0 .5rem; }
+.ajustes-inicio:not(:has(:not([hidden]))) { display: none; }
+/* Sin saltos al cargar (CLS): la guía sale o no desde el primer pintado (assets/arranque.js) y la barra
+   del objetivo guarda su sitio aunque aún no haya objetivo. */
+html:not(.con-tour) #tour { display: none; }
+.panel-barra[hidden] { display: block !important; visibility: hidden; }
+/* Radar: el aviso «Cargando…» y las tarjetas comparten el mismo hueco, ya reservado. */
+.eventos-marco { display: grid; min-height: calc(min(75vw, 17rem) * 1.25 + .5rem); }
+.eventos-marco > * { grid-area: 1 / 1; }
+.eventos-marco > .estado { margin: 0; }
+.pildoras { min-height: calc(44px + 1rem); }
+#notif-caja { margin: 1.25rem 0 .5rem; }
+
+/* Estado vacío: qué pasa y qué hacer, con un botón. */
+.vacio { display: grid; justify-items: start; gap: .75rem; margin: .5rem 0 1rem; padding: var(--tarjeta-pad); border: 1px dashed rgba(255, 255, 255, .2); border-radius: var(--tarjeta-radio); }
+.vacio p { margin: 0; color: var(--muted); }
+
+/* Confirmaciones breves: el mensaje de estado sale como una etiqueta, sin cambiar de página. */
+.nota[role="status"]:not(:empty) {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; width: fit-content; max-width: 100%; margin: .75rem 0;
+  padding: .5rem .9rem; color: var(--text); background: rgba(255, 200, 0, .1); border: 1px solid rgba(255, 200, 0, .35); border-radius: 14px;
+}
+.nota[role="status"].error:not(:empty) { color: var(--error); background: rgba(255, 138, 128, .08); border-color: var(--error); }
+
+/* Movimiento: entre 150 y 250 ms, y nada si el usuario pide menos movimiento. */
+@media (prefers-reduced-motion: no-preference) {
+  .panel-tarjeta, .acceso, .fila { transition: transform .15s ease, border-color .2s ease, background .2s ease; }
+  .nota[role="status"]:not(:empty) { animation: aparece .2s ease-out; }
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .2s; }
+  .barra-app { view-transition-name: barra-app; }
+}
+@keyframes aparece { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }

@@ -12,6 +12,8 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="stylesheet" href="assets/taxi.css">
   <script type="module" src="assets/estadisticas.js"></script>
@@ -36,18 +38,18 @@
         <a href="instalar.html">Instalar</a>
       </nav>
       <h1>Estadísticas</h1>
-      <p class="sub">Qué días y qué horas te funcionan mejor, con tus propias carreras.</p>
     </div>
   </header>
 
   <main class="contenedor">
+    <p class="sub intro">Qué días y qué horas te funcionan mejor, con tus propias carreras.</p>
     <section class="calc" aria-labelledby="t-per">
       <h2 id="t-per">Tus carreras</h2>
       <p class="nota">Sale de lo que apuntas en <a href="ingresos.html">Facturación</a>. Cuantas más carreras con hora apuntes, más útil.</p>
       <label class="campo campo-corto"><span>Periodo</span>
         <select id="periodo"></select></label>
     </section>
-    <p id="vacio" class="estado">Aún no hay carreras en este periodo. Apúntalas en Facturación.</p>
+    <div id="vacio" class="vacio"><p>Aún no hay carreras en este periodo.</p><a class="boton" href="ingresos.html">Apuntar carreras</a></div>
     <div id="contenido" hidden>
       <section class="resultados" aria-labelledby="t-res">
         <h2 id="t-res">Resumen</h2>
@@ -90,7 +92,6 @@
       <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
       <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
       <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
-      <p class="firma"><a href="https://whitemoon.es" target="_blank" rel="noopener"><picture><source srcset="assets/img/whitemoon-logo-3d.webp" type="image/webp"><img src="assets/img/whitemoon-logo-3d.png" width="72" height="72" alt="WhiteMoon" loading="lazy" decoding="async"></picture><span>Desarrollado por WhiteMoon Agencia IA</span></a></p>
     </div>
   </footer>
 </body>
