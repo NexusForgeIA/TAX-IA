@@ -23,4 +23,10 @@ assert.deepEqual(Object.keys(ajeno.copia.datos), ["taxi.ok"]);
 // si falla una escritura, se deshace
 const d = falso({ "taxi.objetivo": "999" }, "taxi.ingresos");
 assert.ok(restaurarCopia(l.copia, d).error); assert.equal(d.get("taxi.objetivo"), "999");
+{
+  const base = { formato: "taxi-ia-copia", v: 1, datos: { "taxi.turnos": "{\"x\":1}", "taxi.trayectos": "[]", "taxi.objetivo": "no json", "taxi.tour": "true" } };
+  const r = leerCopia(JSON.stringify(base));
+  assert.equal(r.copia.fecha, null);
+  assert.deepEqual(Object.keys(r.copia.datos).sort(), ["taxi.tour", "taxi.trayectos"]);
+}
 console.log("copia: ok");

@@ -9,6 +9,12 @@ export const MAX_BYTES = 8_000_000;
 const EXCLUIDAS = new Set(["taxi.instalada-contada", "taxi.trayecto.activo"]);
 const CLAVE_VALIDA = /^taxi\.[A-Za-z0-9._-]{1,60}$/;
 
+/** Claves cuyo contenido es una lista: si la copia trae otra cosa, esa clave se descarta (una copia corrupta no rompe las pantallas). */
+const LISTAS = new Set(["taxi.gastos", "taxi.otros-gastos", "taxi.turnos", "taxi.trayectos"]);
+const contenidoValido = (k, v) => {
+  try { const j = JSON.parse(v); return LISTAS.has(k) ? Array.isArray(j) : true; } catch { return false; }
+};
+
 export const claveCopiable = (k) => typeof k === "string" && CLAVE_VALIDA.test(k) && !EXCLUIDAS.has(k);
 
 /** Copia con todos los datos guardados. `ahora` solo para las pruebas. */
@@ -33,12 +39,13 @@ export function leerCopia(texto) {
   if (c.v !== VERSION_COPIA) return { error: "La copia es de una versión que esta app no entiende." };
   const datos = {};
   for (const [k, v] of Object.entries(c.datos)) {
-    if (!claveCopiable(k) || typeof v !== "string") continue; // se ignora lo ajeno, nunca se escribe fuera de «taxi.»
+    if (!claveCopiable(k) || typeof v !== "string" || !contenidoValido(k, v)) continue; // se ignora lo ajeno, nunca se escribe fuera de «taxi.»
     datos[k] = v;
   }
   const n = Object.keys(datos).length;
   if (!n) return { error: "La copia no contiene datos que restaurar." };
-  return { copia: { ...c, datos }, n };
+  const fecha = typeof c.fecha === "string" && /^\d{4}-\d{2}-\d{2}/.test(c.fecha) ? c.fecha : null; // sin fecha válida no se inventa una
+  return { copia: { ...c, fecha, datos }, n };
 }
 
 /**
