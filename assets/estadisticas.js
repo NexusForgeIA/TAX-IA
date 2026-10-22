@@ -55,9 +55,14 @@ function pintar() {
   $("contenido").hidden = lista.length === 0;
   if (!lista.length) return;
   const r = C.resumen(lista);
+  // Las medias solo cuentan carreras con hora: un total sin detallar (p. ej. el cierre del datáfono) no es una carrera.
+  const conHora = lista.filter((c) => c.hora != null);
+  const media = (l) => (l.length ? Math.round(l.reduce((s, c) => s + c.importe, 0) / l.length * 100) / 100 : null);
+  r.medio = media(conHora);
   $("kpis").replaceChildren(...[["Total facturado", e(r.total)], ["Apuntes", String(r.n)], ["Importe medio", r.medio == null ? "—" : e(r.medio)]]
     .flatMap(([k, v]) => [el("dt", { text: k }), el("dd", { text: v })]));
-  tabla("dias", ["Día", "Apuntes", "Total", "Media"], C.porDiaSemana(lista).map((x, i) => ({ etiqueta: DIAS[i], ...x })));
+  const mediasDia = C.porDiaSemana(conHora);
+  tabla("dias", ["Día", "Apuntes", "Total", "Media (solo carreras con hora)"], C.porDiaSemana(lista).map((x, i) => ({ etiqueta: DIAS[i], ...x, medio: mediasDia[i].medio })));
   grafica(lista);
   const fr = C.porFranja(lista);
   tabla("franjas", ["Franja", "Carreras", "Total", "Media"], fr.franjas.map((x, i) => ({ etiqueta: C.franjas[i], ...x })));
@@ -67,16 +72,16 @@ function pintar() {
   for (const c of lista) {
     const clave = c.canal === "app" ? `${CANALES.app}${c.app ? ` · ${c.app}` : ""}` : CANALES.calle;
     const g = grupos.get(clave) ?? { etiqueta: clave, n: 0, total: 0 };
-    g.n++; g.total += c.importe; grupos.set(clave, g);
+    g.n++; g.total += c.importe; if (c.hora != null) { g.nh = (g.nh ?? 0) + 1; g.th = (g.th ?? 0) + c.importe; } grupos.set(clave, g);
   }
-  tabla("canales", ["Canal", "Apuntes", "Total", "Media"], [...grupos.values()].sort((a, b) => b.total - a.total).map((g) => ({ ...g, total: Math.round(g.total * 100) / 100, medio: Math.round(g.total / g.n * 100) / 100 })));
+  tabla("canales", ["Canal", "Apuntes", "Total", "Media (solo con hora)"], [...grupos.values()].sort((a, b) => b.total - a.total).map((g) => ({ ...g, total: Math.round(g.total * 100) / 100, medio: g.nh ? Math.round(g.th / g.nh * 100) / 100 : null })));
   const formas = new Map();
   for (const c of lista) {
     const k = METODOS[c.canal][c.metodo];
     const g = formas.get(k) ?? { etiqueta: k, n: 0, total: 0 };
-    g.n++; g.total += c.importe; formas.set(k, g);
+    g.n++; g.total += c.importe; if (c.hora != null) { g.nh = (g.nh ?? 0) + 1; g.th = (g.th ?? 0) + c.importe; } formas.set(k, g);
   }
-  tabla("metodos", ["Cobro", "Apuntes", "Total", "Media"], [...formas.values()].map((g) => ({ ...g, total: Math.round(g.total * 100) / 100, medio: Math.round(g.total / g.n * 100) / 100 })));
+  tabla("metodos", ["Cobro", "Apuntes", "Total", "Media (solo con hora)"], [...formas.values()].map((g) => ({ ...g, total: Math.round(g.total * 100) / 100, medio: g.nh ? Math.round(g.th / g.nh * 100) / 100 : null })));
 }
 
 for (const [id, m] of [["ver-n", "n"], ["ver-t", "t"]]) $(id).addEventListener("click", () => {

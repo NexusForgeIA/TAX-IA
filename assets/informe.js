@@ -6,7 +6,7 @@ import { euros } from "./numeros.js";
 import { hoyMadrid, nombreMes, fechaCorta, sumarMeses } from "./fechas.js";
 import { leerJson } from "./datos.js";
 import { CANALES, COLUMNAS, METODOS, leerCarreras, tablaMensual, cruce } from "./ingresos.js";
-import { COMBUSTIBLES_GASTO, celdaCSV, etiquetas, leerRegistros, totales, costePorKm } from "./gastos.js";
+import { COMBUSTIBLES_GASTO, celdaCSV, etiquetas, leerRegistros, totales, costePorKm, porEtiqueta } from "./gastos.js";
 import { TIPOS, leerOtros, totalOtros } from "./otros-gastos.js";
 
 const e = (n) => `${euros(n)} €`;
@@ -64,7 +64,14 @@ function pintar() {
 
   const cp = costePorKm(gastos);
   const filasK = [];
-  if (cp) {
+  // Cada vehículo tiene su cuentakilómetros: si hay varios con lecturas, se calcula por separado (mezclarlos da km absurdos).
+  const porVeh = porEtiqueta(gastos).filter((g) => g.km);
+  if (porVeh.length > 1) {
+    for (const g of porVeh) {
+      const nombre = g.etiqueta || "Sin turno ni vehículo";
+      filasK.push([`${nombre}: recorridos`, `${euros(g.km.km, 0)} km`], [`${nombre}: combustible por km`, `${euros(g.km.coste_km, 3)} €/km`]);
+    }
+  } else if (cp) {
     filasK.push(["Recorridos según cuentakilómetros", `${euros(cp.km, 0)} km`]);
     filasK.push(["Coste de combustible por km", `${euros(cp.coste_km, 3)} €/km`]);
   }
@@ -106,7 +113,7 @@ function pintar() {
       `Efectivo en mano: ${e(F.efectivo_en_mano)} · Datáfono, banco o app: ${e(F.cobrado_banco_app)}`,
       `Combustible: ${e(G.importe)}${O.n ? ` · Otros gastos: ${e(O.total)}` : ""}`,
       `Facturación menos gastos: ${e(Math.round((F.total - gastoTotal) * 100) / 100)}`,
-      cp ? `Km según cuentakilómetros: ${euros(cp.km, 0)}` : null,
+      porVeh.length === 1 || (porVeh.length === 0 && cp) ? `Km según cuentakilómetros: ${euros(cp.km, 0)}` : null,
       "Informativo, hecho con mis datos; no es una factura.",
     ].filter(Boolean).join("\n"),
   };
