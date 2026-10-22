@@ -69,7 +69,7 @@ async function cargar(ciudad) {
   estado.hidden = false; estado.classList.remove("error"); estado.textContent = "Cargando eventos…";
   $("eventos").replaceChildren();
   try {
-    const r = await fetch(`${API}/taxi-eventos?ciudad=${encodeURIComponent(ciudad)}`, { credentials: "omit" });
+    const r = await fetch(`${API}/taxi-eventos?ciudad=${encodeURIComponent(ciudad)}`, { credentials: "omit", signal: AbortSignal.timeout(10000) }); // sin tope se quedaría en «Cargando…» para siempre
     if (!r.ok) throw new Error(String(r.status));
     const { hoy, eventos } = await r.json();
     if (n !== ultima) return;
@@ -78,8 +78,11 @@ async function cargar(ciudad) {
     $("eventos").replaceChildren(...eventos.map((e) => tarjeta(e, hoy)));
   } catch (e) {
     if (n !== ultima) return;
-    estado.textContent = "No se han podido cargar los eventos. Comprueba la conexión e inténtalo de nuevo.";
+    estado.textContent = "No se han podido cargar los eventos. Comprueba la conexión e inténtalo de nuevo. ";
     estado.classList.add("error");
+    const otra = el("button", { type: "button", class: "boton-sec", text: "Reintentar" });
+    otra.addEventListener("click", () => cargar(ciudad));
+    estado.append(otra);
     console.warn("Radar:", e.message);
   }
 }
