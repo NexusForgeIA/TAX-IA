@@ -41,10 +41,21 @@
   </header>
 
   <main class="contenedor">
+    <section id="tour" class="tarjeta-info" aria-labelledby="t-tour" hidden>
+      <h2 id="t-tour">Empieza en 3 pasos</h2>
+      <ol class="pasos-tour">
+        <li><strong>Apunta tus carreras.</strong> En <a href="ingresos.html">Facturación</a> pulsa un día y añade la carrera: calle o aplicación, efectivo o tarjeta. Si tu datáfono te da el total, usa «Cierre del datáfono».</li>
+        <li><strong>Cierra el turno.</strong> En <a href="turnos.html">Turnos</a>, «Traer todo lo del día» rellena las cifras y calcula el reparto con el porcentaje que pongas tú.</li>
+        <li><strong>Pon tus fechas.</strong> En <a href="vencimientos.html">Vencimientos</a> apunta la ITV, el seguro, el taxímetro y la revista; la app te avisará al abrirla.</li>
+      </ol>
+      <p class="nota">Todo lo pones tú y se guarda solo en este móvil. Se anota con el coche parado.</p>
+      <p class="botones"><button type="button" class="boton" id="tour-cerrar">Entendido</button></p>
+    </section>
     <section id="avisos-vencimientos" class="tarjeta-info aviso avisos-venc" aria-labelledby="t-avisos" hidden>
       <h2 id="t-avisos">Revisa tus vencimientos y mantenimiento</h2>
       <p><a href="vencimientos.html">Ver vencimientos</a> · <a href="mantenimiento.html">Ver mantenimiento</a> · Son las fechas y los km que apuntaste tú.</p>
     </section>
+    <p class="nota"><button type="button" class="boton-sec" id="tour-ver" hidden>Ver la guía de inicio</button></p>
     <p id="notif-caja" class="nota" hidden><button type="button" class="boton-sec" id="notif-activar">Activar avisos en el móvil</button> <span id="notif-estado" role="status" aria-live="polite"></span></p>
     <ul class="tarjetas">
       <li class="tarjetas-ancho">
