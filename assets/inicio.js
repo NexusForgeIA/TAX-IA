@@ -5,6 +5,7 @@ import { fechaCorta, hoyMadrid } from "./fechas.js";
 import { leerJson, guardarJson } from "./datos.js";
 import { avisos, leerVencimientos, migrarVencimientos, nombreVencimiento, textoEstado } from "./vencimientos.js";
 import C from "./herramientas.js";
+import { archivoCopia, crearCopia, leerCopia, restaurarCopia } from "./copia.js";
 
 migrarVencimientos(); // tipos de versiones anteriores (decisión 100)
 
@@ -83,6 +84,47 @@ const mostrarTour = (on) => { tour.hidden = !on; verTour.hidden = on; };
 mostrarTour(leerJson(CLAVE_TOUR, null) !== "visto");
 document.getElementById("tour-cerrar").addEventListener("click", () => { guardarJson(CLAVE_TOUR, "visto"); mostrarTour(false); verTour.focus(); });
 verTour.addEventListener("click", () => { mostrarTour(true); tour.scrollIntoView({ block: "start" }); });
+
+// ---- Copia de seguridad (archivo .json, sin cuentas) ------------------------------------------
+const CLAVE_ULTIMA = "taxi.copia.ultima";
+const estadoCopia = document.getElementById("copia-estado");
+const pintarUltima = () => {
+  const u = leerJson(CLAVE_ULTIMA, null);
+  estadoCopia.textContent = typeof u === "string" ? `Última copia guardada desde este móvil: ${fechaCorta(u.slice(0, 10))}.` : "Aún no has guardado ninguna copia.";
+};
+pintarUltima();
+document.getElementById("copia-guardar").addEventListener("click", () => {
+  const copia = crearCopia();
+  if (!Object.keys(copia.datos).length) { estadoCopia.textContent = "Todavía no hay datos que guardar."; return; }
+  const { nombre, texto } = archivoCopia(copia);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([texto], { type: "application/json" }));
+  a.download = nombre;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  guardarJson(CLAVE_ULTIMA, copia.fecha);
+  estadoCopia.textContent = `Copia descargada (${nombre}). Guárdala en un sitio seguro.`;
+});
+let pendiente = null;
+const confirmar = (on) => { document.getElementById("copia-confirmar").hidden = !on; if (!on) pendiente = null; };
+document.getElementById("copia-archivo").addEventListener("change", async (ev) => {
+  const f = ev.target.files[0];
+  confirmar(false);
+  if (!f) return;
+  const r = leerCopia(f.size > 8_000_000 ? "" : await f.text());
+  ev.target.value = "";
+  if (r.error) { estadoCopia.textContent = r.error; return; }
+  pendiente = r.copia;
+  document.getElementById("copia-resumen").textContent = `Copia del ${fechaCorta(String(r.copia.fecha).slice(0, 10))} con ${r.n} apartados. Restaurar sustituye en este móvil lo que traiga la copia; lo demás no se toca.`;
+  confirmar(true);
+});
+document.getElementById("copia-no").addEventListener("click", () => { confirmar(false); estadoCopia.textContent = "No se ha cambiado nada."; });
+document.getElementById("copia-si").addEventListener("click", () => {
+  if (!pendiente) return;
+  const r = restaurarCopia(pendiente);
+  confirmar(false);
+  estadoCopia.textContent = r.error ?? `Restaurado: ${r.n} apartados. Recarga la página para verlo todo.`;
+});
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
