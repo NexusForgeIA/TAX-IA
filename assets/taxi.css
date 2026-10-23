@@ -335,3 +335,7 @@ body:has(#instalar-directo:not([hidden])) main { padding-bottom: 13rem; }
 .atras .icono { width: 26px; height: 26px; stroke-width: 2.5; }
 .atras:hover { background: rgba(255, 200, 0, .12); }
 .atras:active { background: rgba(255, 200, 0, .22); }
+
+/* Ayudas: lista de documentación que se marca */
+.lista-docs { list-style: none; margin: .75rem 0 .5rem; padding: 0; display: grid; gap: .5rem; }
+.lista-docs .interruptor { background: var(--bg); line-height: 1.35; }
