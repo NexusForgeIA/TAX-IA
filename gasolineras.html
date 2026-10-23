@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gasolineras · Taxi-IA</title>
+  <meta name="description" content="Precios de las gasolineras de Madrid, Barcelona, Sevilla y Valencia, de la más barata a la más cara, con datos del Ministerio y su fecha de captura.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <script src="assets/arranque.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/gasolineras.js"></script>
+  <script type="module" src="assets/visita.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="informe.html">Informe</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <div class="barra-titulo"><a class="atras" href="inicio.html" aria-label="Volver"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#atras"/></svg></a><h1>Gasolineras</h1></div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="sub intro">Precios de las gasolineras de tu ciudad, de la más barata a la más cara.</p>
+    <p class="tarjeta-info aviso"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#aviso"/></svg> Los precios cambian durante el día; comprueba el precio en el surtidor.</p>
+
+    <section class="resultados" aria-labelledby="t-gasolineras">
+      <h2 id="t-gasolineras">Precios por ciudad</h2>
+      <div id="ciudades" class="pildoras" role="group" aria-label="Ciudad"></div>
+      <div class="campos">
+        <label class="campo"><span>Municipio</span><select id="municipio"></select></label>
+        <label class="campo"><span>Combustible</span><select id="combustible"></select></label>
+        <label class="interruptor"><input type="checkbox" id="solo24"> Solo abiertas 24 h</label>
+      </div>
+      <div class="gasolineras-marco">
+        <p id="estado-gasolineras" class="estado" role="status" aria-live="polite">Cargando precios… (hace falta JavaScript activado).</p>
+        <ul id="gasolineras" class="lista" aria-label="Gasolineras de la más barata a la más cara"></ul>
+        <div id="origen-datos" class="avisos" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+    </div>
+  </footer>
+</body>
+</html>
