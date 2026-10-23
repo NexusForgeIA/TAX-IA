@@ -7,7 +7,8 @@
   <meta name="description" content="Herramientas para taxistas: facturación por carrera, turnos, calculadoras, vencimientos, mantenimiento y avisos municipales. Con tus datos, sin cuenta.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
@@ -52,7 +53,7 @@
         <a href="avisos.html">Avisos</a>
         <a href="instalar.html">Instalar</a>
       </nav>
-      <h1>Inicio</h1>
+      <div class="barra-titulo"><h1>Inicio</h1><button type="button" class="tema-rapido" id="tema-rapido" aria-label="Cambiar a modo día"><svg class="icono tema-sol" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#sol"/></svg><svg class="icono tema-luna" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#luna"/></svg></button></div>
     </div>
   </header>
 

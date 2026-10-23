@@ -10,9 +10,19 @@ import { pintarObjetivo } from "./objetivo.js";
 import { leerCarreras } from "./ingresos.js";
 import { euros } from "./numeros.js";
 import { lunesDe, resumenSemana } from "./semana.js";
+import { cambiarTema, temaVisible } from "./tema.js";
 
 migrarVencimientos(); // tipos de versiones anteriores (decisión 100)
 pintarObjetivo(); // tarjeta «Objetivo de hoy» del panel: lo facturado hoy frente al objetivo que puso el usuario
+
+// Botón rápido sol/luna: alterna Día ↔ Noche (deja de seguir al sistema; «Automático» se vuelve a elegir en Mi perfil).
+{
+  const b = document.getElementById("tema-rapido");
+  const rotular = () => b.setAttribute("aria-label", temaVisible() === "dia" ? "Cambiar a modo noche" : "Cambiar a modo día");
+  rotular();
+  b.addEventListener("click", () => { cambiarTema(temaVisible() === "dia" ? "noche" : "dia"); rotular(); });
+  document.addEventListener("taxi:tema", rotular);
+}
 
 // Tarjeta «Esta semana»: total de lunes a domingo; el detalle está en Estadísticas.
 {

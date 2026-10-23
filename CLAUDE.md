@@ -31,5 +31,7 @@ al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni nada
 - Ramas + PR (`feat/`, `fix/`, `docs/`, `refactor/`). Un PR, una cosa. Nunca push a `main` para cambios grandes.
 
 ## Diseño
-- Mobile-first y accesible; paleta solo negro, amarillo (#ffc800) y blanco (rojo solo para errores y borrar). Lighthouse móvil >= 85, cero errores de consola,
+- Mobile-first y accesible; paleta solo negro, amarillo (#ffc800) y blanco (rojo solo para errores y borrar).
+  Modo Día / Noche: todos los colores son tokens de `assets/taxi.css` (`:root` = Noche, `[data-tema="dia"]` = Día); nada de colores sueltos en CSS ni JS.
+  **Modo Día: fondo blanco, el amarillo solo como relleno** (botones, chips, fondos de icono); nunca texto ni borde fino amarillo sobre blanco; enlaces en negro subrayado. Lighthouse móvil >= 85, cero errores de consola,
   sin desbordamiento horizontal a 390 px, `prefers-reduced-motion`.

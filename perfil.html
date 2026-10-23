@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Mi perfil · Taxi-IA</title>
-  <meta name="description" content="Tu nombre, licencia y matrícula para el justificante y el PDF de facturación. Se guardan solo en este móvil.">
+  <meta name="description" content="Tu nombre, licencia y matrícula para el justificante y el PDF de facturación, y el modo Día o Noche. Se guardan solo en este móvil.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <script src="assets/arranque.js"></script>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
@@ -53,6 +55,20 @@
       </form>
       <p id="estado-perfil" class="nota" role="status" aria-live="polite"></p>
       <p class="nota">Se guarda al escribir, solo en este móvil; no hay cuenta ni se envía a ningún servidor. Sale en el <a href="informe.html">PDF de facturación</a> y en el justificante de cada carrera. Va en la copia de seguridad (sin cifrar). Para quitarlo, borra los campos.</p>
+    </section>
+    <section class="calc" aria-labelledby="t-tema">
+      <h2 id="t-tema">Apariencia</h2>
+      <form id="f-tema" class="filtros" novalidate>
+        <fieldset>
+          <legend>Modo de color</legend>
+          <div class="segmentado tres">
+            <label><input type="radio" name="tema" value="auto"> <svg class="icono icono-check" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#check"/></svg>Automático</label>
+            <label><input type="radio" name="tema" value="dia"> <svg class="icono icono-check" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#check"/></svg>Día</label>
+            <label><input type="radio" name="tema" value="noche"> <svg class="icono icono-check" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#check"/></svg>Noche</label>
+          </div>
+        </fieldset>
+      </form>
+      <p class="nota">Automático sigue el modo claro u oscuro de tu móvil. Se guarda solo en este móvil.</p>
     </section>
   </main>
 

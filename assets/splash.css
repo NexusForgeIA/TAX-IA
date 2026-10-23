@@ -49,7 +49,7 @@
 }
 
 .splash-nombre { margin: 0; font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
-.splash-firma { margin: 0; font-size: .78rem; color: var(--muted, #c8c8c8); }
+.splash-firma { margin: 0; font-size: .78rem; color: #c8c8c8; } /* el splash es de marca: negro en los dos temas */
 
 @media (prefers-reduced-motion: no-preference) {
   .splash-estrellas::before { animation: splash-titila 2.2s ease-in-out infinite alternate; }
