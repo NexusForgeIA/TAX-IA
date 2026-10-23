@@ -48,3 +48,44 @@ export async function claveIgual(a: string, b: string): Promise<boolean> {
   for (let i = 0; i < x.length; i++) dif |= x[i] ^ y[i];
   return dif === 0;
 }
+
+// ---- Frescura de los precios de Gasolineras (taxi-gasolineras-ingest) --------------------------------------------
+
+export interface FrescuraProvincia { provincia: string; fecha_fuente: string | null; n_estaciones: number | null; ultimo_estado: string | null }
+
+const NOMBRE_PROVINCIA: Record<string, string> = { "28": "Madrid", "08": "Barcelona", "46": "Valencia", "41": "Sevilla" };
+const HORA = 3600_000;
+
+/** «hace 25 min», «hace 4 h», «hace 2 días». */
+export function edadTexto(ms: number): string {
+  const min = Math.max(0, Math.floor(ms / 60_000));
+  if (min < 60) return `hace ${min} min`;
+  const h = Math.floor(min / 60);
+  return h < 48 ? `hace ${h} h` : `hace ${Math.floor(h / 24)} días`;
+}
+
+/**
+ * Desactualizada si no hay captura buena, si supera 12 h, o si supera 3 h en horario de carga (06:00-23:59 hora
+ * peninsular; la carga corre cada 30 min de 06:00 a 23:30).
+ */
+export function desactualizada(fecha: string | null, ahora: Date): boolean {
+  if (!fecha || Number.isNaN(Date.parse(fecha))) return true;
+  const edad = ahora.getTime() - Date.parse(fecha);
+  const hora = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Madrid", hour: "2-digit", hourCycle: "h23" }).format(ahora));
+  return edad > 12 * HORA || (hora >= 6 && edad > 3 * HORA);
+}
+
+/** Líneas del resumen: edad de la última captura buena por provincia y «PRECIOS DESACTUALIZADOS» si toca. */
+export function componerFrescura(filas: FrescuraProvincia[], ahora = new Date()): string[] {
+  const partes = (filas ?? []).map((f) => {
+    const nombre = NOMBRE_PROVINCIA[f.provincia] ?? f.provincia;
+    const edad = f.fecha_fuente && !Number.isNaN(Date.parse(f.fecha_fuente)) ? edadTexto(ahora.getTime() - Date.parse(f.fecha_fuente)) : "sin captura buena";
+    const fallo = f.ultimo_estado === "error" ? " (último intento con error)" : "";
+    return { nombre, texto: `${nombre} ${edad}${fallo}`, vieja: desactualizada(f.fecha_fuente, ahora) };
+  });
+  if (!partes.length) return ["Gasolineras: sin datos de carga", "PRECIOS DESACTUALIZADOS: no hay ninguna captura."];
+  const lineas = [`Gasolineras, última captura buena: ${partes.map((p) => p.texto).join(" · ")}`];
+  const viejas = partes.filter((p) => p.vieja);
+  if (viejas.length) lineas.push(`PRECIOS DESACTUALIZADOS: ${viejas.map((p) => p.nombre).join(", ")}.`);
+  return lineas;
+}

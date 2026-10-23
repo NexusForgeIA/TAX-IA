@@ -1,5 +1,5 @@
 import { assertEquals } from "jsr:@std/assert@1.0.13";
-import { ayerMadrid, claveIgual, componerResumen } from "./mensaje.ts";
+import { ayerMadrid, claveIgual, componerFrescura, componerResumen, desactualizada, edadTexto } from "./mensaje.ts";
 
 Deno.test("resumen sin datos: «sin datos», sin cifras inventadas", () => {
   assertEquals(componerResumen("2026-10-17", { visitas: [], horas_tope: 0 }), [
@@ -52,4 +52,25 @@ Deno.test("claves: comparación por SHA-256 en tiempo constante", async () => {
   assertEquals(await claveIgual("abc", "abc"), true);
   assertEquals(await claveIgual("abc", "abd"), false);
   assertEquals(await claveIgual("abc", ""), false);
+});
+
+Deno.test("frescura: edades por provincia y sin aviso si todo está al día", () => {
+  const ahora = new Date("2026-10-24T06:00:00Z"); // 08:00 en Madrid (horario de carga)
+  const f = (p: string, horas: number) => ({ provincia: p, fecha_fuente: new Date(ahora.getTime() - horas * 3600_000).toISOString(), n_estaciones: 1, ultimo_estado: "ok" });
+  assertEquals(componerFrescura([f("28", 0.5), f("08", 1), f("46", 2), f("41", 2.9)], ahora),
+    ["Gasolineras, última captura buena: Madrid hace 30 min · Barcelona hace 1 h · Valencia hace 2 h · Sevilla hace 2 h"]);
+});
+
+Deno.test("frescura: más de 3 h en horario de carga, más de 12 h siempre, o sin captura -> PRECIOS DESACTUALIZADOS", () => {
+  const dia = new Date("2026-10-24T10:00:00Z"); // 12:00 en Madrid
+  const f = (p: string, horas: number | null, estado = "ok") => ({ provincia: p, fecha_fuente: horas === null ? null : new Date(dia.getTime() - horas * 3600_000).toISOString(), n_estaciones: 1, ultimo_estado: estado });
+  assertEquals(componerFrescura([f("28", 1), f("08", 3.5, "error"), f("46", 1), f("41", null)], dia), [
+    "Gasolineras, última captura buena: Madrid hace 1 h · Barcelona hace 3 h (último intento con error) · Valencia hace 1 h · Sevilla sin captura buena",
+    "PRECIOS DESACTUALIZADOS: Barcelona, Sevilla.",
+  ]);
+  const noche = new Date("2026-10-24T02:00:00Z"); // 04:00 en Madrid: fuera de horario, solo cuenta el tope de 12 h
+  assertEquals(desactualizada(new Date(noche.getTime() - 5 * 3600_000).toISOString(), noche), false);
+  assertEquals(desactualizada(new Date(noche.getTime() - 13 * 3600_000).toISOString(), noche), true);
+  assertEquals(componerFrescura([], dia), ["Gasolineras: sin datos de carga", "PRECIOS DESACTUALIZADOS: no hay ninguna captura."]);
+  assertEquals(edadTexto(50 * 3600_000), "hace 2 días");
 });
