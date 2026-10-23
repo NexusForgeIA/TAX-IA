@@ -469,3 +469,5 @@ body:has(#instalar-directo:not([hidden])) main { padding-bottom: 13rem; }
 :root[data-tema="dia"] .tema-rapido .tema-luna { display: inline-block; }
 @media (scripting: none) { .tema-rapido { display: none; } }
 .segmentado.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Gasolineras: hueco reservado para la lista (el pie no salta al llegar los precios: sin CLS). */
+.gasolineras-marco { min-height: 100svh; }

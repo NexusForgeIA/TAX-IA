@@ -1,8 +1,8 @@
 import { assertEquals } from "jsr:@std/assert@1.0.13";
 import { contarVisita, LIMITE_VISITAS_HORA, leerVisita, MODOS, PAGINAS } from "./limites.ts";
 
-Deno.test("lista cerrada: 18 páginas y dos modos; lo demás se rechaza", () => {
-  assertEquals(PAGINAS.length, 18);
+Deno.test("lista cerrada: 19 páginas y dos modos; lo demás se rechaza", () => {
+  assertEquals(PAGINAS.length, 19);
   assertEquals([...MODOS], ["navegador", "instalada"]);
   assertEquals(leerVisita('{"pagina":"turnos","modo":"instalada"}'), { pagina: "turnos", modo: "instalada" });
   for (const malo of ['{"pagina":"otra","modo":"navegador"}', '{"pagina":"turnos","modo":"app"}', '{"pagina":"turnos"}', "{roto", "null", "", '["turnos","navegador"]',
@@ -47,7 +47,7 @@ Deno.test("la carga útil no lleva datos personales: solo página, modo y tope",
 });
 
 Deno.test("la lista de páginas coincide con la de la última migración", async () => {
-  const sql = await Deno.readTextFile(new URL("../../migrations/20261023120000_taxi_trayecto.sql", import.meta.url));
+  const sql = await Deno.readTextFile(new URL("../../migrations/20261023160000_taxi_gasolineras.sql", import.meta.url));
   const enSql = [...sql.matchAll(/pagina (?:not )?in \(([^)]*)\)/g)].map((m) => m[1].replace(/'/g, "").split(",").map((x) => x.trim()));
   for (const lista of enSql) assertEquals([...lista].sort(), [...PAGINAS].sort());
   assertEquals(enSql.length >= 2, true);
