@@ -1,10 +1,11 @@
 // taxi-resumen: una vez al día (cron a las 08:00 de Madrid) envía por Telegram el resumen de ayer:
-// aperturas (no personas) por modo, páginas más abiertas y si se llegó al tope.
+// aperturas (no personas) por modo, páginas más abiertas y si se llegó al tope; y la edad de los precios de Gasolineras
+// por provincia, con «PRECIOS DESACTUALIZADOS» si alguna se pasa (mensaje.ts).
 // Exige la cabecera x-taxi-clave: la clave del cron (Vault, que se comprueba en la base sin
 // leerla) o, opcional, TAXI_RESUMEN_CLAVE (Secrets) para lanzarla a mano. Ni los secretos ni los datos van a los logs.
 import { cors, respuesta, rpcServicio } from "../_shared/supa.ts";
 import { LIMITE_VISITAS_HORA } from "../taxi-visita/limites.ts";
-import { ayerMadrid, claveIgual, componerResumen, type DatosResumen } from "./mensaje.ts";
+import { ayerMadrid, claveIgual, componerFrescura, componerResumen, type DatosResumen, type FrescuraProvincia } from "./mensaje.ts";
 
 const CORS = cors("POST");
 const json = respuesta(CORS);
@@ -25,7 +26,10 @@ Deno.serve(async (req) => {
 
     const dia = ayerMadrid();
     const datos = await rpcServicio("taxi_datos_resumen", { p_dia: dia, p_limite_hora: LIMITE_VISITAS_HORA }) as DatosResumen;
-    const texto = componerResumen(dia, datos);
+    // Si no se puede leer la frescura, el resumen sale igual y lo dice.
+    const frescura = await rpcServicio("taxi_gasolineras_frescura", {}).then((f) => componerFrescura(f as FrescuraProvincia[]))
+      .catch(() => ["Gasolineras: no se pudo leer la frescura de los precios."]);
+    const texto = [componerResumen(dia, datos), ...frescura].join("\n");
     const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
