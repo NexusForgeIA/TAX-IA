@@ -1,5 +1,5 @@
 // Service worker: red primero; la caché solo sirve la carcasa si no hay conexión.
-const VERSION = "taxi-v41";
+const VERSION = "taxi-v42";
 const CARCASA = [
   "./",
   "aviso-legal.html",
@@ -46,6 +46,7 @@ const CARCASA = [
   "assets/radar.js",
   "assets/semana-vista.js",
   "assets/semana.js",
+  "assets/splash.js",
   "assets/trayecto.js",
   "assets/numeros.js",
   "assets/turnos.js",
@@ -55,6 +56,7 @@ const CARCASA = [
   "assets/vencimientos.js",
   "assets/app.css",
   "assets/portada.css",
+  "assets/splash.css",
   "assets/taxi.css",
   "assets/iconos.svg",
   "assets/icons/apple-touch-icon.png",
@@ -62,6 +64,7 @@ const CARCASA = [
   "assets/icons/icon-192.png",
   "assets/icons/icon-512.png",
   "assets/icons/icon-maskable-512.png",
+  "assets/icons/splash-logo.webp",
   "assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2",
   "assets/img/logo.png",
   "assets/img/evento-futbol.webp",
