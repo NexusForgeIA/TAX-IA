@@ -1,8 +1,8 @@
 // Gasolineras: datos y enlaces sin DOM (se prueban con node assets/gasolineras.test.js).
-// Los precios los da la función pública gasol-buscar (la misma de Gasol-IA); aquí solo se arma la
-// consulta y se leen sus filas. Sin ubicación del usuario: se busca por provincia y municipio.
+// Los precios los da la función pública taxi-gasolineras, con los datos que Taxi-IA carga del Ministerio
+// (taxi-gasolineras-ingest); aquí solo se arma la consulta y se leen sus filas. Sin ubicación del usuario.
 
-/** Ciudades del listado: provincia y municipio con los códigos de gasol-buscar (?listado=territorios). */
+/** Ciudades del listado: provincia y municipio de la capital con los códigos del Ministerio (municipio por defecto). */
 export const CIUDADES = {
   Madrid: { provincia: "28", municipio: "4354" },
   Barcelona: { provincia: "08", municipio: "881" },
@@ -31,27 +31,33 @@ export const porUnidad = (c) => (EN_KG.has(c) ? "por kg" : "por litro");
 export const LIMITE = 30;
 export const ATRIBUCION = "Origen de los datos: Ministerio para la Transición Ecológica y el Reto Demográfico";
 
-/** Consulta de gasol-buscar: las LIMITE más baratas del municipio (el servidor ya las ordena por precio). */
-export function urlBusqueda(api, { combustible, provincia, municipio, solo24 }) {
-  const q = new URLSearchParams({ combustible, provincia, municipio, limite: String(LIMITE) });
-  if (solo24) q.set("solo24", "1");
-  return `${api}/gasol-buscar?${q}`;
+/** Horas a partir de las que se avisa de que los precios pueden estar desactualizados. */
+export const HORAS_DESACTUALIZADA = 3;
+
+/** Consulta de taxi-gasolineras: las LIMITE (30) más baratas del municipio; el servidor ya las ordena por precio. */
+export function urlBusqueda(api, { ciudad, municipio, combustible, solo24 }) {
+  const q = new URLSearchParams({ ciudad, municipio, combustible });
+  if (solo24) q.set("solo24h", "1");
+  return `${api}/taxi-gasolineras?${q}`;
 }
 
-/** Municipios de una provincia con estaciones, por orden alfabético: [[id, nombre], ...]. */
-export function municipiosDe(territorios, provincia) {
-  return (Array.isArray(territorios) ? territorios : [])
-    .filter((t) => t && t.id_provincia === provincia && /^\d{1,6}$/.test(String(t.id_municipio)) && t.municipio)
-    .map((t) => [String(t.id_municipio), String(t.municipio)])
+/** Municipios de la respuesta ([[id, nombre], ...]) válidos y por orden alfabético. */
+export function municipiosDe(lista) {
+  return (Array.isArray(lista) ? lista : [])
+    .filter((m) => Array.isArray(m) && /^\d{1,6}$/.test(String(m[0])) && m[1])
+    .map(([id, nombre]) => [String(id), String(nombre)])
     .sort((a, b) => a[1].localeCompare(b[1], "es"));
 }
 
-/** Filas válidas: precio > 0 y fecha de captura legible (nada estimado), de menor a mayor precio. */
+/** Filas válidas: precio > 0 (nada estimado), de menor a mayor precio. */
 export function filasValidas(filas) {
   return (Array.isArray(filas) ? filas : [])
-    .filter((f) => f && Number(f.precio) > 0 && f.fecha_captura && !Number.isNaN(Date.parse(f.fecha_captura)))
+    .filter((f) => f && Number(f.precio) > 0)
     .sort((a, b) => Number(a.precio) - Number(b.precio));
 }
+
+/** Fecha de captura legible o null (sin captura no se enseña ningún precio como vigente). */
+export const fechaValida = (iso) => (typeof iso === "string" && !Number.isNaN(Date.parse(iso)) ? iso : null);
 
 const enEspana = (lat, lon) => Number.isFinite(lat) && Number.isFinite(lon) && lat >= 27 && lat <= 44.5 && lon >= -18.5 && lon <= 4.5;
 

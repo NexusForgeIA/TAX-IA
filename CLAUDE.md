@@ -2,10 +2,12 @@
 
 App para taxistas (titular y asalariado): facturación por carrera, turnos y reparto, calculadoras, gastos del coche,
 estadísticas, vencimientos (ITV, taxímetro, revista municipal, seguro), mantenimiento y avisos municipales.
-**Solo un listado de gasolineras por ciudad** (gasolineras.html) con datos de la función gasol-buscar y atribución al Ministerio;
-sin comparador de rutas, sin favoritas, sin GPS. La ubicación sigue limitada a trayecto.html. El frontend es el de Gasol-IA
-(nav, iconos SVG, tarjetas, firma); al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni más de
-Supabase/Ministerio que la lectura de gasol-buscar de gasolineras.html (nada gasol_* del backend se toca desde aquí).
+**Solo un listado de gasolineras por ciudad** (gasolineras.html) con datos que Taxi-IA carga del Ministerio (Madrid, Barcelona,
+Valencia y Sevilla: taxi-gasolineras-ingest cada 30 min, se leen con la función pública taxi-gasolineras) y atribución al
+Ministerio; sin comparador de rutas, sin favoritas, sin GPS. La ubicación sigue limitada a trayecto.html. Nada gasol_* ni
+del repo de Gasol-IA se toca ni se importa desde aquí. Licencia de uso comercial de los datos del Ministerio: pendiente de
+confirmar por escrito. El frontend es el de Gasol-IA (nav, iconos SVG, tarjetas, firma); al portar cambios de allí, no traer
+comparador, ruta, favoritas ni visita.
 
 ## Stack
 - Cliente: HTML/CSS/JS vanilla, PWA instalable. Sin frameworks ni npm. CSP estricta (sin scripts ni estilos inline).
