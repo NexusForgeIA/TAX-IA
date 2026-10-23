@@ -2,8 +2,10 @@
 
 App para taxistas (titular y asalariado): facturación por carrera, turnos y reparto, calculadoras, gastos del coche,
 estadísticas, vencimientos (ITV, taxímetro, revista municipal, seguro), mantenimiento y avisos municipales.
-**Sin precios de combustible** (eso es Gasol-IA). El frontend es el de Gasol-IA (nav, iconos SVG, tarjetas, firma);
-al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni nada de Supabase/Ministerio.
+**Solo un listado de gasolineras por ciudad** (gasolineras.html) con datos de la función gasol-buscar y atribución al Ministerio;
+sin comparador de rutas, sin favoritas, sin GPS. La ubicación sigue limitada a trayecto.html. El frontend es el de Gasol-IA
+(nav, iconos SVG, tarjetas, firma); al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni más de
+Supabase/Ministerio que la lectura de gasol-buscar de gasolineras.html (nada gasol_* del backend se toca desde aquí).
 
 ## Stack
 - Cliente: HTML/CSS/JS vanilla, PWA instalable. Sin frameworks ni npm. CSP estricta (sin scripts ni estilos inline).
