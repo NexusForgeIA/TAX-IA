@@ -317,3 +317,12 @@ html:not(.con-tour) #tour { display: none; }
   #instalar-directo:not([hidden]) { bottom: calc(var(--barra-alto) + .75rem + env(safe-area-inset-bottom)); }
 }
 body:has(#instalar-directo:not([hidden])) main { padding-bottom: 13rem; }
+
+/* Pie: sin margen encima de la primera línea (solo el padding del pie). */
+.pie .contenedor > :first-child { margin-top: 0; }
+
+/* Privacidad: sección «Más» (lo que antes iba al pie de la portada). */
+.privacidad-mas p { margin: .5rem 0; }
+.privacidad-mas a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; }
+.privacidad-mas .opinion { text-decoration: none; }
+.privacidad-mas .enlaces-pie { color: var(--muted); font-size: .85rem; }

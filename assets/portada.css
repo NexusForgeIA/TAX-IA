@@ -7,22 +7,14 @@
 .portada .entrar:hover { background: var(--accion-hover); }
 .portada .entrar:active { background: var(--accion-activo); }
 @media (prefers-reduced-motion: no-preference) { .portada .entrar { transition: background-color .15s ease; } }
-.portada .pie { margin: 1.5rem 0 0; color: var(--muted); font-size: .85rem; }
 @media (prefers-reduced-motion: no-preference) { .portada > * { animation: sube .25s ease both; } .portada > *:nth-child(2) { animation-delay: .05s; } .portada > *:nth-child(3) { animation-delay: .1s; } .portada > *:nth-child(4) { animation-delay: .15s; } }
 /* Solo movimiento: el contenido se ve desde el primer pintado aunque la animación no corra. */
 @keyframes sube { from { transform: translateY(8px); } to { transform: none; } }
-.portada-firma { margin-top: .5rem; display: grid; justify-items: center; gap: .25rem; }
-.portada-firma .firma a { color: var(--muted); }
-.portada-firma .enlaces-pie { margin: 0; font-size: .85rem; color: var(--muted); }
-.portada-firma .enlaces-pie a { display: inline-block; min-height: 44px; line-height: 44px; }
 .portada .logo { position: relative; }
 .portada .logo::after {
   content: "Beta"; position: absolute; top: .75rem; right: .75rem; padding: 0 .5rem;
   border: 1px solid var(--warn); border-radius: 999px; background: var(--bg); color: var(--warn);
   font-size: .8rem; font-weight: 700; line-height: 1.6; letter-spacing: .03em;
 }
-.portada-beta { max-width: 24rem; display: grid; justify-items: center; gap: .5rem; }
-.portada-beta .nota-beta { margin: 0; }
-.portada-beta p { margin: 0; }
-.portada-beta .opinion { display: inline-flex; align-items: center; text-decoration: none; }
-.portada .instalar-portada { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 .75rem; color: var(--accent); font-weight: 700; }
+.portada-privacidad { margin: .5rem 0 0; font-size: .85rem; }
+.portada-privacidad a { display: inline-block; min-height: 44px; line-height: 44px; padding: 0 .75rem; color: var(--muted); }
