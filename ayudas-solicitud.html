@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Me interesa · Taxi-IA</title>
+  <meta name="description" content="Deja tu nombre y teléfono para que una gestoría colaboradora te llame para el trámite de la ayuda Auto+.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/ayudas-solicitud.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="informe.html">Informe</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <div class="barra-titulo"><a class="atras" href="ayudas.html" aria-label="Volver"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#atras"/></svg></a><h1>Me interesa</h1></div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="sub intro">Taxi-IA te pone en contacto con una gestoría colaboradora que te llamará para el trámite de la ayuda Auto+.</p>
+    <section class="calc" aria-labelledby="t-solicitud" id="bloque-solicitud">
+      <h2 id="t-solicitud">Tus datos de contacto</h2>
+      <form id="f-solicitud" class="filtros" novalidate>
+        <div class="campos">
+          <label class="campo"><span>Nombre (obligatorio)</span><input type="text" name="nombre" required minlength="2" maxlength="80" autocomplete="name"></label>
+          <label class="campo"><span>Teléfono (obligatorio)</span><input type="tel" name="telefono" required maxlength="20" autocomplete="tel" inputmode="tel"></label>
+          <label class="campo"><span>Mensaje breve (opcional)</span><textarea name="mensaje" maxlength="500" rows="3"></textarea></label>
+        </div>
+        <label class="interruptor consentimiento"><input type="checkbox" name="consentimiento" required> Autorizo que Taxi-IA envíe mi nombre y teléfono a una gestoría colaboradora para que me contacte sobre el trámite de la ayuda.</label>
+        <div class="avisos primera-capa">
+          <p><strong>Responsable:</strong> Cristobal Martinez Comas (Taxi-IA).</p>
+          <p><strong>Finalidad:</strong> que te llamen para el trámite de la ayuda Auto+.</p>
+          <p><strong>Destinatario:</strong> una gestoría colaboradora.</p>
+          <p><strong>Base:</strong> tu consentimiento, que puedes retirar cuando quieras. Se guarda 12 meses como máximo.</p>
+          <p>Más información y tus derechos en <a href="privacidad.html#ayudas">Privacidad</a>.</p>
+        </div>
+        <p class="botones"><button type="submit" class="boton" id="enviar" disabled>Enviar</button></p>
+        <p id="estado-solicitud" class="nota" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section class="calc" id="recibido" hidden tabindex="-1" aria-labelledby="t-recibido">
+      <h2 id="t-recibido">Recibido. Te contactarán para el trámite.</h2>
+      <p class="botones"><a class="boton-sec" href="ayudas.html">Volver a Ayudas</a></p>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+    </div>
+  </footer>
+</body>
+</html>

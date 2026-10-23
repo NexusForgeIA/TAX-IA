@@ -24,7 +24,7 @@ al portar cambios de allí, no traer comparador, ruta, favoritas, visita ni nada
 - Sin emojis como iconos: solo el sprite `assets/iconos.svg` (24×24, trazo). La firma «Desarrollado por WhiteMoon Agencia IA» (logo 3D pequeño, enlace a https://whitemoon.es con rel="noopener") va solo en Inicio (abajo, discreta) y en Privacidad; el resto de páginas no la lleva. Excepción: el splash de arranque (`assets/splash.css`) lleva el texto «Desarrollado por WhiteMoon Agencia IA» bajo el logo, sin enlace ni logo de WhiteMoon.
 
 ## RGPD
-- Prototipo: todo en `localStorage`, nada sale del dispositivo. Con cuentas: exportar y borrar datos desde la app.
+- Prototipo: todo en `localStorage`, nada sale del dispositivo, salvo la solicitud de ayuda (`ayudas-solicitud.html` → Edge Function `taxi-ayuda` → `taxi_ayuda_solicitudes` + aviso a Telegram), opcional y con consentimiento: nombre, teléfono y mensaje; 12 meses como máximo; la derivación a la gestoría la hace Cris a mano. Con cuentas: exportar y borrar datos desde la app.
 - Ubicación: solo en `trayecto.html`, solo mientras el taxista graba una carrera (Iniciar/Terminar), guardada únicamente en localStorage (`taxi.trayectos`), nunca enviada a ningún servidor; borrable desde la app. Decidido por Cris (2026-10-21). En el resto de la app no se usa.
 
 ## Git
