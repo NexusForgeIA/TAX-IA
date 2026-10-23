@@ -1,6 +1,7 @@
 // Copia de seguridad y restaurar, sin cuentas ni servidor: un archivo .json con todo lo que Taxi-IA guarda en este
 // navegador (claves «taxi.*»). Módulo sin DOM; lo usa inicio.js y lo prueba copia.test.js.
 import { almacen } from "./datos.js";
+import { CLAVE_PERFIL, perfilValido } from "./perfil.js";
 
 export const FORMATO = "taxi-ia-copia";
 export const VERSION_COPIA = 1;
@@ -9,10 +10,11 @@ export const MAX_BYTES = 8_000_000;
 const EXCLUIDAS = new Set(["taxi.instalada-contada", "taxi.trayecto.activo"]);
 const CLAVE_VALIDA = /^taxi\.[A-Za-z0-9._-]{1,60}$/;
 
-/** Claves cuyo contenido es una lista: si la copia trae otra cosa, esa clave se descarta (una copia corrupta no rompe las pantallas). */
+/** Claves cuyo contenido es una lista: si la copia trae otra cosa, esa clave se descarta (una copia corrupta no rompe las pantallas).
+ *  El perfil tiene que tener su forma (perfilValido). */
 const LISTAS = new Set(["taxi.gastos", "taxi.otros-gastos", "taxi.turnos", "taxi.trayectos"]);
 const contenidoValido = (k, v) => {
-  try { const j = JSON.parse(v); return LISTAS.has(k) ? Array.isArray(j) : true; } catch { return false; }
+  try { const j = JSON.parse(v); return LISTAS.has(k) ? Array.isArray(j) : k === CLAVE_PERFIL ? perfilValido(j) : true; } catch { return false; }
 };
 
 export const claveCopiable = (k) => typeof k === "string" && CLAVE_VALIDA.test(k) && !EXCLUIDAS.has(k);

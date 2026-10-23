@@ -4,10 +4,9 @@ import "./nav.js";
 import { $, cifras } from "./util.js";
 import { euros } from "./numeros.js";
 import { fechaLarga } from "./fechas.js";
-import { guardarJson, leerJson } from "./datos.js";
+import { guardarPerfil, leerPerfil } from "./perfil.js";
 import { CANALES, METODOS, leerCarreras } from "./ingresos.js";
 
-const CLAVE_PREF = "taxi.justificante.pref";
 const id = new URLSearchParams(location.search).get("id") || "";
 const c = leerCarreras().find((x) => x.id === id && x.hora != null);
 const form = $("f-just");
@@ -17,9 +16,10 @@ if (!c) {
 } else {
   $("datos").hidden = false;
   $("justificante").hidden = false;
-  const pref = leerJson(CLAVE_PREF, {});
-  if (typeof pref.conductor === "string") form.conductor.value = pref.conductor;
-  if (typeof pref.vehiculo === "string") form.vehiculo.value = pref.vehiculo;
+  const perfil = leerPerfil();
+  form.conductor.value = perfil.nombre;
+  form.licencia.value = perfil.licencia;
+  form.matricula.value = perfil.matricula;
   let texto = "";
 
   const pintar = () => {
@@ -33,11 +33,13 @@ if (!c) {
     if (v("origen")) filas.push(["Origen", v("origen")]);
     if (v("destino")) filas.push(["Destino", v("destino")]);
     if (v("conductor")) filas.push(["Conductor", v("conductor")]);
-    if (v("vehiculo")) filas.push(["Licencia o matrícula", v("vehiculo")]);
+    if (v("licencia")) filas.push(["Licencia", v("licencia")]);
+    if (v("matricula")) filas.push(["Matrícula", v("matricula")]);
     $("just-cifras").replaceChildren(...cifras(filas).children);
     texto = ["Justificante de carrera (informativo, no es una factura)", ...filas.map(([k, val]) => `${k}: ${val}`)].join("\n");
   };
-  form.addEventListener("input", () => { pintar(); guardarJson(CLAVE_PREF, { conductor: form.conductor.value.trim().slice(0, 60), vehiculo: form.vehiculo.value.trim().slice(0, 30) }); });
+  // Nombre, licencia y matrícula son los de Mi perfil: lo que se cambie aquí se guarda allí.
+  form.addEventListener("input", () => { pintar(); guardarPerfil({ nombre: form.conductor.value, licencia: form.licencia.value, matricula: form.matricula.value }); });
   form.addEventListener("submit", (ev) => ev.preventDefault());
   pintar();
 

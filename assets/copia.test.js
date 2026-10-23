@@ -29,4 +29,17 @@ assert.ok(restaurarCopia(l.copia, d).error); assert.equal(d.get("taxi.objetivo")
   assert.equal(r.copia.fecha, null);
   assert.deepEqual(Object.keys(r.copia.datos).sort(), ["taxi.tour", "taxi.trayectos"]);
 }
+// El perfil viaja en la copia, pero solo con su forma: {v: 1} y textos dentro del límite
+{
+  const perfil = JSON.stringify({ v: 1, nombre: "José Núñez", licencia: "1234", matricula: "0000 ABC" });
+  const p = falso({ "taxi.perfil": perfil });
+  const leida = leerCopia(archivoCopia(crearCopia(p)).texto);
+  assert.equal(leida.copia.datos["taxi.perfil"], perfil);
+  const q = falso();
+  restaurarCopia(leida.copia, q); assert.equal(q.get("taxi.perfil"), perfil);
+  for (const malo of ['{"nombre":"sin versión"}', '{"v":2,"nombre":"x"}', '[1,2]', '{"v":1,"nombre":5}', JSON.stringify({ v: 1, nombre: "x".repeat(61) }), "no json"]) {
+    const r = leerCopia(JSON.stringify({ formato: "taxi-ia-copia", v: 1, datos: { "taxi.perfil": malo, "taxi.objetivo": "1" } }));
+    assert.deepEqual(Object.keys(r.copia.datos), ["taxi.objetivo"], `perfil malo aceptado: ${malo}`);
+  }
+}
 console.log("copia: ok");
