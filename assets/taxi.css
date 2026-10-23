@@ -203,8 +203,8 @@ a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-acti
 @media (max-width: 56.24rem) {
   .cabecera {
     position: sticky; top: 0; z-index: var(--z-barra);
-    padding: calc(.55rem + env(safe-area-inset-top)) env(safe-area-inset-right) .55rem env(safe-area-inset-left);
-    background: var(--cristal); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
+    padding: calc(.25rem + env(safe-area-inset-top)) env(safe-area-inset-right) .25rem env(safe-area-inset-left);
+    background: #000;
     border-bottom: 1px solid rgba(255, 255, 255, .08);
   }
   .cabecera h1 { font-size: 1.3rem; line-height: 1.35; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -326,3 +326,12 @@ body:has(#instalar-directo:not([hidden])) main { padding-bottom: 13rem; }
 .privacidad-mas a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; }
 .privacidad-mas .opinion { text-decoration: none; }
 .privacidad-mas .enlaces-pie { color: var(--muted); font-size: .85rem; }
+
+/* Barra superior de las pantallas interiores: flecha «Volver» (assets/atras.js) y título. En móvil la cabecera
+   ya es sticky, negra y respeta la zona segura; aquí solo la fila. Zona táctil de 44 × 44. */
+.barra-titulo { display: flex; align-items: center; gap: .25rem; min-height: 48px; min-width: 0; }
+.barra-titulo h1 { margin: 0; min-width: 0; }
+.atras { flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; margin-left: -.65rem; border-radius: 50%; color: var(--accent); }
+.atras .icono { width: 26px; height: 26px; stroke-width: 2.5; }
+.atras:hover { background: rgba(255, 200, 0, .12); }
+.atras:active { background: rgba(255, 200, 0, .22); }
