@@ -20,6 +20,7 @@
   --peligro: #c62828;
   --peligro-hover: #b91c1c;
   --peligro-activo: #991b1b;
+  --peligro-texto: #ffffff; /* blanco sobre los tres rojos: 5,62 / 6,47 / 8,31 a 1 (AA) */
   --foco: #ffffff;
   --accion-suave: #2a2200; /* fondo del cuadro de icono de las tarjetas */
   /* Tarjetas: las comparten .tarjeta, .calc, .estacion, las listas y los avisos. */
@@ -161,7 +162,7 @@ input::placeholder { color: var(--muted); }
 .boton:disabled, .boton-sec:disabled { opacity: .6; cursor: progress; }
 /* Conmutadores pulsados: verde oscuro y borde blanco. */
 .boton-sec[aria-pressed="true"] { background: var(--accion-activo); border-color: var(--foco); }
-.boton-peligro { background: var(--peligro); color: var(--accion-texto); }
+.boton-peligro { background: var(--peligro); color: var(--peligro-texto); }
 .boton-peligro:hover { background: var(--peligro-hover); }
 .boton-peligro:active { background: var(--peligro-activo); }
 .peligro { padding: var(--tarjeta-pad); border: 1px solid var(--tarjeta-borde); border-radius: var(--tarjeta-radio); }
