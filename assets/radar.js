@@ -20,7 +20,8 @@ const LLEGADAS = {
   Valencia: [["avion", "Manises", "Vuelos de llegada · AENA", "Oficial", AENA], ["tren", "Joaquín Sorolla", "Renfe: busca tu estación", "Oficial", RENFE]],
 };
 // Foto del estadio si el «lugar» del evento lo nombra; si no, la genérica del tipo.
-const ESTADIOS = [[/bernab[eé]u/i, "estadio-bernabeu"], [/metropolitano/i, "estadio-metropolitano"], [/camp nou|spotify camp|olímpic lluís|olimpic lluis/i, "estadio-camp-nou"], [/s[aá]nchez.?pizju[aá]n/i, "estadio-sanchez-pizjuan"]];
+const ESTADIOS = [[/bernab[eé]u/i, "estadio-bernabeu"], [/metropolitano/i, "estadio-metropolitano"], [/camp nou|spotify camp|olímpic lluís|olimpic lluis/i, "estadio-camp-nou"], [/s[aá]nchez.?pizju[aá]n/i, "estadio-sanchez-pizjuan"],
+  [/mestalla/i, "estadio-mestalla"], [/vallecas/i, "estadio-vallecas"], [/coliseum/i, "estadio-coliseum"], [/rcde stadium/i, "estadio-rcde"]];
 const fotoDe = (e) => ESTADIOS.find(([r]) => r.test(e.lugar || ""))?.[1] || FOTO[e.tipo] || FOTO.otro;
 const FOTO = { futbol: "evento-futbol", feria: "evento-feria", concierto: "evento-otro", otro: "evento-otro" };
 
