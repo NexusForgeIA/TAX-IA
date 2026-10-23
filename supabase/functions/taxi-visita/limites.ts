@@ -1,10 +1,11 @@
 // Contador de aperturas: lista cerrada, modos y tope por hora. Se cuentan aperturas, no personas.
-// La lista es la misma que en la migración 20261021170000_taxi_primera_instalada.sql (la última que la cambia; lo comprueba
+// La lista es la misma que en la migración 20261023120000_taxi_trayecto.sql (la última que la cambia; lo comprueba
 // limites.test.ts). Decisión 1 en docs/DECISIONES.md.
 
 export const PAGINAS = [
   "portada", "inicio", "ingresos", "turnos", "calculadoras", "gastos", "estadisticas",
   "vencimientos", "mantenimiento", "avisos", "instalar", "privacidad", "aviso-legal", "radar", "instalar-clic", "instalacion", "primera-instalada",
+  "trayecto",
 ] as const;
 export const MODOS = ["navegador", "instalada"] as const;
 
