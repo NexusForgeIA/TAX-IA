@@ -1,6 +1,6 @@
-/* Portada de entrada. Reutiliza las variables de app.css. */
-.portada { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: max(2rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left)); text-align: center; background: radial-gradient(60rem 40rem at 50% 38%, #2a2200 0%, var(--bg) 62%); }
-.portada .logo { margin: 0; padding: 1rem; background: #fff; border-radius: 28px; width: min(86vw, 22rem); box-shadow: 0 10px 40px rgba(255,200,0,.18); }
+/* Portada de entrada. Reutiliza los tokens de tema de taxi.css. */
+.portada { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: max(2rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left)); text-align: center; background: radial-gradient(60rem 40rem at 50% 38%, var(--portada-halo) 0%, var(--bg) 62%); }
+.portada .logo { margin: 0; padding: 1rem; background: #fff; border-radius: 28px; width: min(86vw, 22rem); box-shadow: var(--brillo); border: 1px solid var(--borde-suave); }
 .portada .logo img { display: block; width: 100%; height: auto; }
 .portada .lema { margin: 0; color: var(--muted); font-size: 1.1rem; }
 .portada .entrar { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; min-width: min(80vw, 18rem); margin-top: 1.25rem; padding: 0 2rem; border-radius: var(--radius); background: var(--accion); color: var(--accion-texto); font-size: 1.2rem; font-weight: 800; text-decoration: none; border: 2px solid transparent; }
