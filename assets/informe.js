@@ -3,11 +3,13 @@
 import "./nav.js";
 import { $, el, cifras, descargarCSV } from "./util.js";
 import { euros } from "./numeros.js";
-import { hoyMadrid, nombreMes, fechaCorta, sumarMeses } from "./fechas.js";
+import { hoyMadrid, horaMadrid, nombreMes, fechaCorta, sumarMeses } from "./fechas.js";
 import { leerJson } from "./datos.js";
 import { CANALES, COLUMNAS, METODOS, leerCarreras, tablaMensual, cruce } from "./ingresos.js";
 import { COMBUSTIBLES_GASTO, celdaCSV, etiquetas, leerRegistros, totales, costePorKm, porEtiqueta } from "./gastos.js";
 import { TIPOS, leerOtros, totalOtros } from "./otros-gastos.js";
+import { leerPerfil } from "./perfil.js";
+import { RANGOS, componerPdf, gastosRango, nombreArchivo, rangoFechas, resumenRango } from "./informe-pdf.js";
 
 const e = (n) => `${euros(n)} €`;
 const fechaDeMs = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid", year: "numeric", month: "2-digit", day: "2-digit" });
@@ -147,3 +149,41 @@ $("compartir").addEventListener("click", async () => {
   }
 });
 pintar();
+
+// ---- PDF de facturación por rangos (generado aquí, sin servidor) ----------------------------
+const rangoSel = $("pdf-rango");
+const estPdf = $("pdf-estado");
+for (const [v, t] of Object.entries(RANGOS)) rangoSel.append(el("option", { value: v, text: t }));
+rangoSel.value = "mes";
+$("pdf-desde").value = `${hoy.slice(0, 7)}-01`;
+$("pdf-hasta").value = hoy;
+rangoSel.addEventListener("change", () => { $("pdf-fechas").hidden = rangoSel.value !== "personalizado"; estPdf.textContent = ""; });
+
+$("f-pdf").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const r = rangoFechas(rangoSel.value, hoyMadrid(), $("pdf-desde").value, $("pdf-hasta").value);
+  if (r.error) { estPdf.textContent = r.error; return; }
+  const resumen = resumenRango(carreras, r.desde, r.hasta);
+  if (!resumen.lineas) { estPdf.textContent = "No hay carreras en este rango."; return; }
+  const gastos = $("pdf-gastos").checked ? gastosRango(repostajes, otros, r.desde, r.hasta) : null;
+  const bytes = componerPdf({ resumen, perfil: leerPerfil(), gastos, generado: `${fechaCorta(hoyMadrid())} a las ${horaMadrid()}` });
+  const nombre = nombreArchivo(r.desde, r.hasta);
+  const archivo = new File([bytes], nombre, { type: "application/pdf" });
+  try {
+    if (navigator.canShare?.({ files: [archivo] })) {
+      await navigator.share({ files: [archivo], title: "Resumen de facturación" });
+      estPdf.textContent = "PDF compartido.";
+      return;
+    }
+  } catch (err) {
+    if (err?.name === "AbortError") { estPdf.textContent = ""; return; }
+    // Si compartir falla por otra razón, se descarga.
+  }
+  const url = URL.createObjectURL(archivo);
+  const a = el("a", { href: url, download: nombre });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  estPdf.textContent = `PDF descargado: ${nombre}`;
+});

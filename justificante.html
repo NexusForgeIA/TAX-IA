@@ -48,12 +48,13 @@
       <form id="f-just" class="filtros" novalidate>
         <div class="campos">
           <label class="campo"><span>Tu nombre (opcional)</span><input type="text" name="conductor" maxlength="60" autocomplete="off"></label>
-          <label class="campo"><span>Licencia o matrícula (opcional)</span><input type="text" name="vehiculo" maxlength="30" autocomplete="off"></label>
+          <label class="campo"><span>Licencia (opcional)</span><input type="text" name="licencia" maxlength="30" autocomplete="off"></label>
+          <label class="campo"><span>Matrícula (opcional)</span><input type="text" name="matricula" maxlength="15" autocomplete="off"></label>
           <label class="campo"><span>Origen (opcional)</span><input type="text" name="origen" maxlength="80" autocomplete="off"></label>
           <label class="campo"><span>Destino (opcional)</span><input type="text" name="destino" maxlength="80" autocomplete="off"></label>
         </div>
       </form>
-      <p class="nota">Tu nombre y la licencia o matrícula se recuerdan en este navegador; origen y destino no. Nada se envía a ningún servidor.</p>
+      <p class="nota">Tu nombre, la licencia y la matrícula se guardan en <a href="perfil.html">Mi perfil</a>, solo en este navegador; origen y destino no se guardan. Nada se envía a ningún servidor.</p>
       <p class="botones"><button type="button" class="boton" id="imprimir">Guardar como PDF / imprimir</button> <button type="button" class="boton-sec" id="compartir">Compartir</button></p>
       <p id="estado-just" class="nota" role="status" aria-live="polite"></p>
     </section>

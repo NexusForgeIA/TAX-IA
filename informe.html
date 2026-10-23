@@ -41,7 +41,22 @@
   </header>
 
   <main class="contenedor">
-    <p class="sub intro">Tus carreras, gastos y kilómetros del mes en un documento para guardar como PDF o imprimir.</p>
+    <p class="sub intro">Un PDF de tu facturación en las fechas que elijas, y el informe del mes con gastos y kilómetros para guardar o imprimir.</p>
+    <section class="calc no-imprimir" aria-labelledby="t-pdf">
+      <h2 id="t-pdf">PDF de facturación</h2>
+      <form id="f-pdf" class="filtros" novalidate>
+        <label class="campo campo-corto"><span>Rango</span>
+          <select id="pdf-rango"></select></label>
+        <div class="campos" id="pdf-fechas" hidden>
+          <label class="campo"><span>Desde</span><input type="date" id="pdf-desde"></label>
+          <label class="campo"><span>Hasta</span><input type="date" id="pdf-hasta"></label>
+        </div>
+        <label class="interruptor"><input type="checkbox" id="pdf-gastos"> Incluir gastos (combustible y otros) y el neto</label>
+        <p class="botones"><button type="submit" class="boton">Crear PDF</button></p>
+      </form>
+      <p id="pdf-estado" class="nota" role="status" aria-live="polite"></p>
+      <p class="nota">Si el móvil lo permite, se abre «Compartir» (WhatsApp, correo…); si no, se descarga. Incluye todas las carreras del rango, de todos los vehículos. Tu nombre, licencia y matrícula salen de <a href="perfil.html">Mi perfil</a>.</p>
+    </section>
     <section class="calc no-imprimir" aria-labelledby="t-mes">
       <h2 id="t-mes">Elige el mes</h2>
       <label class="campo campo-corto"><span>Mes</span>

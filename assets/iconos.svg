@@ -32,6 +32,10 @@
   <symbol id="comparador" viewBox="0 0 24 24">
     <path d="M4 20h16M7 20v-8M12 20V5M17 20v-5"/>
   </symbol>
+  <symbol id="perfil" viewBox="0 0 24 24">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
+  </symbol>
   <symbol id="atras" viewBox="0 0 24 24">
     <path d="M15 6l-6 6 6 6"/>
   </symbol>

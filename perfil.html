@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mi perfil · Taxi-IA</title>
+  <meta name="description" content="Tu nombre, licencia y matrícula para el justificante y el PDF de facturación. Se guardan solo en este móvil.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://mlaqtniujnvfxcvcourm.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/favicon-48.png" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Taxi-IA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="assets/app.css">
+  <link rel="stylesheet" href="assets/taxi.css">
+  <script type="module" src="assets/perfil-vista.js"></script>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <nav class="navegacion" aria-label="Secciones">
+        <a class="marca" href="inicio.html">Taxi-IA</a>
+        <a href="ingresos.html">Facturación</a>
+        <a href="turnos.html">Turnos</a>
+        <a href="radar.html">Radar</a>
+        <a href="trayecto.html">Trayecto</a>
+        <a href="calculadoras.html">Calculadoras</a>
+        <a href="gastos.html">Gastos</a>
+        <a href="estadisticas.html">Estadísticas</a>
+        <a href="informe.html">Informe</a>
+        <a href="vencimientos.html">Vencimientos</a>
+        <a href="mantenimiento.html">Mantenimiento</a>
+        <a href="avisos.html">Avisos</a>
+        <a href="instalar.html">Instalar</a>
+      </nav>
+      <div class="barra-titulo"><a class="atras" href="inicio.html" aria-label="Volver"><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#atras"/></svg></a><h1>Mi perfil</h1></div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="sub intro">Tus datos para el justificante de carrera y el PDF de facturación. Todo es opcional.</p>
+    <section class="calc" aria-labelledby="t-perfil">
+      <h2 id="t-perfil">Tus datos</h2>
+      <form id="f-perfil" class="filtros" novalidate>
+        <div class="campos">
+          <label class="campo"><span>Nombre completo</span><input type="text" name="nombre" maxlength="60" autocomplete="name"></label>
+          <label class="campo"><span>Nº de licencia</span><input type="text" name="licencia" maxlength="30" autocomplete="off"></label>
+          <label class="campo"><span>Matrícula</span><input type="text" name="matricula" maxlength="15" autocomplete="off" autocapitalize="characters"></label>
+        </div>
+      </form>
+      <p id="estado-perfil" class="nota" role="status" aria-live="polite"></p>
+      <p class="nota">Se guarda al escribir, solo en este móvil; no hay cuenta ni se envía a ningún servidor. Sale en el <a href="informe.html">PDF de facturación</a> y en el justificante de cada carrera. Va en la copia de seguridad (sin cifrar). Para quitarlo, borra los campos.</p>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Todas las cifras son las que introduces tú. Se guardan solo en este navegador.</p>
+      <p class="enlaces-pie"><a href="privacidad.html">Privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+      <p><a class="boton-sec opinion" href="mailto:comercial@whitemoon.es?subject=Opini%C3%B3n%20Taxi-IA%20beta" data-opinion><svg class="icono" aria-hidden="true" focusable="false"><use href="assets/iconos.svg#correo"/></svg>Enviar opinión</a></p>
+    </div>
+  </footer>
+</body>
+</html>
