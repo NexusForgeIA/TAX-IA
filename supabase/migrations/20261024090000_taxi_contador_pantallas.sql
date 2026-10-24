@@ -1,0 +1,25 @@
+-- Cinco páginas más en la lista cerrada del contador: ayudas, ayudas-solicitud, perfil, informe y justificante (hasta
+-- ahora no cargaban visita.js). Solo se cuenta la apertura: página y modo. En ayudas-solicitud no se envía nada del formulario.
+alter table public.taxi_visitas drop constraint taxi_visitas_pagina_check;
+alter table public.taxi_visitas add constraint taxi_visitas_pagina_check check (pagina in ('portada','inicio','ingresos','turnos','calculadoras','gastos','estadisticas','vencimientos','mantenimiento','avisos','instalar','privacidad','aviso-legal','radar','instalar-clic','instalacion','primera-instalada','trayecto','gasolineras','ayudas','ayudas-solicitud','perfil','informe','justificante'));
+create or replace function public.taxi_contar_visita(p_pagina text, p_modo text, p_limite_hora integer)
+returns text language plpgsql volatile security invoker set search_path = ''
+as $$
+declare h integer;
+begin
+  if p_pagina is null or p_pagina not in ('portada','inicio','ingresos','turnos','calculadoras','gastos','estadisticas','vencimientos','mantenimiento','avisos','instalar','privacidad','aviso-legal','radar','instalar-clic','instalacion','primera-instalada','trayecto','gasolineras','ayudas','ayudas-solicitud','perfil','informe','justificante')
+     or p_modo is null or p_modo not in ('navegador', 'instalada') then
+    return 'invalida';
+  end if;
+  insert into public.taxi_visitas_hora as v (hora, recuento) values (date_trunc('hour', now()), 1)
+  on conflict (hora) do update set recuento = v.recuento + 1 returning recuento into h;
+  if h = 1 then delete from public.taxi_visitas_hora where hora < now() - interval '2 days'; end if;
+  if h > p_limite_hora then return 'tope'; end if;
+  insert into public.taxi_visitas as v (dia, pagina, modo, recuento)
+  values ((now() at time zone 'Europe/Madrid')::date, p_pagina, p_modo, 1)
+  on conflict (dia, pagina, modo) do update set recuento = v.recuento + 1;
+  return 'ok';
+end;
+$$;
+revoke execute on function public.taxi_contar_visita(text, text, integer) from public, anon, authenticated;
+grant execute on function public.taxi_contar_visita(text, text, integer) to service_role;
